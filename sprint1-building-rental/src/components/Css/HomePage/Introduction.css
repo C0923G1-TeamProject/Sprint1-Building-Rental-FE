@@ -1,0 +1,119 @@
+.introduction{
+    height: 500px;
+}
+.picture-introduction{
+    height: 500px;
+    width: 100%;
+}
+.text-img-introduction:before{
+    content: "GIỚI THIỆU";
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(142, 77, 13);
+    font-size: 50px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-weight: bold;
+    background: rgb(214, 212, 212);
+    opacity: 70%;
+    border-radius: 2px;
+}
+.text-img-contact:before{
+    content: "LIÊN HỆ";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(142, 77, 13);
+    font-size: 50px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-weight: bold;
+    background: rgb(214, 212, 212);
+    opacity: 70%;
+    border-radius: 2px;
+}
+.display{
+    display: flex;
+}
+.tick{
+    color: #F4CD87;
+    font-size: x-large;
+}
+.picture-introduct-1{
+   width: 1110px;
+}
+.picture-contact{
+    height: 400px;
+    width: 100%;
+}
+.flex{
+    flex-wrap: wrap;
+}
+
+
+/* ô gửi mail */
+*{
+    margin:0;
+    padding:0;
+    border:none;
+    font-family: 'Open Sans', sans-serif;
+}
+.form {
+    border: 1px solid #80808000;
+    grid-column: 6/9;
+    grid-row: 3;
+    height: 400px;
+    width: 292px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border-radius: 15px;
+    box-shadow: 0px 0px 4px 0px grey;
+    background-color: white;
+}
+i.fab.fa-app-store-ios {
+    display: block;
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
+label {
+    margin-left: -126px;
+    display: block;
+    font-weight: lighter;
+
+}
+input{
+    display: block;
+    border-bottom: 2px solid #DDC383;
+    margin-top: 6px;
+    margin-bottom: 10px;
+    outline-style: none;
+}
+input[type="text"] {
+    padding: 5px;
+    width: 88%;
+}
+
+input#submit {
+    padding: 7px;
+    width: 50%;
+    border-radius: 10px;
+    border: none;
+    position: absolute;
+    bottom: 10px;
+    cursor: pointer;
+    background: linear-gradient(to right, #d6c8a5, #dba850);
+}
+input#submit:hover{
+
+    background: linear-gradient(to right, #dba850, #d6c8a5); 
+}
+.textera{
+    border: solid 1px #DDC383; 
+    outline: none;
+    
+}
+
