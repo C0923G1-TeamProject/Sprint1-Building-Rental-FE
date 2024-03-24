@@ -6,10 +6,22 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
 import React, { useEffect, useState } from "react";
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link, NavLink } from "react-router-dom";
+import "jquery";
+import "@popperjs/core"; // Edit here
+import "bootstrap/dist/js/bootstrap.bundle";
 function HeaderUser() {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen(!dropdownOpen);
   return (
     <>
       {/* Topbar Start */}
@@ -106,9 +118,18 @@ function HeaderUser() {
             <NavLink to={"/contactPage"} id="lien-he" className={`nav-link`}>
               Liên hệ
             </NavLink>
-            <button className="icon-login">
-              <AccountCircleIcon sx={{ fontSize: 30 }} />
-            </button>
+            <div>
+              <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+                <DropdownToggle>
+                  <AccountCircleIcon sx={{ fontSize: 30 }} />
+                </DropdownToggle>
+                <Link to={"/loginPage"}>
+                  <DropdownMenu>
+                    <DropdownItem>Đăng nhập</DropdownItem>
+                  </DropdownMenu>
+                </Link>
+              </Dropdown>
+            </div>
           </div>
         </div>
       </nav>

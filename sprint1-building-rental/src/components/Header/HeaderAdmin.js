@@ -10,12 +10,35 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link, NavLink } from "react-router-dom";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import "jquery";
+import "@popperjs/core"; // Edit here
+import "bootstrap/dist/js/bootstrap.bundle";
 
 function HeaderAdmin({ name, ...props }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen(!dropdownOpen);
+
+  const [showModal, setShowModal] = useState(false);
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = async (blog) => {
+    // await setBlogdelete(blog);
+    setShowModal(true);
+  };
+
   return (
     <>
       {/* Topbar Start */}
@@ -99,7 +122,7 @@ function HeaderAdmin({ name, ...props }) {
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <div class="navbar-nav ms-auto p-4 p-lg-0">
-          <NavLink to={"/loginPage"} id="trang-chu" className={`nav-link`}>
+            <NavLink to={"/loginPage"} id="trang-chu" className={`nav-link`}>
               Trang chủ
             </NavLink>
             {/* sideba Start */}
@@ -112,7 +135,9 @@ function HeaderAdmin({ name, ...props }) {
             </NavLink>
             <Offcanvas show={show} onHide={handleClose} {...props}>
               <Offcanvas.Header closeButton>
-                <Offcanvas.Title><span className="sidebar-title">Quản Lý</span></Offcanvas.Title>
+                <Offcanvas.Title>
+                  <span className="sidebar-title">Quản Lý</span>
+                </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <div>
@@ -143,13 +168,52 @@ function HeaderAdmin({ name, ...props }) {
 
             {/* sideba End */}
 
-            <button className="icon-login">
-              <AccountCircleIcon sx={{ fontSize: 30 }} />
-            </button>
+            <div>
+              <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+                <DropdownToggle>
+                  <AccountCircleIcon sx={{ fontSize: 30 }} />
+                </DropdownToggle>
+                <button onClick={() => handleShowModal()}>
+                <DropdownMenu>
+                  <DropdownItem>
+                    Đăng xuất
+                  </DropdownItem>
+                </DropdownMenu>
+                </button>
+              </Dropdown>
+            </div>
           </div>
         </div>
       </nav>
       {/* <!-- Navbar End --> */}
+      {/* modal Start */}
+      {/* <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body> {`Bạn chắc chắn muốn đăng xuất`} </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Không
+          </Button>
+            <Link to={"/"}><button className="button-logout">Dăng xuất</button></Link>
+        </Modal.Footer>
+      </Modal> */}
+      <Modal show={showModal} onHide={handleCloseModal} className="custom-modal">
+      <Modal.Header closeButton>
+        <Modal.Title>Xác nhận đăng xuất</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>Bạn có chắc chắn muốn đăng xuất?</Modal.Body>
+      <Modal.Footer>
+        <Button className="nologout" onClick={handleCloseModal}>
+          Không
+        </Button>
+        <Link to="/">
+          <Button  className="button-logout">
+            Đăng xuất
+          </Button>
+        </Link>
+      </Modal.Footer>
+    </Modal>
+      {/* modal End */}
     </>
   );
 }

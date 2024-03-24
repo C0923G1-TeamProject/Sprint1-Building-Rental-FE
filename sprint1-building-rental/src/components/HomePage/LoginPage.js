@@ -10,14 +10,13 @@ import Helmet from "react-helmet";
 import "../Css/HomePage/Messgae.css";
 import HeaderAdmin from "../Header/HeaderAdmin";
 function LoginPage() {
-
   return (
     <>
       <Helmet>
         <title>Quản lý</title>
       </Helmet>
       <div>
-        <HeaderAdmin/>
+        <HeaderAdmin />
         <CarouselBody />
 
         <div>
