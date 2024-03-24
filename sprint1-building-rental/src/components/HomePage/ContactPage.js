@@ -48,7 +48,7 @@ function ContactPage() {
       <div className="display container flex">
         <div className="col-sx-4 col-sm-4 col-md-4 col-lg-4">
           <img
-            className={"picture-contact"}
+            className={"picture-contact1"}
             src="/img/HomePage/introduct.png"
             alt=""
           />

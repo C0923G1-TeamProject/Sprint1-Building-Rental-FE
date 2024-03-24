@@ -45,13 +45,10 @@
 .navbar .navbar-nav .nav-link.active {
   color: var(--primary);
 }
-.icon-login {
-  width: 50px;
-  height: auto;
-  border: none;
-  background: white;
-}
 
+.dropdown{
+  margin-top: 19px !important;
+}
 
 /* dropdown Start */
 .dropdown {
@@ -66,6 +63,7 @@
 .dropdown-toggle {
   cursor: pointer;
 }
+
 
 .dropdown-menu {
   position: absolute;
@@ -95,6 +93,15 @@
   }
 }
 /* dropdown End */
+
+/* icon-login */
+.btn.btn-secondary {
+  border-radius: 30px !important;
+  color: black !important;
+  background: none !important;
+  border: none !important;
+}
+
 /* sideba Start */
 
 .text-manage{
@@ -132,4 +139,46 @@
 .offcanvas-body{
   background-image: linear-gradient(#212529, #cabcaf);
 }
+.dropdown-item{
+  background: none !important;
+  border: none !important;
+  border: none !important;
+  
+}
 /* sideba End */
+
+
+/* modal Start */
+.custom-modal {
+  .modal-dialog {
+    max-width: 400px; 
+    border-radius: 10px; 
+  }
+  .modal-header {
+    background-color: #343a40; 
+    color: #fff; 
+  }
+  .modal-title {
+    font-weight: bold; 
+  }
+  .modal-body {
+    padding: 20px; 
+  }
+  .modal-footer {
+    background-color: #f5f5f5; 
+  }
+  .button-logout {
+    background-color: #e74c3c; 
+    color: #fff; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    cursor: pointer;
+  }
+  .button-logout:hover {
+    background-color: #c0392b; 
+  }
+  .nologout{
+    height: 45px;
+  }
+}
+/* modal End */

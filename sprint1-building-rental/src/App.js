@@ -13,7 +13,7 @@ import HomePage from "./components/HomePage/HomePage";
 import ContactPage from "./components/HomePage/ContactPage";
 import IntroductionPage from "./components/HomePage/IntroductionPage";
 import LoginPage from "./components/HomePage/LoginPage";
-
+import 'bootstrap/dist/js/bootstrap.bundle';
 function App() {
   return (
     <>
