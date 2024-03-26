@@ -1,0 +1,6 @@
+.offcanvas-backdrop {
+  background: none !important;
+}
+.modal-backdrop.show {
+  background: none !important;
+}

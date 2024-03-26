@@ -5,7 +5,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link, NavLink } from "react-router-dom";
@@ -34,10 +34,12 @@ function HeaderAdmin({ name, ...props }) {
 
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
-  const handleShowModal = async (blog) => {
-    // await setBlogdelete(blog);
-    setShowModal(true);
+
+  const handleLogout = () => {
+    setShowModal(true); // Hiển thị Modal khi người dùng nhấn vào nút "Đăng xuất"
   };
+
+
 
   return (
     <>
@@ -106,19 +108,7 @@ function HeaderAdmin({ name, ...props }) {
           data-bs-toggle="collapse"
           data-bs-target="#navbarCollapse"
         >
-          <span>
-            <select class="navbar-toggler-icon">
-              <option value="someOption">
-                <Link to={"/"}>Trang chủ</Link>
-              </option>
-              <option>
-                <Link to={"/introductionPage"}>Giới thiệu</Link>
-              </option>
-              <option value="otherOption">
-                <Link to={"/contactPage"}>Liên hệ</Link>
-              </option>
-            </select>
-          </span>
+          
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <div class="navbar-nav ms-auto p-4 p-lg-0">
@@ -149,7 +139,7 @@ function HeaderAdmin({ name, ...props }) {
                 </div>
                 <div>
                   <Link className="text-sideba" to={""}>
-                    <button className="button-sideba">
+                    <button  className="button-sideba">
                       <span>Quản lý khách hàng</span>
                     </button>
                   </Link>
@@ -173,46 +163,34 @@ function HeaderAdmin({ name, ...props }) {
                 <DropdownToggle>
                   <AccountCircleIcon sx={{ fontSize: 30 }} />
                 </DropdownToggle>
-                <button onClick={() => handleShowModal()}>
-                <DropdownMenu>
-                  <DropdownItem>
-                    Đăng xuất
-                  </DropdownItem>
-                </DropdownMenu>
-                </button>
+                
+                  <DropdownMenu>
+                  <DropdownItem>Thông tin cá nhân</DropdownItem>
+                    <DropdownItem><p className="logout-button-header" onClick={handleLogout}>Đăng xuất</p></DropdownItem>
+                  </DropdownMenu>
               </Dropdown>
             </div>
           </div>
         </div>
       </nav>
-      {/* <!-- Navbar End --> */}
-      {/* modal Start */}
-      {/* <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton></Modal.Header>
-        <Modal.Body> {`Bạn chắc chắn muốn đăng xuất`} </Modal.Body>
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        className="custom-modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Xác nhận đăng xuất</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><strong>Bạn có chắc chắn muốn đăng xuất?</strong></Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button className="nologout" onClick={handleCloseModal}>
             Không
           </Button>
-            <Link to={"/"}><button className="button-logout">Dăng xuất</button></Link>
+          <Link to="/">
+            <Button className="button-logout">Đăng xuất</Button>
+          </Link>
         </Modal.Footer>
-      </Modal> */}
-      <Modal show={showModal} onHide={handleCloseModal} className="custom-modal">
-      <Modal.Header closeButton>
-        <Modal.Title>Xác nhận đăng xuất</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>Bạn có chắc chắn muốn đăng xuất?</Modal.Body>
-      <Modal.Footer>
-        <Button className="nologout" onClick={handleCloseModal}>
-          Không
-        </Button>
-        <Link to="/">
-          <Button  className="button-logout">
-            Đăng xuất
-          </Button>
-        </Link>
-      </Modal.Footer>
-    </Modal>
+      </Modal>
       {/* modal End */}
     </>
   );
