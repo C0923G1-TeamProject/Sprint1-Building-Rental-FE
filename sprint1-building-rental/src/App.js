@@ -24,10 +24,7 @@ function App() {
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/contactPage" element={<ContactPage />}></Route>
           <Route path="/loginPage" element={<LoginPage />}></Route>
-          <Route
-            path="/introductionPage"
-            element={<IntroductionPage/>}
-          ></Route>
+          <Route path="/introductionPage" element={<IntroductionPage/>}></Route>
           <Route path={"/login"} element={<Login/>}></Route>
           <Route path={"/otp"} element={<Otp/>}></Route>
         </Routes>

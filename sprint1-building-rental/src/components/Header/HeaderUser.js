@@ -125,7 +125,8 @@ function HeaderUser() {
                 </DropdownToggle>
                 <Link to={"/loginPage"}>
                   <DropdownMenu>
-                    <DropdownItem>Đăng nhập</DropdownItem>
+                    
+                    <DropdownItem><Link to={"/login"}>Đăng nhập</Link></DropdownItem>
                   </DropdownMenu>
                 </Link>
               </Dropdown>

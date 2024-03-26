@@ -27,7 +27,6 @@ function HomePage() {
         >
           <img src="/img/HomePage/message.png" width="40px" />
         </a>
-
         <div>
           {/* <!--Div Card Start--> */}
           <div className="container">
