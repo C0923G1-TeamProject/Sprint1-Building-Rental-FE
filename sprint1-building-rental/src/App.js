@@ -14,6 +14,8 @@ import ContactPage from "./components/HomePage/ContactPage";
 import IntroductionPage from "./components/HomePage/IntroductionPage";
 import LoginPage from "./components/HomePage/LoginPage";
 import 'bootstrap/dist/js/bootstrap.bundle';
+import {Login} from "./components/Login/Login";
+import {Otp} from "./components/Login/Otp";
 function App() {
   return (
     <>
@@ -26,6 +28,8 @@ function App() {
             path="/introductionPage"
             element={<IntroductionPage/>}
           ></Route>
+          <Route path={"/login"} element={<Login/>}></Route>
+          <Route path={"/otp"} element={<Otp/>}></Route>
         </Routes>
       </BrowserRouter>
 
