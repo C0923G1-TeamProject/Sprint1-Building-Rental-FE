@@ -26,7 +26,7 @@ export function Login() {
             </Helmet>
 
             <div className="k-body">
-                <div className="container">
+                <div className="k-container">
 
                     <div className="k-shadow-box">
                         <div className="login-kk"></div>
