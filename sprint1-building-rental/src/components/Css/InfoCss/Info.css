@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+    padding-top: 40px;
+    color: #2e323c;
+    background: #f5f6fa;
+    position: relative;
+    height: 100%;
+}
+
+.account-settings .user-profile {
+    margin: 0 0 1rem 0;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+
+.account-settings .user-profile .user-avatar {
+    margin: 0 0 1rem 0;
+}
+
+.account-settings .user-profile .user-avatar img {
+    width: 90px;
+    height: 90px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+}
+
+.account-settings .user-profile h5.user-name {
+    margin: 0 0 0.5rem 0;
+}
+
+.account-settings .user-profile h6.user-email {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #9fa8b9;
+}
+
+.account-settings .about {
+    margin: 2rem 0 0 0;
+    text-align: center;
+}
+
+.account-settings .about h5 {
+    margin: 0 0 15px 0;
+
+}
+
+.account-settings .about p {
+    font-size: 0.825rem;
+}
+
+.form-control {
+    border: 1px solid #cfd1d8;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    font-size: .825rem;
+    background: #ffffff;
+    color: #2e323c;
+}
+
+.input-te{
+    position: relative;
+    top: -18px;
+    border: none !important;
+    outline: none !important;
+    /*border-bottom: solid 1px !important;*/
+    border-radius: 0 !important
+}
+
+.form-group label {
+    display: inline-block; /* Make labels appear inline */
+    width: auto; /* Allow labels to adjust to content */
+    margin-right: 10px; /* Add margin between label and input */
+}
+
+.form-group input {
+    display: inline-block; /* Make inputs appear inline */
+    width: calc(100% - 110px); /* Adjust width based on label width and margin */
+}
+
+
+.button-upload-photo {
+    border: none;
+
+
+    .card {
+        background: #ffffff;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        border: 0;
+        margin-bottom: 1rem;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .modal-dialog {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 992px) {
+    .display {
+        flex-direction: column;
+
+        .display {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .col-md-4 {
+            margin-bottom: 20px;
+        }
+    }
+}
