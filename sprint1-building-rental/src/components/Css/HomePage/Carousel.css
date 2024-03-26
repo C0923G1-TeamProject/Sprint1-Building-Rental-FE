@@ -1,42 +1,47 @@
 .text-img-carousel-1:before {
-    content: "DIAMONDTIME";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: rgb(143, 78, 13);
-    font-size: 50px;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    font-weight: bold;
-    background: rgb(214, 212, 212);
-    opacity: 70%;
-    border-radius: 2px;
-  }
-  .text-img-carousel-2:before {
-    content: "TRUNG TÂM THƯƠNG MẠI";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: rgb(142, 77, 13);
-    font-size: 50px;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    font-weight: bold;
-    background: rgb(214, 212, 212);
-    opacity: 70%;
-    border-radius: 2px;
-  }
-  .text-img-carousel-3:before {
-    content: "COWORKING SPACE";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: rgb(142, 77, 13);
-    font-size: 50px;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    font-weight: bold;
-    background: rgb(214, 212, 212);
-    opacity: 70%;
-    border-radius: 2px;
-  }
+  content: "DIAMONDTIME";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(143, 78, 13);
+  font-size: 50px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  background: rgb(214, 212, 212);
+  opacity: 70%;
+  border-radius: 2px;
+}
+.text-img-carousel-2:before {
+  content: "TRUNG TÂM THƯƠNG MẠI";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(142, 77, 13);
+  font-size: 50px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  background: rgb(214, 212, 212);
+  opacity: 70%;
+  border-radius: 2px;
+}
+.text-img-carousel-3:before {
+  content: "COWORKING SPACE";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(142, 77, 13);
+  font-size: 50px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  background: rgb(214, 212, 212);
+  opacity: 70%;
+  border-radius: 2px;
+}
+
+/* .animated {
+  position: relative !important;
+  left: 38% !important;
+} */
