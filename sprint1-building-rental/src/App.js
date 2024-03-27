@@ -13,9 +13,12 @@ import HomePage from "./components/HomePage/HomePage";
 import ContactPage from "./components/HomePage/ContactPage";
 import IntroductionPage from "./components/HomePage/IntroductionPage";
 import LoginPage from "./components/HomePage/LoginPage";
+import LisContract from "./components/Contract/ListContract";
+import "../src/components/Contract/list-contract.css"
 import 'bootstrap/dist/js/bootstrap.bundle';
 import {Login} from "./components/Login/Login";
 import {Otp} from "./components/Login/Otp";
+import ListPremises from "./components/Premises/ListPremises";
 function App() {
   return (
     <>
@@ -25,6 +28,12 @@ function App() {
           <Route path="/contactPage" element={<ContactPage />}></Route>
           <Route path="/loginPage" element={<LoginPage />}></Route>
           <Route path="/introductionPage" element={<IntroductionPage/>}></Route>
+          <Route path="/premises" element={<ListPremises />}> </Route>
+          <Route
+            path="/introductionPage"
+            element={<IntroductionPage/>}
+          ></Route>
+          <Route path="/contract" element={<LisContract/>}></Route>
           <Route path={"/login"} element={<Login/>}></Route>
           <Route path={"/otp"} element={<Otp/>}></Route>
         </Routes>

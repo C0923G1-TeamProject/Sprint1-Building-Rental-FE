@@ -134,7 +134,7 @@ function HeaderAdmin({ name, ...props }) {
               </Offcanvas.Header>
               <Offcanvas.Body className="sidebar-loginPage">
                 <div>
-                  <Link className="text-sideba" to={""}>
+                  <Link className="text-sideba" to={"/premises"}>
                     <button className="button-sideba">
                       <span >Quản lý mặt bằng</span>
                     </button>
@@ -150,7 +150,7 @@ function HeaderAdmin({ name, ...props }) {
                 <div>
                   <Link className="text-sideba" to={""}>
                     <button className="button-sideba">
-                      <span>Quản lý hợp đồng</span>
+                      <a href="/contract" style={{color:`black`, textDecoration:`none`}}><span>Quản lý hợp đồng</span></a>
                     </button>
                   </Link>
                 </div>
