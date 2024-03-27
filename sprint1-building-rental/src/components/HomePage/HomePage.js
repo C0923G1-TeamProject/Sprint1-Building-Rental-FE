@@ -9,6 +9,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import Footer from "../Footer/Footer";
 import Helmet from "react-helmet";
 import "../Css/HomePage/Messgae.css";
+
 function HomePage() {
   const myBtn2 = document.getElementById("myBtn2");
   return (
@@ -39,9 +40,14 @@ function HomePage() {
                     data-wow-delay="0.1s"
                     style={{ "max-width": "600px" }}
                   >
-                    <h1 className="display-5 mb-4">
+                    <h3
+                      className="display-5 mb-4"
+                      style={{
+                        color: "#452D14",
+                      }}
+                    >
                       Một số mặt bằng tại MediaMond
-                    </h1>
+                    </h3>
                   </div>
                   <div className="flex">
                     <input style={{ margin: "5px" }} />
@@ -305,7 +311,10 @@ function HomePage() {
           <br />
           {/* <!--Div giới thiệu Start--> */}
           <div className="container color-marketing-homepage">
-            <div className="display" style={{ " flex-wrap": "wrap" }}>
+            <div
+              className="display"
+              style={{ " flex-wrap": "wrap" }}
+            >
               <div className="col-md-8">
                 <div>
                   <div style={{ width: "80%" }}>
@@ -406,7 +415,14 @@ function HomePage() {
                 data-wow-delay="0.1s"
                 style={{ "max-width": "600px" }}
               >
-                <h1 class="display-5 mb-4">Đóng góp</h1>
+                <h3
+                  class="display-5 mb-4"
+                  style={{
+                    color: "#452D14",
+                  }}
+                >
+                  Đóng góp
+                </h3>
               </div>
               <div class="row g-0 team-items">
                 <div

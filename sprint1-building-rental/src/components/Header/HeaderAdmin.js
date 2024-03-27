@@ -116,6 +116,9 @@ function HeaderAdmin({ name, ...props }) {
               Trang chủ
             </NavLink>
             {/* sideba Start */}
+            <div>
+              
+            </div>
             <NavLink
               style={{ "text-align": "center" }}
               onClick={handleShow}
@@ -124,16 +127,16 @@ function HeaderAdmin({ name, ...props }) {
               {name} <button className="text-manage">QUẢN LÝ</button>
             </NavLink>
             <Offcanvas show={show} onHide={handleClose} {...props}>
-              <Offcanvas.Header closeButton>
+              <Offcanvas.Header  closeButton>
                 <Offcanvas.Title>
                   <span className="sidebar-title">Quản Lý</span>
                 </Offcanvas.Title>
               </Offcanvas.Header>
-              <Offcanvas.Body>
+              <Offcanvas.Body className="sidebar-loginPage">
                 <div>
                   <Link className="text-sideba" to={""}>
                     <button className="button-sideba">
-                      <span>Quản lý mặt bằng</span>
+                      <span >Quản lý mặt bằng</span>
                     </button>
                   </Link>
                 </div>
