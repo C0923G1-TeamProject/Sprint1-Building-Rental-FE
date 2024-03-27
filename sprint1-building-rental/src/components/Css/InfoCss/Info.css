@@ -115,4 +115,8 @@ body {
             margin-bottom: 20px;
         }
     }
+    .form-check{
+        position: relative !important;
+    left: 113px !important;
+    }
 }

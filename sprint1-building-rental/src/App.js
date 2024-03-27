@@ -14,13 +14,13 @@ import ContactPage from "./components/HomePage/ContactPage";
 import IntroductionPage from "./components/HomePage/IntroductionPage";
 import LoginPage from "./components/HomePage/LoginPage";
 import 'bootstrap/dist/js/bootstrap.bundle';
-import ShowInfoUser from "./components/PersonalInformation/ShowInfoUser";
 import {Login} from "./components/Login/Login";
 import {Otp} from "./components/Login/Otp";
+import ShowInfoUser from "./components/PersonalInsormation/ShowInfoUser";
 function App() {
   return (
     <>
-      <BrowserRouter>
+    <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/contactPage" element={<ContactPage />}></Route>
