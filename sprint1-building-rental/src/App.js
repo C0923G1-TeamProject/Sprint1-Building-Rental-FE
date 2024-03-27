@@ -18,15 +18,17 @@ import "../src/components/Contract/list-contract.css"
 import 'bootstrap/dist/js/bootstrap.bundle';
 import {Login} from "./components/Login/Login";
 import {Otp} from "./components/Login/Otp";
+import ShowInfoUser from "./components/PersonalInsormation/ShowInfoUser";
 import ListPremises from "./components/Premises/ListPremises";
 function App() {
   return (
     <>
-      <BrowserRouter>
+    <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/contactPage" element={<ContactPage />}></Route>
           <Route path="/loginPage" element={<LoginPage />}></Route>
+          <Route path="/information" element={<ShowInfoUser />}></Route>
           <Route path="/introductionPage" element={<IntroductionPage/>}></Route>
           <Route path="/premises" element={<ListPremises />}> </Route>
           <Route
