@@ -1,340 +1,187 @@
 import Footer from "../Footer/Footer";
 import HeaderAdmin from "../Header/HeaderAdmin";
 import "../Css/InfoCss/Info.css";
+import { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 function ShowInfoUser() {
+  const [show, setShow] = useState(false);
+
+  const showModal = () => {
+    setShow(true);
+  };
+
+  useEffect(() => {
+    document.title = "Thông tin cá nhân";
+  });
   return (
     <>
       <HeaderAdmin />
-      <div class="container p-5">
-        <div class="row gutters">
-          <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-            <div class="card h-100">
-              <div class="card-body">
-                <div class="account-settings">
-                  <div class="user-profile">
-                    <div class="user-avatar">
-                      <img
-                        src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        alt="Maxwell Admin"
-                      />
+      <div
+        className="container p-5 fixed-grid has-auto-count is-three-quarters-mobile
+      is-two-thirds-tablet
+      is-half-desktop
+      is-one-third-widescreen
+      is-one-quarter-fullhd"
+      >
+        <div className="columns ">
+          <div className="column is-12">
+            <div
+              className="columns is-three-quarters-mobile
+      is-two-thirds-tablet
+      is-half-desktop
+      is-one-third-widescreen
+      is-one-quarter-fullhd"
+            >
+              {/* cột ảnh cá nhân */}
+              <div
+                className="column is-narrow is-three-quarters-mobile
+                is-two-thirds-tablet
+                is-half-desktop
+                is-one-third-widescreen
+                is-one-quarter-fullhd"
+                style={{ width: "27%" }}
+              >
+                <div
+                  className="box"
+                  style={{
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.1) 0px 0em 0.5em 0em, rgba(1, 10, 10, 0.02) 0px 0px 0px 1px",
+                    height: "100%",
+                    width: "100%",
+                  }}
+                >
+                  <p
+                    className="is-5 is-three-quarters-mobile
+      is-two-thirds-tablet
+      is-half-desktop
+      is-one-third-widescreen
+      is-one-quarter-fullhd"
+                  >
+                    <div className="account-settings">
+                      <div className="user-profile">
+                        <div className="user-avatar">
+                          <img
+                            src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                            alt="Maxwell Admin"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="about">
-                    <button class="button-upload-photo">Thay đổi ảnh</button>
-                  </div>
+                  </p>
+                  <p
+                    className="subtitle is-three-quarters-mobile
+      is-two-thirds-tablet
+      is-half-desktop
+      is-one-third-widescreen
+      is-one-quarter-fullhd"
+                  >
+                    <div className="about" style={{ textAlign: "center" }}>
+                      <button className="button is-light">Thay đổi ảnh</button>
+                    </div>
+                  </p>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-            <div class="card h-100">
-              <div class="card-body">
-                <div class="row gutters">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h4 class="mb-4" style={{ color: "#ddb673" }}>
-                      Thông tin cá nhân
-                    </h4>
-                  </div>
+              <div className="column ">
+                <div
+                  className="box"
+                  style={{
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.1) 0px 0em 0.5em 0em, rgba(1, 10, 10, 0.02) 0px 0px 0px 1px",
+                  }}
+                >
+                  <p className="is-5" style={{ color: "#ddb673" }}>
+                    <h4>Thông tin cá nhân</h4>
+                  </p>
+                  <p className="subtitle">
+                    <div className="columns">
+                      <div className="column is-7">
+                        <table className="table">
+                          <thead>
+                            <tr>
+                              <td style={{ width: "120px" }}>Họ và tên</td>
+                              <td>Trần Kim Tiểu Vi</td>
+                            </tr>
+                            <tr>
+                              <td>Email</td>
+                              <td>tieuvi200904@gmail.com</td>
+                            </tr>
+                            <tr>
+                              <td>Địa chỉ</td>
+                              <td>
+                                295 Nguyễn Tất Thành,Quận Thanh Khê,Thành phố Đà
+                                Nẵng
+                              </td>
+                            </tr>
+                          </thead>
+                        </table>
+                        {/* <div className="columns">
+                          <div className="column is-3">
+                            <div className="mt-3">Ho ten</div>
+                            <div className="mt-3">Email</div>
+                            <div className="mt-3">Dia chi</div>
+                          </div>
+                          <div className="column is-9">
+                            <div className="mt-3">Nguyen Van A</div>
+                            <div className="mt-3">ngvana@gmail.com</div>
+                            <div className="mt-3">
+                              295 Nguyễn Tất Thành,Quận Thanh Khê, thành phố Đà
+                              Nẵng
+                            </div>
+                          </div>
+                        </div> */}
+                      </div>
 
-                  <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-12"
-                    style={{ marginTop: "5px" }}
-                  >
-                    <div class="form-group row">
-                      <div class="col-3">
-                        <label style={{ margin: "0", fontWeight: "bold" }}>
-                          Họ và tên{" "}
-                        </label>
-                      </div>
-                      <div class="col-9">
-                        <input
-                          type="text"
-                          style={{
-                            border: "none",
-                            width: "100%",
-                            padding: "0",
-                            top: "-1px",
-                            borderRadius: "0px",
-                            outline: "none",
-                          }}
-                          class="form-control input-readonly input-te"
-                          value="Nguyễn Văn A"
-                          placeholder="Nhập họ và tên"
-                          readonly
-                        />
-                      </div>
-
-                      {/* <div
-                        style={{
-                          color: "red",
-                          position: "relative",
-                          top: "-1px",
-                        }}
-                      >
-                        Vui lòng nhập Họ tên hợp lệ
-                      </div> */}
-                    </div>
-                  </div>
-
-                  <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12">
-                    <div class="form-group row">
-                      <div class="col-5">
-                        <label style={{ margin: "0", fontWeight: "bold" }}>
-                          Tên tài khoản:{" "}
-                        </label>
-                      </div>
-                      <div class="col-7">
-                        <input
-                          type="text"
-                          style={{
-                            border: "none",
-                            width: "100%",
-                            padding: "0",
-                            borderRadius: "0px",
-                            outline: "none",
-                          }}
-                          class="form-control input-readonly"
-                          value="NguyenvanA1223"
-                          placeholder="Nhập tên tài khoản"
-                          readonly
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-12"
-                    style={{ marginTop: "10px" }}
-                  >
-                    <div class="form-group row">
-                      <div class="col-3">
-                        <label
-                          className="position-form-infor"
-                          style={{
-                            fontWeight: "bold",
-                            position: "relative",
-                            left: "115%",
-                          }}
+                      <div className="column is-5">
+                        <table
+                          className="table"
+                          style={{ borderBottom: "none" }}
                         >
-                          Email
-                        </label>
+                          <thead>
+                            <tr>
+                              <td>Tài khoản</td>
+                              <td>vitkt</td>
+                            </tr>
+                            <tr>
+                              <td>Ngày sinh</td>
+                              <td>09/09/2009</td>
+                            </tr>
+                            <tr>
+                              <td>Giới tính</td>
+                              <td>Nguyen van a</td>
+                            </tr>
+                          </thead>
+                        </table>
+                        {/* <div className="columns">
+                          <div className="column is-4">
+                            <div className="mt-3">Tai khoan</div>
+                            <div className="mt-3">Ngay sinh</div>
+                            <div className="mt-3">Gioi tinh</div>
+                          </div>
+                          <div className="column is-8">
+                            <div className="mt-3">annv</div>
+                            <div className="mt-3">20/09/2009</div>
+                            <div className="mt-3">Nam</div>
+                          </div>
+                        </div> */}
                       </div>
-                      <div class="col-9">
-                        <input
-                          type="text"
-                          style={{
-                            border: "none",
-                            width: "100%",
-                            padding: "0",
-                            top: "1px",
-                            borderRadius: "0px",
-                            outline: "none",
-                          }}
-                          class="form-control input-readonly input-te"
-                          placeholder="Nhập email"
-                          value="nva@gmail.com"
-                          readonly
-                        />
-                      </div>
-
-                      {/* <div
-                        style={{
-                          color: "red",
-                          position: "relative",
-                          top: "-10px",
-                        }}
-                      >
-                        Vui lòng nhập Email hợp lệ
-                      </div> */}
                     </div>
-                  </div>
-
-                  <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12"
-                    style={{ marginTop: "5px" }}
-                  >
-                    <div class="form-group row">
-                      <div class="col-5">
-                        <label
-                          style={{
-                            fontWeight: "bold",
-                            position: "relative",
-                            left: "97%",
-                          }}
-                        >
-                          Ngày sinh
-                        </label>
-                      </div>
-                      <div class="col-7">
-                        <input
-                          type="url"
-                          style={{
-                            border: "none",
-                            width: "100%",
-                            padding: "0",
-                            top: "-1px",
-                            borderRadius: "0px",
-                            outline: "none",
-                          }}
-                          class="form-control input-readonly input-te"
-                          placeholder="Nhập ngày sinh"
-                          value="01/02/1992"
-                          readonly
-                        />
-                      </div>
-
-                      {/* <div
-                        style={{
-                          color: "red",
-                          position: "relative",
-                          top: "-10px",
-                        }}
+                    <div className="buttons">
+                      <button className="button button-update-info">
+                        Cập nhật thông tin
+                      </button>
+                      <Button
+                        className="button button-change-password"
+                        onClick={() => showModal()}
                       >
-                        Vui lòng nhập Ngày sinh hợp lệ
-                      </div> */}
+                        Đổi mật khẩu
+                      </Button>
                     </div>
-                  </div>
-
+                  </p>
+                  <ChangePasswordModal show={show} setShow={setShow} />
                 </div>
-
-                <div class="row gutters">
-                  <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-12"
-                    style={{ marginTop: "5px " }}>
-                    <div class="form-group row" style={{ flexWrap: "wrap" }}>
-                      <div class="col-3">
-                        <label style={{ margin: "0", fontWeight: "bold" }}>
-                          Địa chỉ
-                        </label>
-                      </div>
-                      <div class="col-9">
-                        <textarea
-                          type="text"
-                          style={{
-                            position: "relative",
-                            top: "-1px",
-                            width: "100%",
-                            // word-wrap: break-word;
-                            overflow: "hidden",
-                            resize: "none",
-                            right: "8px",
-                          }}
-                          class="form-control input-readonly input-te"
-                          placeholder="Nhập địa chỉ...."
-                          readonly
-                        >
-                          295 Nguyễn Tất Thành, Quận Thanh Khê, Thành phố Đà Năg
-                        </textarea>
-                      </div>
-                      {/* <div
-                        style={{
-                          color: "red",
-                          position: "relative",
-                          top: "-1px",
-                        }}
-                      >
-                        Vui lòng nhập Địa chỉ hợp lệ
-                      </div> */}
-                    </div>
-                  </div>
-
-                  {/* <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12"
-                    style={{ marginTop: "5px" }}
-                  >
-                    <div class="form-group row"> */}
-                      {/* <div class="col-4">
-                        <label
-                          style={{
-                            fontWeight: "bold",
-                            position: "relative",
-                            left: "124%",
-                          }}
-                        >
-                          Giới tính
-                        </label>
-                      </div> */}
-                      {/* <div class="col-8"> */}
-                        {/* <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="maleRadio"
-                            value="Nam"
-                            checked
-                          />
-
-                          <label class="form-check-label" for="maleRadio" style={{ position: "relative", left: "117px" }}>
-                            Nam
-                          </label>
-                        </div> */}
-                        {/* <div
-                          class="form-check form-check-inline"
-                          style={{ position: "relative", left: "117px" }}
-                        >
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="femaleRadio"
-                            value="Nữ"
-                          />
-                          <label class="form-check-label" for="femaleRadio">
-                            Nữ
-                          </label>
-                        </div> */}
-
-                        {/* <div
-                          style={{ color: "red", display: "none" }}
-                          id="genderError"
-                        >
-                          Vui lòng Chọn giới tính hợp lệ
-                        </div> */}
-                      {/* </div> */}
-                    {/* </div>
-                  </div> */}
-
-                </div>
-
-                {/* <div class="row gutters">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
-                    style={{ float: "right", position: "relative", top: "20%" }}
-                  >
-                    <div
-                      class="text-right"
-                      style={{
-                        display: "flex",
-                        position: "relative",
-                        top: "20%",
-                      }}
-                    >
-                      <div class="col-md-5"></div>
-                      <div class="col-md-4">
-                        <button
-                          type="button"
-                          id="edit-button"
-                          name="submit"
-                          style={{
-                            background: "#ddb6739c",
-                            color: "black",
-                            border: "none",
-                          }}
-                          class="btn btn-secondary"
-                        >
-                          Cập nhật
-                        </button>
-                        <button
-                          type="button"
-                          id="changed-password-button"
-                          class="btn btn-secondary"
-                          data-bs-toggle="modal"
-                          data-bs-target="#staticBackdrop"
-                        >
-                          Đổi mật khẩu
-                        </button>
-                      </div>
-                      <div class="col-md-3"></div>
-                    </div>
-                  </div>
-                </div> */}
-
               </div>
             </div>
           </div>

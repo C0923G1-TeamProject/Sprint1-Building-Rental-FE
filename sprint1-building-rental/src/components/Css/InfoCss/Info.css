@@ -1,11 +1,11 @@
-body {
+/* body {
     margin: 0;
     padding-top: 40px;
     color: #2e323c;
     background: #f5f6fa;
     position: relative;
     height: 100%;
-}
+} */
 
 .account-settings .user-profile {
     margin: 0 0 1rem 0;
@@ -120,3 +120,65 @@ body {
     left: 113px !important;
     }
 }
+
+.button-update-info{
+    background-color: rgb(255, 237, 194);
+    border: none;
+}
+
+.button-update-info:hover{
+    background-color:#ddb6739c !important;
+    color: black !important;
+}
+
+.button-change-password{
+    background-color: rgb(103 101 88 / 69%) !important;
+    color: white !important;
+    border: none !important;
+}
+
+.button-change-password:hover{
+    background-color:  rgb(116, 114, 100);
+    color: white !important;
+}
+
+.buttons{
+    justify-content: center !important;
+}
+
+.button-cancel{
+    background-color:  rgb(151 151 148) !important;
+    border: none !important;
+}
+
+.button-cancel:hover{
+    background-color: rgb(116, 114, 100) !important;
+    border: none !important;
+}
+
+.button-accept{
+    background-color: #3C3633 !important;
+    border: none !important;
+}
+
+.background-modal{
+    background-color: rgba(0, 0, 0, 0.5); 
+     backdrop-filter: blur(8px); 
+     z-index: 999;
+  
+}
+
+.table{
+    --bulma-table-cell-border-style: none;
+}
+
+.lock-lock{
+    position: absolute;
+}
+.lock-lock2{
+    position: absolute;
+}
+.lock-lock3{
+    position: absolute;
+}
+  
