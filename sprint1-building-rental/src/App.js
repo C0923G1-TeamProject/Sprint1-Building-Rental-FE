@@ -13,6 +13,8 @@ import HomePage from "./components/HomePage/HomePage";
 import ContactPage from "./components/HomePage/ContactPage";
 import IntroductionPage from "./components/HomePage/IntroductionPage";
 import LoginPage from "./components/HomePage/LoginPage";
+import LisContract from "./components/Contract/ListContract";
+import "../src/components/Contract/list-contract.css"
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
             path="/introductionPage"
             element={<IntroductionPage/>}
           ></Route>
+
+          <Route path="/contract" element={<LisContract/>}></Route>
         </Routes>
       </BrowserRouter>
 
