@@ -6,6 +6,13 @@ function IntroductionPage() {
   useEffect(() => {
     document.title = "Giới thiệu";
   }, []);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, []);
   return (
     <>
       <a
