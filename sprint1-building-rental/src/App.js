@@ -14,7 +14,7 @@ import ContactPage from "./components/HomePage/ContactPage";
 import IntroductionPage from "./components/HomePage/IntroductionPage";
 import LoginPage from "./components/HomePage/LoginPage";
 import LisContract from "./components/Contract/ListContract";
-import "../src/components/Contract/list-contract.css"
+import "../src/components/Css/Contract/list-contract.css"
 import 'bootstrap/dist/js/bootstrap.bundle';
 import {Login} from "./components/Login/Login";
 import {Otp} from "./components/Login/Otp";

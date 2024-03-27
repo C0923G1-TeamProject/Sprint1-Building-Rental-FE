@@ -1,26 +1,31 @@
 import HeaderAdmin from "../Header/HeaderAdmin";
 import Footer from "../Footer/Footer";
-import "../Contract/list-contract.css";
+import "../Css/Contract/list-contract.css";
 import { useEffect, useState } from "react";
 import * as contractStatusService from "../ThamService/ContractStatusService";
 import * as contractService from "../ThamService/ContractService";
 
 function LisContract() {
-  const [status,setStatus] = useState([]);
-  useEffect(()=>{
-      getAllStatus();
-  })
-  const getAllStatus = async ()=>{
-      try{
-          const res = await contractStatusService.getAllStatus();
-          setStatus(res);
+  const [status, setStatus] = useState([]);
+  const initSearch = {
+    nameCustomer: "",
+    statusContract: "",
+  };
+  const [search, setSearch] = useState(initSearch);
 
-      }catch(e){
-          console.log(e);
-      }
-  }
+  useEffect(() => {
+    getAllStatus();
+  }, []);
+  const getAllStatus = async () => {
+    try {
+      const res = await contractStatusService.getAllStatus();
+      setStatus(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-  const [contracts, setContracts] = useState([]);
+  const [contracts, setContracts] = useState();
   useEffect(() => {
     getAllContract(search);
   }, []);
@@ -35,25 +40,24 @@ function LisContract() {
     }
   };
 
+  // const handelSearchChange = (e)=>{
+  //   const {name, value} = e.target;
+  //   setSearch({...search,[name]:value});
+  //   console.log(search);
+  // }
+  const handelSearchChange = (e) => {
+    const { name, value } = e.target;
+    const data = { ...search, [name]: value };
+    setSearch(data);
+    console.log(data);
+  };
 
-  const initSearch = {
-    customer:"",
-    premises:"",
-    sortEndDate: "asc",
-  }
-  const [search,setSearch] = useState(initSearch);
-  const handelSearchChange = (e)=>{
-    const {name, value} = e.target;
-    setSearch({...search,[name]:value});
-    console.log(search);
-  }
-
-  const handleSearch = ()=>{
+  const handleSearch = () => {
     getAllContract(search);
     console.log(search);
-  }
-  if(!contracts){
-    return <div>load</div>;
+  };
+  if (!contracts) {
+    return <div>loading</div>;
   }
 
   return (
@@ -65,7 +69,7 @@ function LisContract() {
 
           <div className="row mt-5">
             <div className="col-sm-2 mb-3">
-              <a className="btn btn-secondary" href="./create-contract.html">
+              <a className="btn btn-in-list" href="./create-contract.html">
                 Tạo mới hợp đồng
               </a>
             </div>
@@ -74,11 +78,11 @@ function LisContract() {
                 type="text"
                 className="form-control"
                 placeholder="Tìm kiếm tên khách hàng"
-                name="customer"
+                name="nameCustomer"
                 onChange={handelSearchChange}
               />
             </div>
-            <div className="col-sm-3 mb-3">
+            {/* <div className="col-sm-3 mb-3">
               <input
                 type="text"
                 className="form-control"
@@ -86,23 +90,32 @@ function LisContract() {
                 name="premises"
                 onChange={handelSearchChange}
               />
-            </div>
+            </div> */}
             {status && (
               <div className="col-sm-2 mb-3">
-              <select className="form-select" name="contractStatus" 
-                onChange={handelSearchChange}>
-                <option selected>Tìm kiếm trạng thái</option>
-                {status.map((item)=>(
-                 <option value={item.name} key={item.id}>{item.name}</option>
-                ))}
-                
-                
-              </select>
-            </div>
+                <select
+                  className="form-select"
+                  name="statusContract"
+                  onChange={handelSearchChange}
+                >
+                  <option selected value="">
+                    Tìm kiếm trạng thái
+                  </option>
+                  {status.map((item) => (
+                    <option value={item.id} key={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             )}
-            
+
             <div className="col-sm-2">
-              <button type="submit" className="btn btn-secondary" onClick={handleSearch}>
+              <button
+                type="submit"
+                className="btn btn-in-list"
+                onClick={handleSearch}
+              >
                 Tìm kiếm
               </button>
             </div>
@@ -149,16 +162,18 @@ function LisContract() {
               </tr>
             </thead>
             <tbody>
-              {contracts.map((item, index) => {
-                return <tr key={item.id}>
-                  <td>{index + 1}</td>
-                  <td>{item.code}</td>
-                  <td>{item.customer.name}</td>
-                  <td>{item.premises.typePremises.name}</td>
-                  <td>{item.premises.premisesStatus.name}</td>
+              {contracts.content.map((item, index) => {
+                return (
+                  <tr key={item.id}>
+                    <td>{index + 1}</td>
+                    <td>{item.code}</td>
+                    <td>{item.nameCustomer}</td>
+                    <td>{item.deposit}</td>
+                    <td>{item.contractStatus}</td>
 
-                  <td>{item.endDate}</td>
-                </tr>;
+                    <td>{item.endDate}</td>
+                  </tr>
+                );
               })}
             </tbody>
           </table>
