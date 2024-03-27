@@ -11,12 +11,11 @@ function Example(props) {
     mat3: false,
   });
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleSubmit = (value) => {
-    console.log(value);
+  const togglePasswordVisibility = (input) => {
+    setShowPassword({
+      ...showPassword,
+      [input]: !showPassword[input],
+    });
   };
 
   const handleClose = () => setShow(false);
@@ -39,19 +38,30 @@ function Example(props) {
               <tr>
                 <td>
                   Nhập mật khẩu hiện tại:
-                  <span className="material-symbols-outlined lock-b-vi">
+                  <span className="material-symbols-outlined lock-b-vi lock-lock">
                     lock
                   </span>
                 </td>
                 <td>
-                  <input type={showPassword ? "text" : "password"} />
+                  <input
+                    type={showPassword.mat1 ? "text" : "password"}
+                    style={{
+                      position: "relative",
+                      paddingLeft: "10px",
+                      marginLeft: "15px", /* Adjusted marginLeft instead of left */
+                      borderBottom: "solid 1px black",
+                      outline: "none", /* Removed important */
+                      width: "calc(100% - 25px)" /* Adjusted width */
+                    }}
+                  />
                 </td>
                 <td>
                   <img
-                    src={showPassword ? view : hide}
-                    alt={showPassword ? "show" : "hide"}
-                    onClick={togglePasswordVisibility}
+                    src={showPassword.mat1 ? view : hide}
+                    alt={showPassword.mat1 ? "show" : "hide"}
+                    onClick={() => togglePasswordVisibility("mat1")}
                     width="30px"
+                    className="eye-vi-1"
                   />
                 </td>
               </tr>
@@ -63,33 +73,55 @@ function Example(props) {
                   </span>{" "}
                 </td>
                 <td>
-                  <input type={showPassword ? "text" : "password"} />
+                  <input
+                    type={showPassword.mat2 ? "text" : "password"}
+                    style={{
+                      position: "relative",
+                      paddingLeft: "10px",
+                      marginLeft: "15px", /* Adjusted marginLeft instead of left */
+                      borderBottom: "solid 1px black",
+                      outline: "none", /* Removed important */
+                      width: "calc(100% - 25px)" /* Adjusted width */
+                    }}
+                  />
                 </td>
                 <td>
                   <img
-                    src={showPassword ? view : hide}
-                    alt={showPassword ? "show" : "hide"}
-                    onClick={togglePasswordVisibility}
+                    src={showPassword.mat2 ? view : hide}
+                    alt={showPassword.mat2 ? "show" : "hide"}
+                    onClick={() => togglePasswordVisibility("mat2")}
                     width="30px"
+                    className="eye-vi-2"
                   />
                 </td>
               </tr>
               <tr>
                 <td>
                   Nhập lại mật khẩu mới:{" "}
-                  <span className="material-symbols-outlined lock-b-vi">
+                  <span className="material-symbols-outlined lock-b-vi lock-lock">
                     lock
                   </span>{" "}
                 </td>
                 <td>
-                  <input type={showPassword ? "text" : "password"} />
+                  <input
+                    type={showPassword.mat3 ? "text" : "password"}
+                    style={{
+                      position: "relative",
+                      paddingLeft: "10px",
+                      marginLeft: "15px", /* Adjusted marginLeft instead of left */
+                      borderBottom: "solid 1px black",
+                      outline: "none", /* Removed important */
+                      width: "calc(100% - 25px)" /* Adjusted width */
+                    }}
+                  />
                 </td>
                 <td>
                   <img
-                    src={showPassword ? view : hide}
-                    alt={showPassword ? "show" : "hide"}
-                    onClick={togglePasswordVisibility}
+                    src={showPassword.mat3 ? view : hide}
+                    alt={showPassword.mat3 ? "show" : "hide"}
+                    onClick={() => togglePasswordVisibility("mat3")}
                     width="30px"
+                    className="eye-vi-3"
                   />
                 </td>
               </tr>

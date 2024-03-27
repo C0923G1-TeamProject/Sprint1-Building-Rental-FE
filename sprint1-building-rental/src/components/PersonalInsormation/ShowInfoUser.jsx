@@ -7,14 +7,19 @@ import ChangePasswordModal from "./ChangePasswordModal";
 
 function ShowInfoUser() {
   const [show, setShow] = useState(false);
-
+  const [isEditing, setIsEditing] = useState(false);
   const showModal = () => {
     setShow(true);
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
   };
 
   useEffect(() => {
     document.title = "Thông tin cá nhân";
   });
+
   return (
     <>
       <HeaderAdmin />
@@ -36,11 +41,7 @@ function ShowInfoUser() {
             >
               {/* cột ảnh cá nhân */}
               <div
-                className="column is-narrow is-three-quarters-mobile
-                is-two-thirds-tablet
-                is-half-desktop
-                is-one-third-widescreen
-                is-one-quarter-fullhd"
+                className="column is-narrow is-narrow-mobile is-narrow-tablet is-narrow-touch is-narrow-desktop is-narrow-widescreen is-narrow-fullhd"
                 style={{ width: "27%" }}
               >
                 <div
@@ -96,45 +97,78 @@ function ShowInfoUser() {
                     <h4>Thông tin cá nhân</h4>
                   </p>
                   <p className="subtitle">
-                    <div className="columns">
-                      <div className="column is-7">
+                    <div
+                      className="columns is-three-quarters-mobile
+      is-two-thirds-tablet
+      is-half-desktop
+      is-one-third-widescreen
+      is-one-quarter-fullhd"
+                    >
+                      <div className="column is-6">
                         <table className="table">
                           <thead>
                             <tr>
                               <td style={{ width: "120px" }}>Họ và tên</td>
-                              <td>Trần Kim Tiểu Vi</td>
+                              <td>
+                                {isEditing ? (
+                                  <input
+                                    type="text"
+                                    defaultValue={"Trần Kim Tiểu Vi"}
+                                    style={{
+                                      position: "relative",
+                                      top: "-5px",
+                                    }}
+                                  />
+                                ) : (
+                                  "Trần Kim Tiểu Vi"
+                                )}
+                              </td>
                             </tr>
                             <tr>
                               <td>Email</td>
-                              <td>tieuvi200904@gmail.com</td>
+                              <td>
+                                {isEditing ? (
+                                  <input
+                                    type="text"
+                                    defaultValue={"tieuvi200904@gmail.com"}
+                                    style={{
+                                      position: "relative",
+                                      top: "-5px",
+                                    }}
+                                  />
+                                ) : (
+                                  "tieuvi200904@gmail.com"
+                                )}
+                              </td>
                             </tr>
                             <tr>
                               <td>Địa chỉ</td>
                               <td>
-                                295 Nguyễn Tất Thành,Quận Thanh Khê,Thành phố Đà
-                                Nẵng
+                                {isEditing ? (
+                                  <textarea
+                                    defaultValue={
+                                      " 295 Nguyễn Tất Thành,Quận Thanh Khê,Thành phố Đà Nẵng"
+                                    }
+                                    style={{
+                                      position: "relative",
+                                      top: "-5px",
+                                      width: "100%",
+                                      overflow: "hidden",
+                                      resize: "none",
+                                      outline: "none",
+                                      borderBottom: "solid 1px",
+                                    }}
+                                  ></textarea>
+                                ) : (
+                                  " 295 Nguyễn Tất Thành,Quận Thanh Khê,Thành phố Đà Nẵng"
+                                )}
                               </td>
                             </tr>
                           </thead>
                         </table>
-                        {/* <div className="columns">
-                          <div className="column is-3">
-                            <div className="mt-3">Ho ten</div>
-                            <div className="mt-3">Email</div>
-                            <div className="mt-3">Dia chi</div>
-                          </div>
-                          <div className="column is-9">
-                            <div className="mt-3">Nguyen Van A</div>
-                            <div className="mt-3">ngvana@gmail.com</div>
-                            <div className="mt-3">
-                              295 Nguyễn Tất Thành,Quận Thanh Khê, thành phố Đà
-                              Nẵng
-                            </div>
-                          </div>
-                        </div> */}
                       </div>
 
-                      <div className="column is-5">
+                      <div className="column is-6">
                         <table
                           className="table"
                           style={{ borderBottom: "none" }}
@@ -142,43 +176,142 @@ function ShowInfoUser() {
                           <thead>
                             <tr>
                               <td>Tài khoản</td>
-                              <td>vitkt</td>
+                              <td>
+                                {isEditing ? (
+                                  <input
+                                    type="text"
+                                    defaultValue={"tieuvi200904@gmail.com"}
+                                    style={{
+                                      position: "relative",
+                                      top: "-5px",
+                                    }}
+                                  />
+                                ) : (
+                                  "vitkt"
+                                )}
+                              </td>
                             </tr>
                             <tr>
                               <td>Ngày sinh</td>
-                              <td>09/09/2009</td>
+                              <td>
+                                {isEditing ? (
+                                  <input
+                                    type="date"
+                                    style={{
+                                      position: "relative",
+                                      top: "-5px",
+                                    }}
+                                  />
+                                ) : (
+                                  "24/03/2024"
+                                )}
+                              </td>
                             </tr>
                             <tr>
                               <td>Giới tính</td>
-                              <td>Nguyen van a</td>
+                              <td>
+                                {isEditing ? (
+                                  <div
+                                    className="columns is-three-quarters-mobile
+                                  is-two-thirds-tablet
+                                  is-half-desktop
+                                  is-one-third-widescreen
+                                  is-one-quarter-fullhd"
+                                  >
+                                    <div className="column is-6">
+                                      <div className="columns">
+                                        <div className="column is-6">
+                                          <input
+                                            type="radio"
+                                            id="male"
+                                            name="gender"
+                                            value="male"
+                                            defaultChecked
+                                            style={{
+                                              position: "relative",
+                                              top: "7px",
+                                            }}
+                                          />
+                                        </div>
+                                        <div className="column is-6">
+                                          <label
+                                            htmlFor="male"
+                                            style={{
+                                              display: "flex",
+                                              position: "relative",
+                                              right: "-87px",
+                                              top: "-1px",
+                                            }}
+                                          >
+                                            Nam
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="column is-6">
+                                      <div className="columns">
+                                        <div className="column is-6">
+                                          {" "}
+                                          <input
+                                            type="radio"
+                                            id="female"
+                                            name="gender"
+                                            value="female"
+                                            style={{
+                                              position: "relative",
+                                              top: "7px",
+                                            }}
+                                          />
+                                        </div>
+                                        <div className="column is-6">
+                                          <label
+                                            htmlFor="female"
+                                            style={{
+                                              display: "flex",
+                                              position: "relative",
+                                              right: "-87px",
+                                              top: "-1px",
+                                            }}
+                                          >
+                                            Nữ
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  "nam"
+                                )}
+                              </td>
                             </tr>
                           </thead>
                         </table>
-                        {/* <div className="columns">
-                          <div className="column is-4">
-                            <div className="mt-3">Tai khoan</div>
-                            <div className="mt-3">Ngay sinh</div>
-                            <div className="mt-3">Gioi tinh</div>
-                          </div>
-                          <div className="column is-8">
-                            <div className="mt-3">annv</div>
-                            <div className="mt-3">20/09/2009</div>
-                            <div className="mt-3">Nam</div>
-                          </div>
-                        </div> */}
                       </div>
                     </div>
                     <div className="buttons">
-                      <button className="button button-update-info">
-                        Cập nhật thông tin
-                      </button>
-                      <Button
-                        className="button button-change-password"
-                        onClick={() => showModal()}
-                      >
-                        Đổi mật khẩu
-                      </Button>
-                    </div>
+                    {isEditing ? (
+                    <button className="button button-update-info">
+                      Cập nhật thông tin
+                    </button>
+                  ) : (
+                    <button className="button button-update-info" onClick={handleEdit}>
+                      Cập nhật thông tin
+                    </button>
+                  )}
+                  <Button
+                    className="button button-change-password"
+                    onClick={() => showModal()}
+                    style={{ display: isEditing ? 'none' : 'block' }} // Hide in edit mode
+                  >
+                    Đổi mật khẩu
+                  </Button>
+                  <Button
+                    className="button button-accept"
+                    style={{ display: isEditing ? 'block' : 'none' }} // Show in edit mode
+                  >
+                    Đồng ý
+                  </Button>
+                </div>
                   </p>
                   <ChangePasswordModal show={show} setShow={setShow} />
                 </div>

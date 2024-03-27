@@ -1,11 +1,4 @@
-/* body {
-    margin: 0;
-    padding-top: 40px;
-    color: #2e323c;
-    background: #f5f6fa;
-    position: relative;
-    height: 100%;
-} */
+
 
 .account-settings .user-profile {
     margin: 0 0 1rem 0;
@@ -174,11 +167,34 @@
 
 .lock-lock{
     position: absolute;
+    left: 198px;
+    z-index: 2;
+    scale: 0.8;
+    opacity: 70%;
+    right: 50px !important;
 }
-.lock-lock2{
+
+.eye-vi-1{
     position: absolute;
+    scale: 0.8;
+    opacity: 70%;
+    right: 55px !important;
+    top: 23px;
 }
-.lock-lock3{
+
+.eye-vi-2{
+    right: 53px;
     position: absolute;
+    scale: 0.8;
+    opacity: 70%;
+    top: 64px;
 }
-  
+
+.eye-vi-3{
+    position: absolute;
+    scale: 0.8;
+    opacity: 70%;
+    right: 52px !important;
+    top: 105px;
+}
+
