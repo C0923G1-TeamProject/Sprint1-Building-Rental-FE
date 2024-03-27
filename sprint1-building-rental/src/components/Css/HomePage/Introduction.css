@@ -2,7 +2,7 @@
   height: 500px;
 }
 .picture-introduction {
-  height: 500px;
+  height: 800px;
   width: 100%;
 }
 .text-img-introduction:before {
@@ -22,7 +22,7 @@
 .text-img-contact:before {
   content: "LIÊN HỆ";
   position: absolute;
-  top: 50%;
+  top: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: rgb(142, 77, 13);
@@ -44,14 +44,12 @@
   width: 1110px;
 }
 .picture-contact {
-  height: 400px;
   width: 100%;
 }
 .picture-contact1 {
-  height: 400px;
+  height: 410px;
   width: 100%;
   border-radius: 12px;
-
 }
 
 .flex {
