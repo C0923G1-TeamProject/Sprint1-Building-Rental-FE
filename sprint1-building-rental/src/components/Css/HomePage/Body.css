@@ -373,4 +373,8 @@
   .float-paging{
     float: right;
   }
-  
+  /** Css hiệu ứng loading */
+  .loading-homePage{
+    position: relative; left: 50%;
+    
+  }

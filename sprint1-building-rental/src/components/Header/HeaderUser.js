@@ -6,6 +6,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
 import React, { useEffect, useState } from "react";
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   Dropdown,
   DropdownToggle,
@@ -90,17 +91,7 @@ function HeaderUser() {
           data-bs-target="#navbarCollapse"
         >
           <span>
-            <select class="navbar-toggler-icon">
-              <option value="someOption">
-                <Link to={"/"}>Trang chủ</Link>
-              </option>
-              <option>
-                <Link to={"/introductionPage"}>Giới thiệu</Link>
-              </option>
-              <option value="otherOption">
-                <Link to={"/contactPage"}>Liên hệ</Link>
-              </option>
-            </select>
+            <button><MenuIcon/></button>
           </span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -139,3 +130,4 @@ function HeaderUser() {
   );
 }
 export default HeaderUser;
+// LoginPage

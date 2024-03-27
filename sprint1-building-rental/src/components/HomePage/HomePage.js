@@ -7,11 +7,51 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import Footer from "../Footer/Footer";
+import { Hourglass } from "react-loader-spinner";
 import Helmet from "react-helmet";
 import "../Css/HomePage/Messgae.css";
+import * as Method from "../Method/MethodHomePage";
+import { useEffect, useState } from "react";
 
 function HomePage() {
-  const myBtn2 = document.getElementById("myBtn2");
+  const [premises, setPremises] = useState([]);
+
+  const getAll = async () => {
+    let res = await Method.getAllPremisesHomePage();
+    if (res) {
+      let premisesFiltered = res.content.filter(
+        (premise) => premise.typePremises.name === "chưa bàn giao"
+      );
+      setPremises(premisesFiltered);
+    }
+  };
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    getAll();
+  }, []);
+
+  useEffect(() => {
+    console.log(Permissions[0]);
+  }, [premises]);
+  useEffect(() => {
+    getAll();
+    setTimeout(() => {
+      setIsLoading(false); // Set loading to false after a simulated delay
+    }, 1000); // Adjust the delay as needed
+  }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+        window.scrollTo(0, 0);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+}, []);
+
+  if (!premises) {
+    return "";
+  }
+
   return (
     <>
       <Helmet>
@@ -29,9 +69,7 @@ function HomePage() {
           <img src="/img/HomePage/message.png" width="40px" />
         </a>
         <div>
-          {/* <!--Div Card Start--> */}
           <div className="container">
-            {/* <!-- Service Start --> */}
             <div className="container">
               <div className="container-xxl py-5">
                 <div className="container">
@@ -61,208 +99,73 @@ function HomePage() {
                       Tìm kiếm
                     </button>
                   </div>
-
-                  <div className="row g-4">
-                    <div
-                      className="col-lg-4 col-md-6 wow fadeInUp"
-                      data-wow-delay="0.1s"
-                    >
-                      <div className="service-item d-flex position-relative text-center h-100">
-                        <img
-                          className="bg-img"
-                          src="/img/HomePage/card-1.jpg"
-                          alt=""
-                        />
-                        <div className="service-text p-5">
-                          <img
-                            className="mb-4"
-                            src="/img/HomePage/icon-1.png"
-                            alt="Icon"
-                          />
-                          <h4 className="mb-3">Indo Riverside</h4>
-                          <strong>Địa chỉ</strong>:
-                          <span style={{ display: "inline-block" }}>
-                            290 Trần Hưng Đạo, Sơn Trà, Đà Nẵng
-                          </span>
-                          <p className="mb-4">
-                            <strong>Giá</strong>: 10.000.000 vnđ/tháng
-                          </p>
-                          <a className="btn" href="">
-                            <span style={{ marginRight: "5px" }}>
-                              <AddIcon />
-                            </span>
-                            Xem thêm
-                          </a>
-                        </div>
-                      </div>
+                  <br />
+                   {/* Hiển thị danh sách mặt bằng Start */}
+                  {isLoading ? (
+                    <div className="loading-homePage">
+                    <Hourglass 
+                      visible={true}
+                      height="40"
+                      width="40"
+                      ariaLabel="hourglass-loading"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                      colors={["#306cce", "#72a1ed"]}
+                    />
                     </div>
-                    <div
-                      className="col-lg-4 col-md-6 wow fadeInUp"
-                      data-wow-delay="0.1s"
-                    >
-                      <div className="service-item d-flex position-relative text-center h-100">
-                        <img
-                          className="bg-img"
-                          src="/img/HomePage/card-1.jpg"
-                          alt=""
-                        />
-                        <div className="service-text p-5">
-                          <img
-                            className="mb-4"
-                            src="/img/HomePage/icon-1.png"
-                            alt="Icon"
-                          />
-                          <h4 className="mb-3">Indo Riverside</h4>
-                          <strong>Địa chỉ</strong>:
-                          <span style={{ display: "inline-block" }}>
-                            290 Trần Hưng Đạo, Sơn Trà, Đà Nẵng
-                          </span>
-                          <p className="mb-4">
-                            <strong>Giá</strong>: 10.000.000 vnđ/tháng
-                          </p>
-                          <a className="btn" href="">
-                            <span style={{ marginRight: "5px" }}>
-                              <AddIcon />
-                            </span>
-                            Xem thêm
-                          </a>
+                  ) : (
+                    <div className="row g-4">
+                      {premises.map((premise, index) => (
+                        <div className="col-lg-4 col-md-6" key={index}>
+                          <div className="service-item d-flex position-relative text-center h-100">
+                            <img
+                              className="bg-img"
+                              src="/img/HomePage/card-6.jpg"
+                              alt=""
+                            />
+                            <div
+                              className="service-text p-5"
+                              style={{ width: "100%" }}
+                            >
+                              <img
+                                className="mb-4"
+                                src="/img/HomePage/icon-1.png"
+                                alt="Icon"
+                              />
+                              <h6 className="mb-3">
+                                <strong>Mã mặt Bằng:</strong> {premise.code}
+                              </h6>
+                              <strong>Giá: </strong>
+                              <span style={{ display: "inline-block" }}>
+                                {premise.price} {"vnđ"}
+                              </span>
+                              <br />
+                              <strong>Tình trạng: </strong>
+                              <span style={{ display: "inline-block" }}>
+                                {premise.typePremises.name}
+                              </span>
+                              <br />
+                              <br />
+                              <Link
+                                className="btn"
+                                to={`/premises/${premise.id}`}
+                              >
+                                <span style={{ marginRight: "5px" }}>
+                                  <AddIcon />
+                                </span>
+                                Xem thêm
+                              </Link>
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      ))}
                     </div>
-                    <div
-                      className="col-lg-4 col-md-6 wow fadeInUp"
-                      data-wow-delay="0.1s"
-                    >
-                      <div className="service-item d-flex position-relative text-center h-100">
-                        <img
-                          className="bg-img"
-                          src="/img/HomePage/card-1.jpg"
-                          alt=""
-                        />
-                        <div className="service-text p-5">
-                          <img
-                            className="mb-4"
-                            src="/img/HomePage/icon-1.png"
-                            alt="Icon"
-                          />
-                          <h4 className="mb-3">Interior Design</h4>
-                          <strong>Địa chỉ</strong>:
-                          <span style={{ display: "inline-block" }}>
-                            02 Ngô Đức Kế, Quận 1, Hồ Chí Minh
-                          </span>
-                          <p className="mb-4">
-                            <strong>Giá</strong>: 19.500.000 vnđ/tháng
-                          </p>
-                          <a className="btn" href="">
-                            <span style={{ marginRight: "5px" }}>
-                              <AddIcon />
-                            </span>
-                            Xem thêm
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="col-lg-4 col-md-6 wow fadeInUp"
-                      data-wow-delay="0.3s"
-                    >
-                      <div className="service-item d-flex position-relative text-center h-100">
-                        <img
-                          className="bg-img"
-                          src="/img/HomePage/card-5.jpg"
-                          alt=""
-                        />
-                        <div className="service-text p-5">
-                          <img
-                            className="mb-4"
-                            src="/img/HomePage/icon-1.png"
-                            alt="Icon"
-                          />
-                          <h4 className="mb-3">Belvedere Building</h4>
-                          <strong>Địa chỉ</strong>:
-                          <span style={{ display: "inline-block" }}>
-                            76 Võ Thị Sáu, Quận Hoàn Kiếm, Hà Nội
-                          </span>
-                          <p className="mb-4">
-                            <strong>Giá</strong>: 25.500.000 vnđ/tháng
-                          </p>
-                          <a className="btn" href="">
-                            <span style={{ marginRight: "5px" }}>
-                              <AddIcon />
-                            </span>
-                            Xem thêm
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="col-lg-4 col-md-6 wow fadeInUp"
-                      data-wow-delay="0.5s"
-                    >
-                      <div className="service-item d-flex position-relative text-center h-100">
-                        <img
-                          className="bg-img"
-                          src="/img/HomePage/card-6.jpg"
-                          alt=""
-                        />
-                        <div className="service-text p-5">
-                          <img
-                            className="mb-4"
-                            src="/img/HomePage/icon-1.png"
-                            alt="Icon"
-                          />
-                          <h4 className="mb-3">Hoàng Đông Tower</h4>
-                          <strong>Địa chỉ</strong>:
-                          <span style={{ display: "inline-block" }}>
-                            76 Mẹ Nhu, Quận Hoàn Kiếm, Hà Nội
-                          </span>
-                          <p className="mb-4">
-                            <strong>Giá</strong>: 29.500.000 vnđ/tháng
-                          </p>
-                          <Link className="btn w-10" href="">
-                            <span style={{ marginRight: "5px" }}>
-                              <AddIcon />
-                            </span>
-                            Xem thêm
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="col-lg-4 col-md-6 wow fadeInUp"
-                      data-wow-delay="0.5s"
-                    >
-                      <div className="service-item d-flex position-relative text-center h-100">
-                        <img
-                          className="bg-img"
-                          src="/img/HomePage/card-6.jpg"
-                          alt=""
-                        />
-                        <div className="service-text p-5">
-                          <img
-                            className="mb-4"
-                            src="/img/HomePage/icon-1.png"
-                            alt="Icon"
-                          />
-                          <h4 className="mb-3">Hoàng Đông Tower</h4>
-                          <strong>Địa chỉ</strong>:
-                          <span style={{ display: "inline-block" }}>
-                            01 Lê Lợi, Quận Hoàn Kiếm, Hà Nội
-                          </span>
-                          <p className="mb-4">
-                            <strong>Giá</strong>: 22.500.000 vnđ/tháng
-                          </p>
-                          <a className="btn" href="">
-                            <span style={{ marginRight: "5px" }}>
-                              <AddIcon />
-                            </span>
-                            Xem thêm
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  )}
                 </div>
+                   {/* Hiển thị danh sách mặt bằng End */}
+
+
+
                 {/* <!-- phân trang Start --> */}
                 <div>
                   <nav
@@ -311,10 +214,7 @@ function HomePage() {
           <br />
           {/* <!--Div giới thiệu Start--> */}
           <div className="container color-marketing-homepage">
-            <div
-              className="display"
-              style={{ " flex-wrap": "wrap" }}
-            >
+            <div className="display" style={{ " flex-wrap": "wrap" }}>
               <div className="col-md-8">
                 <div>
                   <div style={{ width: "80%" }}>
