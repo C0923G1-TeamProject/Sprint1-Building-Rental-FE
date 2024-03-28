@@ -42,11 +42,11 @@ function HomePage() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-        window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
     }, 1000);
 
     return () => clearTimeout(timeout);
-}, []);
+  }, []);
 
   if (!premises) {
     return "";
@@ -100,18 +100,18 @@ function HomePage() {
                     </button>
                   </div>
                   <br />
-                   {/* Hiển thị danh sách mặt bằng Start */}
+                  {/* Hiển thị danh sách mặt bằng Start */}
                   {isLoading ? (
                     <div className="loading-homePage">
-                    <Hourglass 
-                      visible={true}
-                      height="40"
-                      width="40"
-                      ariaLabel="hourglass-loading"
-                      wrapperStyle={{}}
-                      wrapperClass=""
-                      colors={["#306cce", "#72a1ed"]}
-                    />
+                      <Hourglass
+                        visible={true}
+                        height="40"
+                        width="40"
+                        ariaLabel="hourglass-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                        colors={["#306cce", "#72a1ed"]}
+                      />
                     </div>
                   ) : (
                     <div className="row g-4">
@@ -132,15 +132,27 @@ function HomePage() {
                                 src="/img/HomePage/icon-1.png"
                                 alt="Icon"
                               />
-                              <h6 className="mb-3">
-                                <strong>Mã mặt Bằng:</strong> {premise.code}
+                              <h6>
+                                <a style={{ "font-weight": "bold" }}>
+                                  Mã mặt Bằng:
+                                </a>{" "}
+                                {premise.code}
                               </h6>
-                              <strong>Giá: </strong>
+                              <a style={{ "font-weight": "bold" }}>
+                                Diện tích:{" "}
+                              </a>
+                              <span style={{ display: "inline-block" }}>
+                                {premise.area} m<sup>2</sup>
+                              </span>
+                              <br />
+                              <a style={{ "font-weight": "bold" }}>Giá: </a>
                               <span style={{ display: "inline-block" }}>
                                 {premise.price} {"vnđ"}
                               </span>
                               <br />
-                              <strong>Tình trạng: </strong>
+                              <a style={{ "font-weight": "bold" }}>
+                                Tình trạng:{" "}
+                              </a>
                               <span style={{ display: "inline-block" }}>
                                 {premise.typePremises.name}
                               </span>
@@ -162,9 +174,7 @@ function HomePage() {
                     </div>
                   )}
                 </div>
-                   {/* Hiển thị danh sách mặt bằng End */}
-
-
+                {/* Hiển thị danh sách mặt bằng End */}
 
                 {/* <!-- phân trang Start --> */}
                 <div>

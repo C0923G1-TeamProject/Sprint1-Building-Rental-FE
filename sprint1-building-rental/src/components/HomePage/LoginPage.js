@@ -120,7 +120,7 @@ function LoginPage() {
                           <div className="service-item d-flex position-relative text-center h-100">
                             <img
                               className="bg-img"
-                              src="/img/HomePage/card-6.jpg"
+                              src="/img/HomePage/card-1.jpg"
                               alt=""
                             />
                             <div
@@ -132,15 +132,15 @@ function LoginPage() {
                                 src="/img/HomePage/icon-1.png"
                                 alt="Icon"
                               />
-                              <h6 className="mb-3">
-                                <strong>Mã mặt Bằng:</strong> {premise.code}
+                              <h6 >
+                                <a style={{"font-weight": 'bold'}}>Mã mặt Bằng:</a> {premise.code}
                               </h6>
-                              <strong>Giá: </strong>
+                              <a style={{"font-weight": 'bold'}}>Giá: </a>
                               <span style={{ display: "inline-block" }}>
                                 {premise.price} {"vnđ"}
                               </span>
                               <br />
-                              <strong>Tình trạng: </strong>
+                              <a style={{"font-weight": 'bold'}}>Tình trạng: </a>
                               <span style={{ display: "inline-block" }}>
                                 {premise.typePremises.name}
                               </span>
