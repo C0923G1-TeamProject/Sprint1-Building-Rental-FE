@@ -39,17 +39,23 @@ export function Login() {
 
             }
             const isVisited = localStorage.getItem("isVisited");
-            // console.log("ve ne");
-            // console.log(isValidPass);
 
 
             if(isVisited == 1 && isValidPass) {
 
 
                 const info = await LoginService.login(value);
-                console.log(info.token);
-                console.log(info.name);
-                console.log(info.authorities[0].authority);
+
+                const token = info.token;
+                const nameOfSigninUser = info.name;
+                const role = info.authorities[0].authority;
+                const nameAccount = info.username;
+                sessionStorage.setItem("token", token);
+                sessionStorage.setItem("nameOfSigninUser", nameOfSigninUser);
+                sessionStorage.setItem("role", role);
+                sessionStorage.setItem("nameAccount", nameAccount);
+
+                //hien modal
 
                 navigation("/");
 

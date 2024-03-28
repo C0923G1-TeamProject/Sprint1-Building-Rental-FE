@@ -53,10 +53,12 @@ export function Otp() {
                 const token = loginInfo.token;
                 const nameOfSigninUser = loginInfo.name;
                 const role = loginInfo.authorities[0].authority;
+                const nameAccount = loginInfo.username;
 
                 sessionStorage.setItem("token", token);
                 sessionStorage.setItem("nameOfSigninUser", nameOfSigninUser);
                 sessionStorage.setItem("role", role);
+                sessionStorage.setItem("nameAccount", nameAccount);
                 // localStorage.setItem("isVisited", 1);
                 localStorage.setItem("isVisited", 0);
 
