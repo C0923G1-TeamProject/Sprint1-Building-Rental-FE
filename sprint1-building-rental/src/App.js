@@ -1,13 +1,12 @@
-
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  BrowserRouter,
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    BrowserRouter,
 } from "react-router-dom";
-import React from "react";
+import React, {useEffect} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./components/HomePage/HomePage";
 import ContactPage from "./components/HomePage/ContactPage";
@@ -18,9 +17,25 @@ import "../src/components/Contract/list-contract.css"
 import 'bootstrap/dist/js/bootstrap.bundle';
 import {Login} from "./components/Login/Login";
 import {Otp} from "./components/Login/Otp";
+import axios from "axios";
+
 import ShowInfoUser from "./components/PersonalInsormation/ShowInfoUser";
 import ListPremises from "./components/Premises/ListPremises";
 function App() {
+  
+   useEffect(() => {
+
+        const interceptor = axios.interceptors.request.use(function (config) {
+            const token = sessionStorage.getItem("token");
+            config.headers.Authorization = `Bearer ${token}`;
+            return config;
+        });
+
+        return () => {
+            axios.interceptors.request.eject(interceptor);
+        };
+    }, []);
+  
   return (
     <>
     <BrowserRouter>
