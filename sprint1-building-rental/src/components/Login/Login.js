@@ -50,10 +50,10 @@ export function Login() {
                 const nameOfSigninUser = info.name;
                 const role = info.authorities[0].authority;
                 const nameAccount = info.username;
-                sessionStorage.setItem("token", token);
-                sessionStorage.setItem("nameOfSigninUser", nameOfSigninUser);
-                sessionStorage.setItem("role", role);
-                sessionStorage.setItem("nameAccount", nameAccount);
+                localStorage.setItem("token", token);
+                localStorage.setItem("nameOfSigninUser", nameOfSigninUser);
+                localStorage.setItem("role", role);
+                localStorage.setItem("nameAccount", nameAccount);
 
                 //hien modal
 
