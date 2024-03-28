@@ -4,18 +4,32 @@ import "../Css/Contract/list-contract.css";
 import { useEffect, useState } from "react";
 import * as contractStatusService from "../ThamService/ContractStatusService";
 import * as contractService from "../ThamService/ContractService";
+import Pagination from "react-bootstrap/Pagination";
 
 function LisContract() {
   const [status, setStatus] = useState([]);
+  //search
   const initSearch = {
     nameCustomer: "",
     statusContract: "",
   };
+  //paginate
+  const initPage = {
+    page: 0,
+    size: 5,
+    // sortDirection: "ASC",
+    // sortBy: "endDate",
+    nameCustomer: "",
+    statusContract: "",
+  };
   const [search, setSearch] = useState(initSearch);
+  const [pageContract, setPageContract] = useState(initPage);
+  const [contracts, setContracts] = useState();
 
   useEffect(() => {
     getAllStatus();
   }, []);
+
   const getAllStatus = async () => {
     try {
       const res = await contractStatusService.getAllStatus();
@@ -25,37 +39,43 @@ function LisContract() {
     }
   };
 
-  const [contracts, setContracts] = useState();
   useEffect(() => {
-    getAllContract(search);
+    getAllContract(pageContract);
   }, []);
 
-  const getAllContract = async (search) => {
+  const getAllContract = async (pageContract) => {
     try {
-      const res = await contractService.getAll(search);
+      const res = await contractService.getAll(pageContract);
       setContracts(res);
-      console.log(res);
     } catch (e) {
       console.log(e);
     }
   };
 
-  // const handelSearchChange = (e)=>{
-  //   const {name, value} = e.target;
-  //   setSearch({...search,[name]:value});
-  //   console.log(search);
-  // }
   const handelSearchChange = (e) => {
     const { name, value } = e.target;
-    const data = { ...search, [name]: value };
-    setSearch(data);
+    const data = { ...pageContract, [name]: value };
+    setPageContract(data);
     console.log(data);
   };
 
   const handleSearch = () => {
-    getAllContract(search);
-    console.log(search);
+    getAllContract(pageContract);
+    console.log(pageContract);
   };
+
+  //phaan trang
+
+  const handleChangePage = async (page) => {
+    const data = { ...pageContract, page };
+    setPageContract(data);
+    getAllContract(data);
+  };
+
+  // useEffect(() => {
+  //   getAllContract(search);
+  // }, [search]);
+
   if (!contracts) {
     return <div>loading</div>;
   }
@@ -69,7 +89,7 @@ function LisContract() {
 
           <div className="row mt-5">
             <div className="col-sm-2 mb-3">
-              <a className="btn btn-in-list" href="./create-contract.html">
+              <a className="btn btn-in-list" href="/contract/create">
                 Tạo mới hợp đồng
               </a>
             </div>
@@ -162,42 +182,53 @@ function LisContract() {
               </tr>
             </thead>
             <tbody>
-              {contracts.content.map((item, index) => {
-                return (
-                  <tr key={item.id}>
-                    <td>{index + 1}</td>
-                    <td>{item.code}</td>
-                    <td>{item.nameCustomer}</td>
-                    <td>{item.deposit}</td>
-                    <td>{item.contractStatus}</td>
+              {contracts.content &&
+                contracts.content.map((item, index) => {
+                  return (
+                    <tr key={item.id}>
+                      <td>{index + 1}</td>
+                      <td>{item.code}</td>
+                      <td>{item.nameCustomer}</td>
+                      <td>{item.deposit}</td>
+                      <td>{item.contractStatus}</td>
 
-                    <td>{item.endDate}</td>
-                  </tr>
-                );
-              })}
+                      <td>{item.endDate}</td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
+          <div className="col-sm-2">
+            {contracts.content.length > 0 && (
+              <Pagination>
+                <Pagination.First
+                  disabled={contracts.number <= 0}
+                  onClick={() => handleChangePage(0)}
+                />
+                <Pagination.Prev
+                  disabled={contracts.number <= 0}
+                  onClick={() => handleChangePage(contracts.number - 1)}
+                />
 
-          <div className="pagination-wrapper">
-            <nav aria-label="...">
-              <ul className="pagination pagination-circle ">
-                <li className="page-item">
-                  <a className="page-link">Trang đầu</a>
-                </li>
-                <div>
-                  <div>
-                    <li className="page-item active" aria-current="page">
-                      <a className="page-link">
-                        <span className="visually-hidden"></span>1
-                      </a>
-                    </li>
-                  </div>
-                </div>
-                <li className="page-item">
-                  <a className="page-link">Trang cuối</a>
-                </li>
-              </ul>
-            </nav>
+                {Array.from(Array(contracts.totalPages)).map((e, i) => (
+                  <Pagination.Item
+                    active={contracts.number === i}
+                    key={i + 1}
+                    onClick={() => handleChangePage(i)}
+                  >
+                    {i + 1}
+                  </Pagination.Item>
+                ))}
+                <Pagination.Next
+                  disabled={contracts.number >= contracts.totalPages - 1}
+                  onClick={() => handleChangePage(contracts.number + 1)}
+                />
+                <Pagination.Last
+                  disabled={contracts.number >= contracts.totalPages - 1}
+                  onClick={() => handleChangePage(contracts.totalPages - 1)}
+                />
+              </Pagination>
+            )}
           </div>
         </div>
       </div>

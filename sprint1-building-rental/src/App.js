@@ -20,6 +20,8 @@ import {Login} from "./components/Login/Login";
 import {Otp} from "./components/Login/Otp";
 import ShowInfoUser from "./components/PersonalInsormation/ShowInfoUser";
 import ListPremises from "./components/Premises/ListPremises";
+import CreateContract from "./components/Contract/CreateContract";
+
 function App() {
   return (
     <>
@@ -38,6 +40,7 @@ function App() {
           <Route path="/contract" element={<LisContract/>}></Route>
           <Route path={"/login"} element={<Login/>}></Route>
           <Route path={"/otp"} element={<Otp/>}></Route>
+          <Route path={"/contract/create"} element={<CreateContract/>}></Route>
         </Routes>
       </BrowserRouter>
 
