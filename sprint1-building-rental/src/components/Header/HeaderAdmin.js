@@ -12,6 +12,8 @@ import { Link, NavLink } from "react-router-dom";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import MenuIcon from "@mui/icons-material/Menu";
+
 import {
   Dropdown,
   DropdownToggle,
@@ -38,8 +40,6 @@ function HeaderAdmin({ name, ...props }) {
   const handleLogout = () => {
     setShowModal(true); // Hiển thị Modal khi người dùng nhấn vào nút "Đăng xuất"
   };
-
-
 
   return (
     <>
@@ -108,14 +108,20 @@ function HeaderAdmin({ name, ...props }) {
           data-bs-toggle="collapse"
           data-bs-target="#navbarCollapse"
         >
-          
+          <span>
+          <button>
+            <MenuIcon />
+          </button>
+        </span>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <div class="navbar-nav ms-auto p-4 p-lg-0">
             <NavLink to={"/loginPage"} id="trang-chu" className={`nav-link`}>
               Trang chủ
             </NavLink>
             {/* sideba Start */}
+            <div></div>
             <NavLink
               style={{ "text-align": "center" }}
               onClick={handleShow}
@@ -129,9 +135,9 @@ function HeaderAdmin({ name, ...props }) {
                   <span className="sidebar-title">Quản Lý</span>
                 </Offcanvas.Title>
               </Offcanvas.Header>
-              <Offcanvas.Body>
+              <Offcanvas.Body className="sidebar-loginPage">
                 <div>
-                  <Link className="text-sideba" to={""}>
+                  <Link className="text-sideba" to={"/premises"}>
                     <button className="button-sideba">
                       <span>Quản lý mặt bằng</span>
                     </button>
@@ -139,7 +145,7 @@ function HeaderAdmin({ name, ...props }) {
                 </div>
                 <div>
                   <Link className="text-sideba" to={""}>
-                    <button  className="button-sideba">
+                    <button className="button-sideba">
                       <span>Quản lý khách hàng</span>
                     </button>
                   </Link>
@@ -147,7 +153,12 @@ function HeaderAdmin({ name, ...props }) {
                 <div>
                   <Link className="text-sideba" to={""}>
                     <button className="button-sideba">
-                      <span>Quản lý hợp đồng</span>
+                      <a
+                        href="/contract"
+                        style={{ color: `black`, textDecoration: `none` }}
+                      >
+                        <span>Quản lý hợp đồng</span>
+                      </a>
                     </button>
                   </Link>
                 </div>
@@ -163,11 +174,15 @@ function HeaderAdmin({ name, ...props }) {
                 <DropdownToggle>
                   <AccountCircleIcon sx={{ fontSize: 30 }} />
                 </DropdownToggle>
-                
-                  <DropdownMenu>
+
+                <DropdownMenu>
                   <DropdownItem>Thông tin cá nhân</DropdownItem>
-                    <DropdownItem><p className="logout-button-header" onClick={handleLogout}>Đăng xuất</p></DropdownItem>
-                  </DropdownMenu>
+                  <DropdownItem>
+                    <p className="logout-button-header" onClick={handleLogout}>
+                      Đăng xuất
+                    </p>
+                  </DropdownItem>
+                </DropdownMenu>
               </Dropdown>
             </div>
           </div>
@@ -177,11 +192,14 @@ function HeaderAdmin({ name, ...props }) {
         show={showModal}
         onHide={handleCloseModal}
         className="custom-modal"
+        backdrop="static"
       >
         <Modal.Header closeButton>
           <Modal.Title>Xác nhận đăng xuất</Modal.Title>
         </Modal.Header>
-        <Modal.Body><strong>Bạn có chắc chắn muốn đăng xuất?</strong></Modal.Body>
+        <Modal.Body>
+          <strong>Bạn có chắc chắn muốn đăng xuất?</strong>
+        </Modal.Body>
         <Modal.Footer>
           <Button className="nologout" onClick={handleCloseModal}>
             Không

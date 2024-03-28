@@ -4,3 +4,6 @@
 .modal-backdrop.show {
   background: none !important;
 }
+.nav-link{
+  text-align: center !important;
+}
