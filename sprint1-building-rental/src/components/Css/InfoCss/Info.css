@@ -1,0 +1,205 @@
+
+
+.account-settings .user-profile {
+    margin: 0 0 1rem 0;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+
+.account-settings .user-profile .user-avatar {
+    margin: 0 0 1rem 0;
+}
+
+.account-settings .user-profile .user-avatar img {
+    width: 90px;
+    height: 90px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+}
+
+.account-settings .user-profile h5.user-name {
+    margin: 0 0 0.5rem 0;
+}
+
+.account-settings .user-profile h6.user-email {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #9fa8b9;
+}
+
+.account-settings .about {
+    margin: 2rem 0 0 0;
+    text-align: center;
+}
+
+.account-settings .about h5 {
+    margin: 0 0 15px 0;
+
+}
+
+.account-settings .about p {
+    font-size: 0.825rem;
+}
+
+.form-control {
+    border: 1px solid #cfd1d8;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    font-size: .825rem;
+    background: #ffffff;
+    color: #2e323c;
+}
+
+.input-te{
+    position: relative;
+    top: -18px;
+    border: none !important;
+    outline: none !important;
+    /*border-bottom: solid 1px !important;*/
+    border-radius: 0 !important
+}
+
+.form-group label {
+    display: inline-block; /* Make labels appear inline */
+    width: auto; /* Allow labels to adjust to content */
+    margin-right: 10px; /* Add margin between label and input */
+}
+
+.form-group input {
+    display: inline-block; /* Make inputs appear inline */
+    width: calc(100% - 110px); /* Adjust width based on label width and margin */
+}
+
+
+.button-upload-photo {
+    border: none;
+
+
+    .card {
+        background: #ffffff;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        border: 0;
+        margin-bottom: 1rem;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .modal-dialog {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 992px) {
+    .display {
+        flex-direction: column;
+
+        .display {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .col-md-4 {
+            margin-bottom: 20px;
+        }
+    }
+    .form-check{
+        position: relative !important;
+    left: 113px !important;
+    }
+}
+
+.button-update-info{
+    background-color: rgb(255, 237, 194);
+    border: none;
+}
+
+.button-update-info:hover{
+    background-color:#ddb6739c !important;
+    color: black !important;
+}
+
+.button-change-password{
+    background-color: rgb(103 101 88 / 69%) !important;
+    color: white !important;
+    border: none !important;
+}
+
+.button-change-password:hover{
+    background-color:  rgb(116, 114, 100);
+    color: white !important;
+}
+
+.button-viiii:hover{
+    background-color:#ddb6739c !important;
+    color: black !important;
+}
+
+.buttons{
+    justify-content: center !important;
+}
+
+.button-cancel{
+    background-color:  rgb(151 151 148) !important;
+    border: none !important;
+}
+
+.button-cancel:hover{
+    background-color: rgb(116, 114, 100) !important;
+    border: none !important;
+}
+
+.button-accept{
+    background-color: #3C3633 !important;
+    border: none !important;
+}
+
+.background-modal{
+    background-color: rgba(0, 0, 0, 0.5); 
+     backdrop-filter: blur(8px); 
+     z-index: 999;
+  
+}
+
+.table{
+    --bulma-table-cell-border-style: none;
+}
+
+.lock-lock{
+    position: absolute;
+    left: 198px;
+    z-index: 2;
+    scale: 0.8;
+    opacity: 70%;
+    right: 50px !important;
+}
+
+.eye-vi-1{
+    position: absolute;
+    scale: 0.8;
+    opacity: 70%;
+    right: 55px !important;
+    top: 23px;
+}
+
+.eye-vi-2{
+    right: 53px;
+    position: absolute;
+    scale: 0.8;
+    opacity: 70%;
+    top: 70px;
+}
+
+.eye-vi-3{
+    position: absolute;
+    scale: 0.8;
+    opacity: 70%;
+    right: 52px !important;
+    top: 115px;
+}
+

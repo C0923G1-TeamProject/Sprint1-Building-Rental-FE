@@ -1,13 +1,12 @@
-
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  BrowserRouter,
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    BrowserRouter,
 } from "react-router-dom";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./components/HomePage/HomePage";
 import ContactPage from "./components/HomePage/ContactPage";
@@ -20,14 +19,21 @@ import {Login} from "./components/Login/Login";
 import {Otp} from "./components/Login/Otp";
 import ListCustomer from "./components/Customer/ListCustomer";
 import AddCustomer from "./components/Customer/AddCustomer";
-function App() {
+import ShowInfoUser from "./components/PersonalInsormation/ShowInfoUser";
+import ListPremises from "./components/Premises/ListPremises";
+import { log } from "handlebars";
+function App() { 
+
   return (
     <>
-      <BrowserRouter>
+    <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/contactPage" element={<ContactPage />}></Route>
           <Route path="/loginPage" element={<LoginPage />}></Route>
+          <Route path="/information" element={<ShowInfoUser />}></Route>
+          <Route path="/introductionPage" element={<IntroductionPage/>}></Route>
+          <Route path="/premises" element={<ListPremises />}> </Route>
           <Route
             path="/introductionPage"
             element={<IntroductionPage/>}
