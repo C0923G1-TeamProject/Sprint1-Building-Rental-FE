@@ -21,14 +21,10 @@ import ListCustomer from "./components/Customer/ListCustomer";
 import AddCustomer from "./components/Customer/AddCustomer";
 import ShowInfoUser from "./components/PersonalInsormation/ShowInfoUser";
 import ListPremises from "./components/Premises/ListPremises";
-<<<<<<< HEAD
 import UpdatePremises from "./components/Premises/UpdatePremises";
-function App() {
-=======
 import { log } from "handlebars";
-function App() { 
 
->>>>>>> 37be55af61c58b1428b06ae681d62e713cce5fed
+function App() { 
   return (
     <>
     <BrowserRouter>
@@ -43,15 +39,12 @@ function App() {
             path="/introductionPage"
             element={<IntroductionPage/>}
           ></Route>
-<<<<<<< HEAD
-          <Route path="/update-premises/:id" element={<UpdatePremises/>}></Route>
-=======
+        <Route path="/update-premises/:id" element={<UpdatePremises/>}></Route>
           <Route path="/contract" element={<LisContract/>}></Route>
           <Route path={"/login"} element={<Login/>}></Route>
           <Route path={"/otp"} element={<Otp/>}></Route>
           <Route path="/customer" element={<ListCustomer />}></Route>
           <Route path="/add" element={<AddCustomer />}></Route>
->>>>>>> 37be55af61c58b1428b06ae681d62e713cce5fed
         </Routes>
       </BrowserRouter>
 
