@@ -15,6 +15,7 @@ import IntroductionPage from "./components/HomePage/IntroductionPage";
 import LoginPage from "./components/HomePage/LoginPage";
 import 'bootstrap/dist/js/bootstrap.bundle';
 import ListPremises from "./components/Premises/ListPremises";
+import UpdatePremises from "./components/Premises/UpdatePremises";
 function App() {
   return (
     <>
@@ -28,6 +29,7 @@ function App() {
             path="/introductionPage"
             element={<IntroductionPage/>}
           ></Route>
+          <Route path="/update-premises/:id" element={<UpdatePremises/>}></Route>
         </Routes>
       </BrowserRouter>
 
