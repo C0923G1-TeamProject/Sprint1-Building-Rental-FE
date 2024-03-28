@@ -1,0 +1,95 @@
+.cus-title-add {
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    margin-top: 50px;
+    margin-bottom: 70px;
+    text-transform: uppercase
+}
+
+.cus-col {
+    color: red !important;
+}
+
+.dis123 {
+    right: 0;
+    width: 45%;
+    position: absolute;
+    bottom: 0
+}
+
+.custom-btn {
+    border-color: #c77a29 !important;
+    color: white !important;
+    background-color: #c77a29 !important;
+}
+
+.custom-btn:hover {
+    background-color: #b77632 !important;
+    border-color: #c77a29 !important;
+}
+
+.cus-display-add {
+    text-decoration: none;
+}
+
+.custom-btn-1 {
+    border-color: #747264;
+    background-color: #747264;
+}
+
+.custom-btn-1 a {
+    color: white !important;
+}
+
+.custom-btn-1:hover {
+    background-color: #5d5b54;
+    border-color: #747264;
+}
+
+.custom-btn-1:hover a {
+    color: white;
+}
+
+.cus-add {
+    width: 45%;
+    position: absolute;
+    bottom: 0
+}
+
+.cus-group {
+    margin-bottom: 25px;
+}
+
+.cus-input {
+    padding: 7px !important;
+    width: 100% !important;
+}
+
+.cus-label {
+    margin-left: 0px !important;
+}
+
+.k-span {
+    color: red !important;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem; /* Khoảng cách giữa các nút và các trường trên */
+}
+
+.btn.cus {
+    flex: 1;
+    margin-right: 0.5rem; /* Khoảng cách giữa các nút */
+}
+
+.btn:last-child {
+    margin-right: 0; /* Loại bỏ khoảng cách cho nút cuối cùng */
+}
+
+.btn a {
+    text-decoration: none;
+    color: inherit;
+}

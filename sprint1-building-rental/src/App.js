@@ -18,6 +18,8 @@ import "../src/components/Contract/list-contract.css"
 import 'bootstrap/dist/js/bootstrap.bundle';
 import {Login} from "./components/Login/Login";
 import {Otp} from "./components/Login/Otp";
+import ListCustomer from "./components/Customer/ListCustomer";
+import AddCustomer from "./components/Customer/AddCustomer";
 function App() {
   return (
     <>
@@ -33,10 +35,12 @@ function App() {
           <Route path="/contract" element={<LisContract/>}></Route>
           <Route path={"/login"} element={<Login/>}></Route>
           <Route path={"/otp"} element={<Otp/>}></Route>
+          <Route path="/customer" element={<ListCustomer />}></Route>
+          <Route path="/add" element={<AddCustomer />}></Route>
         </Routes>
       </BrowserRouter>
 
-    
+
     </>
   );
 }
