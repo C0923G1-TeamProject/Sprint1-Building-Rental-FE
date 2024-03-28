@@ -1,13 +1,12 @@
-
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  BrowserRouter,
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    BrowserRouter,
 } from "react-router-dom";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./components/HomePage/HomePage";
 import ContactPage from "./components/HomePage/ContactPage";
@@ -18,11 +17,15 @@ import "../src/components/Css/Contract/list-contract.css"
 import 'bootstrap/dist/js/bootstrap.bundle';
 import {Login} from "./components/Login/Login";
 import {Otp} from "./components/Login/Otp";
+import ListCustomer from "./components/Customer/ListCustomer";
+import AddCustomer from "./components/Customer/AddCustomer";
 import ShowInfoUser from "./components/PersonalInsormation/ShowInfoUser";
 import ListPremises from "./components/Premises/ListPremises";
 import CreateContract from "./components/Contract/CreateContract";
 
-function App() {
+import { log } from "handlebars";
+function App() { 
+
   return (
     <>
     <BrowserRouter>
@@ -41,10 +44,13 @@ function App() {
           <Route path={"/login"} element={<Login/>}></Route>
           <Route path={"/otp"} element={<Otp/>}></Route>
           <Route path={"/contract/create"} element={<CreateContract/>}></Route>
+
+          <Route path="/customer" element={<ListCustomer />}></Route>
+          <Route path="/add" element={<AddCustomer />}></Route>
         </Routes>
       </BrowserRouter>
 
-    
+
     </>
   );
 }

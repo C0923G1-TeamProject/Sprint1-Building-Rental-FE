@@ -4,17 +4,73 @@ import '../Css/Login/js/LoginJs'
 import hide from '../Css/Login/icon-m6/hide.png'
 import view from '../Css/Login/icon-m6/view.png'
 import {Field, Form, Formik} from "formik";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import * as LoginService from '../Services/LoginService/LoginService'
+import {Otp} from "./Otp";
 
 export function Login() {
     const [showPassword, setShowPassword] = useState(false);
-
+    const navigation = useNavigate();
+    const [recentAccount, setRecentAccount] = useState();
+    const [isRedirectOtp, setIsRedirectOtp] = useState(false);
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleSubmit = (value) => {
-        console.log(value);
+    useEffect(() => {
+        if(isRedirectOtp) {
+            navigation("/otp");
+        }
+    }, [isRedirectOtp]);
+
+
+
+    const handleSubmit = async (value) => {
+        try {
+
+
+            const isValidPass = await LoginService.submit(value);
+
+            if (isValidPass) {
+
+                sessionStorage.setItem("reUsername", value.username);
+                sessionStorage.setItem("rePass", value.password);
+
+            }
+            const isVisited = localStorage.getItem("isVisited");
+
+
+            if(isVisited == 1 && isValidPass) {
+
+
+                const info = await LoginService.login(value);
+
+                const token = info.token;
+                const nameOfSigninUser = info.name;
+                const role = info.authorities[0].authority;
+                const nameAccount = info.username;
+                localStorage.setItem("token", token);
+                localStorage.setItem("nameOfSigninUser", nameOfSigninUser);
+                localStorage.setItem("role", role);
+                localStorage.setItem("nameAccount", nameAccount);
+
+                //hien modal
+
+                navigation("/");
+
+
+
+            } else if (isVisited !== 1 && isValidPass) {
+               setIsRedirectOtp(!isRedirectOtp);
+            } else {
+                console.log("nhap sai roi")
+                // them gia trị lỗi vào 1 biến và truyền xuống cho return
+            }
+        } catch (e) {
+            console.log(e);
+        }
+
     }
 
 
@@ -75,6 +131,7 @@ export function Login() {
                                         </div>
 
 
+
                                         <button className="button login__submit" type="submit">
                                             <span className="button__text">Đăng nhập</span>
                                             <i className="button__icon fas fa-chevron-right"></i>
@@ -99,6 +156,7 @@ export function Login() {
             </div>
 
 
+            {/*<Otp acc={recentAccount}/>*/}
         </>
     )
 }
