@@ -5,13 +5,15 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link, NavLink } from "react-router-dom";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import MenuIcon from "@mui/icons-material/Menu";
+
 import {
   Dropdown,
   DropdownToggle,
@@ -34,9 +36,9 @@ function HeaderAdmin({ name, ...props }) {
 
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
-  const handleShowModal = async (blog) => {
-    // await setBlogdelete(blog);
-    setShowModal(true);
+
+  const handleLogout = () => {
+    setShowModal(true); // Hiển thị Modal khi người dùng nhấn vào nút "Đăng xuất"
   };
 
   return (
@@ -107,25 +109,19 @@ function HeaderAdmin({ name, ...props }) {
           data-bs-target="#navbarCollapse"
         >
           <span>
-            <select class="navbar-toggler-icon">
-              <option value="someOption">
-                <Link to={"/"}>Trang chủ</Link>
-              </option>
-              <option>
-                <Link to={"/introductionPage"}>Giới thiệu</Link>
-              </option>
-              <option value="otherOption">
-                <Link to={"/contactPage"}>Liên hệ</Link>
-              </option>
-            </select>
-          </span>
+          <button>
+            <MenuIcon />
+          </button>
+        </span>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <div class="navbar-nav ms-auto p-4 p-lg-0">
             <NavLink to={"/loginPage"} id="trang-chu" className={`nav-link`}>
               Trang chủ
             </NavLink>
             {/* sideba Start */}
+            <div></div>
             <NavLink
               style={{ "text-align": "center" }}
               onClick={handleShow}
@@ -139,9 +135,9 @@ function HeaderAdmin({ name, ...props }) {
                   <span className="sidebar-title">Quản Lý</span>
                 </Offcanvas.Title>
               </Offcanvas.Header>
-              <Offcanvas.Body>
+              <Offcanvas.Body className="sidebar-loginPage">
                 <div>
-                  <Link className="text-sideba" to={""}>
+                  <Link className="text-sideba" to={"/premises"}>
                     <button className="button-sideba">
                       <span>Quản lý mặt bằng</span>
                     </button>
@@ -157,7 +153,12 @@ function HeaderAdmin({ name, ...props }) {
                 <div>
                   <Link className="text-sideba" to={""}>
                     <button className="button-sideba">
-                      <span>Quản lý hợp đồng</span>
+                      <a
+                        href="/contract"
+                        style={{ color: `black`, textDecoration: `none` }}
+                      >
+                        <span>Quản lý hợp đồng</span>
+                      </a>
                     </button>
                   </Link>
                 </div>
@@ -173,46 +174,41 @@ function HeaderAdmin({ name, ...props }) {
                 <DropdownToggle>
                   <AccountCircleIcon sx={{ fontSize: 30 }} />
                 </DropdownToggle>
-                <button onClick={() => handleShowModal()}>
+
                 <DropdownMenu>
+                  <DropdownItem>Thông tin cá nhân</DropdownItem>
                   <DropdownItem>
-                    Đăng xuất
+                    <p className="logout-button-header" onClick={handleLogout}>
+                      Đăng xuất
+                    </p>
                   </DropdownItem>
                 </DropdownMenu>
-                </button>
               </Dropdown>
             </div>
           </div>
         </div>
       </nav>
-      {/* <!-- Navbar End --> */}
-      {/* modal Start */}
-      {/* <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton></Modal.Header>
-        <Modal.Body> {`Bạn chắc chắn muốn đăng xuất`} </Modal.Body>
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        className="custom-modal"
+        backdrop="static"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Xác nhận đăng xuất</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <strong>Bạn có chắc chắn muốn đăng xuất?</strong>
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button className="nologout" onClick={handleCloseModal}>
             Không
           </Button>
-            <Link to={"/"}><button className="button-logout">Dăng xuất</button></Link>
+          <Link to="/">
+            <Button className="button-logout">Đăng xuất</Button>
+          </Link>
         </Modal.Footer>
-      </Modal> */}
-      <Modal show={showModal} onHide={handleCloseModal} className="custom-modal">
-      <Modal.Header closeButton>
-        <Modal.Title>Xác nhận đăng xuất</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>Bạn có chắc chắn muốn đăng xuất?</Modal.Body>
-      <Modal.Footer>
-        <Button className="nologout" onClick={handleCloseModal}>
-          Không
-        </Button>
-        <Link to="/">
-          <Button  className="button-logout">
-            Đăng xuất
-          </Button>
-        </Link>
-      </Modal.Footer>
-    </Modal>
+      </Modal>
       {/* modal End */}
     </>
   );
