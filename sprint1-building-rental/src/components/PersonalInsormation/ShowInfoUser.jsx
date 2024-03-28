@@ -4,6 +4,7 @@ import "../Css/InfoCss/Info.css";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import ChangePasswordModal from "./ChangePasswordModal";
+import { Field } from "formik";
 
 function ShowInfoUser() {
   const [show, setShow] = useState(false);
@@ -14,6 +15,10 @@ function ShowInfoUser() {
 
   const handleEdit = () => {
     setIsEditing(true);
+  };
+
+  const handleBack = () => {
+    setIsEditing(false);
   };
 
   useEffect(() => {
@@ -145,7 +150,8 @@ function ShowInfoUser() {
                               <td>Địa chỉ</td>
                               <td>
                                 {isEditing ? (
-                                  <textarea
+                                  <input
+                                  as= "textarea"
                                     defaultValue={
                                       " 295 Nguyễn Tất Thành,Quận Thanh Khê,Thành phố Đà Nẵng"
                                     }
@@ -158,7 +164,7 @@ function ShowInfoUser() {
                                       outline: "none",
                                       borderBottom: "solid 1px",
                                     }}
-                                  ></textarea>
+                                  />
                                 ) : (
                                   " 295 Nguyễn Tất Thành,Quận Thanh Khê,Thành phố Đà Nẵng"
                                 )}
@@ -289,29 +295,41 @@ function ShowInfoUser() {
                       </div>
                     </div>
                     <div className="buttons">
-                    {isEditing ? (
-                    <button className="button button-update-info">
-                      Cập nhật thông tin
-                    </button>
-                  ) : (
-                    <button className="button button-update-info" onClick={handleEdit}>
-                      Cập nhật thông tin
-                    </button>
-                  )}
-                  <Button
-                    className="button button-change-password"
-                    onClick={() => showModal()}
-                    style={{ display: isEditing ? 'none' : 'block' }} // Hide in edit mode
-                  >
-                    Đổi mật khẩu
-                  </Button>
-                  <Button
-                    className="button button-accept"
-                    style={{ display: isEditing ? 'block' : 'none' }} // Show in edit mode
-                  >
-                    Đồng ý
-                  </Button>
-                </div>
+                      {isEditing ? (
+                        <button
+                          className="button button-cancel"
+                          onClick={handleBack}
+                          style={{color : "white"}}
+                        >
+                          Huy
+                        </button>
+                      ) : (
+                        <button
+                          className="button button-update-info"
+                          onClick={handleEdit}
+                        >
+                          Cập nhật thông tin
+                        </button>
+                      )}
+                      <Button
+                        className="button button-change-password"
+                        onClick={() => showModal()}
+                        style={{ display: isEditing ? "none" : "block" }} // Hide in edit mode
+                      >
+                        Đổi mật khẩu
+                      </Button>
+                      <Button
+                        className="button button-viiii"
+                        style={{
+                          display: isEditing ? "block" : "none",
+                          background: " rgb(255, 237, 194)",
+                          border: "none",
+                          color: "black",
+                        }} // Show in edit mode
+                      >
+                        Đồng ý
+                      </Button>
+                    </div>
                   </p>
                   <ChangePasswordModal show={show} setShow={setShow} />
                 </div>
