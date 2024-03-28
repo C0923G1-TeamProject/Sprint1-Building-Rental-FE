@@ -51,7 +51,8 @@ function Example(props) {
                       marginLeft: "15px", /* Adjusted marginLeft instead of left */
                       borderBottom: "solid 1px black",
                       outline: "none", /* Removed important */
-                      width: "calc(100% - 25px)" /* Adjusted width */
+                      width: "calc(100% - 25px)", /* Adjusted width */
+                      height: '30px'
                     }}
                   />
                 </td>
@@ -81,7 +82,8 @@ function Example(props) {
                       marginLeft: "15px", /* Adjusted marginLeft instead of left */
                       borderBottom: "solid 1px black",
                       outline: "none", /* Removed important */
-                      width: "calc(100% - 25px)" /* Adjusted width */
+                      width: "calc(100% - 25px)", /* Adjusted width */
+                      height: '30px'
                     }}
                   />
                 </td>
@@ -91,6 +93,7 @@ function Example(props) {
                     alt={showPassword.mat2 ? "show" : "hide"}
                     onClick={() => togglePasswordVisibility("mat2")}
                     width="30px"
+                    height="30px"
                     className="eye-vi-2"
                   />
                 </td>
@@ -111,7 +114,8 @@ function Example(props) {
                       marginLeft: "15px", /* Adjusted marginLeft instead of left */
                       borderBottom: "solid 1px black",
                       outline: "none", /* Removed important */
-                      width: "calc(100% - 25px)" /* Adjusted width */
+                      width: "calc(100% - 25px)", /* Adjusted width */
+                      height: '30px'
                     }}
                   />
                 </td>

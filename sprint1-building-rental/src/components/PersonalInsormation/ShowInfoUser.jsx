@@ -4,11 +4,14 @@ import "../Css/InfoCss/Info.css";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import ChangePasswordModal from "./ChangePasswordModal";
-import { Field } from "formik";
+import UploadImage from "./firebase/UploadImage";
+import { getInfoUser } from "./../Services/PersonalInformationService/information-service";
 
 function ShowInfoUser() {
   const [show, setShow] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [image, setImage] = useState();
+  const [user, setUser] = useState();
   const showModal = () => {
     setShow(true);
   };
@@ -25,6 +28,21 @@ function ShowInfoUser() {
     document.title = "Thông tin cá nhân";
   });
 
+  const getInfo = async () => {
+    try {
+      const result = await getInfoUser();
+      setUser(result.data);
+      console.log(result);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getInfo();
+  });
+
+  if (!user) return <div>loadingg...</div>;
   return (
     <>
       <HeaderAdmin />
@@ -60,16 +78,20 @@ function ShowInfoUser() {
                 >
                   <p
                     className="is-5 is-three-quarters-mobile
-      is-two-thirds-tablet
-      is-half-desktop
-      is-one-third-widescreen
-      is-one-quarter-fullhd"
+                                is-two-thirds-tablet
+                                is-half-desktop
+                                is-one-third-widescreen
+                                is-one-quarter-fullhd"
                   >
                     <div className="account-settings">
                       <div className="user-profile">
                         <div className="user-avatar">
                           <img
-                            src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                            src={
+                              image
+                                ? image
+                                : "https://bootdey.com/img/Content/avatar/avatar7.png"
+                            }
                             alt="Maxwell Admin"
                           />
                         </div>
@@ -78,13 +100,14 @@ function ShowInfoUser() {
                   </p>
                   <p
                     className="subtitle is-three-quarters-mobile
-      is-two-thirds-tablet
-      is-half-desktop
-      is-one-third-widescreen
-      is-one-quarter-fullhd"
+                                is-two-thirds-tablet
+                                is-half-desktop
+                                is-one-third-widescreen
+                                is-one-quarter-fullhd"
                   >
                     <div className="about" style={{ textAlign: "center" }}>
                       <button className="button is-light">Thay đổi ảnh</button>
+                      <UploadImage setImage={setImage} />
                     </div>
                   </p>
                 </div>
@@ -104,10 +127,10 @@ function ShowInfoUser() {
                   <p className="subtitle">
                     <div
                       className="columns is-three-quarters-mobile
-      is-two-thirds-tablet
-      is-half-desktop
-      is-one-third-widescreen
-      is-one-quarter-fullhd"
+                                    is-two-thirds-tablet
+                                    is-half-desktop
+                                    is-one-third-widescreen
+                                    is-one-quarter-fullhd"
                     >
                       <div className="column is-6">
                         <table className="table">
@@ -118,7 +141,6 @@ function ShowInfoUser() {
                                 {isEditing ? (
                                   <input
                                     type="text"
-                                    defaultValue={"Trần Kim Tiểu Vi"}
                                     style={{
                                       position: "relative",
                                       top: "-5px",
@@ -150,8 +172,8 @@ function ShowInfoUser() {
                               <td>Địa chỉ</td>
                               <td>
                                 {isEditing ? (
-                                  <input
-                                  as= "textarea"
+                                  <textarea
+                                    as="textarea"
                                     defaultValue={
                                       " 295 Nguyễn Tất Thành,Quận Thanh Khê,Thành phố Đà Nẵng"
                                     }
@@ -203,6 +225,7 @@ function ShowInfoUser() {
                                 {isEditing ? (
                                   <input
                                     type="date"
+                                    value={"2024-03-24"}
                                     style={{
                                       position: "relative",
                                       top: "-5px",
@@ -299,7 +322,7 @@ function ShowInfoUser() {
                         <button
                           className="button button-cancel"
                           onClick={handleBack}
-                          style={{color : "white"}}
+                          style={{ color: "white" }}
                         >
                           Huy
                         </button>
