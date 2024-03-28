@@ -6,25 +6,40 @@ function IntroductionPage() {
   useEffect(() => {
     document.title = "Giới thiệu";
   }, []);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, []);
   return (
     <>
-      <a id="myBtn2" className="zom" href="https://www.facebook.com/" target="_blank">
+      <a
+        id="myBtn2"
+        className="zom"
+        href="https://www.facebook.com/"
+        target="_blank"
+      >
         <img src="/img/HomePage/message.png" width="40px" />
       </a>
       <HeaderUser />
       <div className="introduction text-img-introduction">
         <img
           className="picture-introduction"
-          src="/img/HomePage/introduct.png"
+          src="/img/HomePage/introduct_2.jpg"
         />
       </div>
       <br />
       <br />
       <br />
-      <div class="display container" style={{ "flex-wrap": "wrap" }}>
+      <div
+        class="display container"
+        style={{ "flex-wrap": "wrap", position: "relative", top: "19pc" }}
+      >
         <div class="col-md-5 col-lg-5">
           <div>
-            <div style={{ width: "80%" }}>
+            <div>
               <img
                 style={{ width: "100%", height: "450px" }}
                 src="/img/HomePage/marketing-body-homepage.png"
@@ -33,17 +48,22 @@ function IntroductionPage() {
           </div>
         </div>
 
-        <div class="col-md-7 col-lg-7">
+        <div
+          class="col-md-7 col-lg-7"
+          // style={{ position: "relative", top: "19pc" }}
+        >
           <h3
             style={{
               color: "#452D14",
               "text-align": "center",
               margin: "6%",
+              "font-family": "Segoe UI",
             }}
+            className="mb-4"
           >
             Diamond Thái Phiên Đà Nẵng
           </h3>
-          <p style={{ " margin": "6%" }}>
+          <p style={{ "margin-left": "2pc" }}>
             Tòa nhà phức hợp DIAMOND TIME – 35 Thái Phiên với diện tích sử dụng
             lên đến gần 5.000m2 được đánh giá là một trong những tòa nhà phức
             hợp hiện đại tại Thành phố Đà Nẵng, không chỉ sở hữu vị trí “VÀNG”
@@ -53,7 +73,8 @@ function IntroductionPage() {
             <br />
             <br />
             <span className="tick">&#x2713;</span>{" "}
-            <strong>Tên tòa nhà: </strong> DIAMOND TIME <br />
+            <strong style={{ " margin": "6%" }}>Tên tòa nhà: </strong> DIAMOND
+            TIME <br />
             <span className="tick">&#x2713;</span> <strong>Địa chỉ: </strong> 35
             đường Thái Phiên, Phường Phước Ninh, Quận Hải Châu, Thành phố Đà
             Nẵng <br />
@@ -66,8 +87,18 @@ function IntroductionPage() {
             <span className="tick">&#x2713;</span>{" "}
             <strong>Diện tích mặt sàn: </strong>1300 m<sup>2</sup>
             <br />
-            <span className="tick">&#x2713;</span> <strong>Mô hình: </strong>Tòa
-            nhà phức hợp Văn phòng, lưu trú, cho thuê cơ sở mặt bằng
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <br />
           </p>
         </div>
