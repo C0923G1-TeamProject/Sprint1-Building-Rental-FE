@@ -1,7 +1,7 @@
 import Helmet from "react-helmet";
 import '../Css/Login/Otp.css'
 import {useEffect, useState} from "react";
-import * as LoginService from '../Services/LoginService/LoginService'
+import * as LoginService from '../../service/LoginService/LoginService'
 import {Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {Cookie} from "@mui/icons-material";

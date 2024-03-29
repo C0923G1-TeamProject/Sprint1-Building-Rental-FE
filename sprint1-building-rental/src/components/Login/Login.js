@@ -6,7 +6,7 @@ import view from '../Css/Login/icon-m6/view.png'
 import {Field, Form, Formik} from "formik";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import * as LoginService from '../Services/LoginService/LoginService'
+import * as LoginService from '../../service/LoginService/LoginService'
 import {Otp} from "./Otp";
 
 export function Login() {
