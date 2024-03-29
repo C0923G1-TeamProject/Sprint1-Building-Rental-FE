@@ -7,7 +7,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { changePassword } from "../../service/PersonalInformationService/information-service";
 import * as Yup from "yup";
 import "../Css/InfoCss/Info.css";
-
+import Swal from 'sweetalert2'
 function Example(props) {
   const { show, setShow } = props;
   const [showPassword, setShowPassword] = useState({
@@ -43,7 +43,13 @@ function Example(props) {
           onSubmit={(values, { setSubmitting }) => {
             changePassword(values).then(() => {
               setSubmitting(false);
-              alert("Đổi mật khẩu thành công");
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Đổi mật khẩu thành công!",
+                showConfirmButton: false,
+                timer: 1500
+              });
               handleClose();
             });
           }}
@@ -98,11 +104,11 @@ function Example(props) {
                           height: "30px",
                         }}
                       />
-                      {/* <ErrorMessage
+                      <ErrorMessage
                         name="currentPassword"
                         className="error-message"
                         component="span"
-                      /> */}
+                      />
                     </td>
                     <td>
                       <img
