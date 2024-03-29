@@ -117,42 +117,42 @@ export default function ListPremises() {
                     <div className="col-1"></div>
                     <div className="col-10">
 
-                        <div className="input-group">
+                            <div className="input-group">
 
-                            <select className="form-control rounded-1 me-2"
-                                    onChange={(event) => handleFloor(event.target.value)}>
-                                <option value="">Chọn tầngㅤㅤㅤㅤㅤㅤ▼</option>
-                                <option value="1">Tầng 1</option>
-                                <option value="2">Tầng 2</option>
-                                <option value="3">Tầng 3</option>
-                                <option value="4">Tầng 4</option>
-                                <option value="5">Tầng 5</option>
-                                <option value="6">Tầng 6</option>
-                                <option value="7">Tầng 7</option>
-                                <option value="8">Tầng 8</option>
-                                <option value="9">Tầng 9</option>
-                            </select>
+                                <select className="form-control rounded-1 me-2"
+                                        onChange={(event) => handleFloor(event.target.value)}>
+                                    <option value="">Chọn tầngㅤㅤㅤㅤㅤㅤ▼</option>
+                                    <option value="1">Tầng 1</option>
+                                    <option value="2">Tầng 2</option>
+                                    <option value="3">Tầng 3</option>
+                                    <option value="4">Tầng 4</option>
+                                    <option value="5">Tầng 5</option>
+                                    <option value="6">Tầng 6</option>
+                                    <option value="7">Tầng 7</option>
+                                    <option value="8">Tầng 8</option>
+                                    <option value="9">Tầng 9</option>
+                                </select>
 
-                            <input onChange={(event) => handleCode(event.target.value)} type="text"
-                                   className="form-control rounded-1 me-2" name="name-search" size="25"
-                                   placeholder="Mã mặt bằng"/>
-
-
-                            <input onChange={(event) => handleArea(event.target.value)} type="text"
-                                   className="form-control rounded-1 me-2" name="name-search" size="25"
-                                   placeholder="Diện tích tối đa"/>
+                                <input onChange={(event) => handleCode(event.target.value)} type="text"
+                                       className="form-control rounded-1 me-2" name="name-search" size="25"
+                                       placeholder="Mã mặt bằng"/>
 
 
-                            <input onChange={(event) => handlePremisesName(event.target.value)} type="text"
-                                   className="form-control rounded-1 me-2" name="name-search" size="25"
-                                   placeholder="Loại mặt bằng"/>
+                                <input onChange={(event) => handleArea(event.target.value)} type="text"
+                                       className="form-control rounded-1 me-2" name="name-search" size="25"
+                                       placeholder="Diện tích tối đa"/>
 
-                            <div>
-                                <button onClick={() => submitSearch()} type="button" className="btn btn-in-list">Tìm
-                                    kiếm
-                                </button>
+
+                                <input onChange={(event) => handlePremisesName(event.target.value)} type="text"
+                                       className="form-control rounded-1 me-2" name="name-search" size="25"
+                                       placeholder="Loại mặt bằng"/>
+
+                                <div>
+                                    <button onClick={() => submitSearch()} type="button" className="btn btn-in-list">Tìm
+                                        kiếm
+                                    </button>
+                                </div>
                             </div>
-                        </div>
 
                     </div>
 

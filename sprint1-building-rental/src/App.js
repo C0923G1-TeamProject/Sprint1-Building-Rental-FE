@@ -26,29 +26,31 @@ import {log} from "handlebars";
 import {Logout} from "./components/Login/Logout";
 
 function App() {
-    return (
-        <>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<HomePage/>}></Route>
-                    <Route path="/contactPage" element={<ContactPage/>}></Route>
-                    <Route path="/loginPage" element={<LoginPage/>}></Route>
-                    <Route path="/information" element={<ShowInfoUser/>}></Route>
-                    <Route path="/introductionPage" element={<IntroductionPage/>}></Route>
-                    {/* <Route path="/premises" element={<ListPremises />}> </Route> */}
-                    <Route
-                        path="/introductionPage"
-                        element={<IntroductionPage/>}
-                    ></Route>
-                    <Route path="/update-premises/:id" element={<UpdatePremises/>}></Route>
-                    <Route path="/contract" element={<LisContract/>}></Route>
-                    <Route path={"/login"} element={<Login/>}></Route>
-                    <Route path={"/otp"} element={<Otp/>}></Route>
-                    <Route path="/customer" element={<ListCustomer/>}></Route>
-                    <Route path="/add" element={<AddCustomer/>}></Route>
-                    <Route path={"/logout"} element={<Logout/>}></Route>
-                </Routes>
-            </BrowserRouter>
+
+  return (
+    <>
+    <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/contactPage" element={<ContactPage />}></Route>
+          <Route path="/loginPage" element={<LoginPage />}></Route>
+          <Route path="/information" element={<ShowInfoUser />}></Route>
+          <Route path="/introductionPage" element={<IntroductionPage/>}></Route>
+          <Route path="/premises" element={<ListPremises />}> </Route>
+          <Route
+            path="/introductionPage"
+            element={<IntroductionPage/>}
+          ></Route>
+          <Route path="/contract" element={<LisContract/>}></Route>
+          <Route path={"/login"} element={<Login/>}></Route>
+          <Route path={"/otp"} element={<Otp/>}></Route>
+          <Route path="/customer" element={<ListCustomer />}></Route>
+          <Route path="/add" element={<AddCustomer />}></Route>
+          <Route path="/update-premises/:id" element={<UpdatePremises/>}></Route>
+        <Route path={"/logout"} element={<Logout/>}></Route>
+        </Routes>
+      </BrowserRouter>
+
 
 
         </>
