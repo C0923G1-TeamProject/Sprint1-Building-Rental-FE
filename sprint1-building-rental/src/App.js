@@ -21,10 +21,10 @@ import ListCustomer from "./components/Customer/ListCustomer";
 import AddCustomer from "./components/Customer/AddCustomer";
 import ShowInfoUser from "./components/PersonalInsormation/ShowInfoUser";
 import ListPremises from "./components/Premises/ListPremises";
-import UpdatePremises from "./components/Premises/UpdatePremises";
 import { log } from "handlebars";
+import UpdatePremises from "./components/Premises/UpdatePremises";
+function App() {
 
-function App() { 
   return (
     <>
     <BrowserRouter>
@@ -34,17 +34,17 @@ function App() {
           <Route path="/loginPage" element={<LoginPage />}></Route>
           <Route path="/information" element={<ShowInfoUser />}></Route>
           <Route path="/introductionPage" element={<IntroductionPage/>}></Route>
-          {/* <Route path="/premises" element={<ListPremises />}> </Route> */}
+          <Route path="/premises" element={<ListPremises />}> </Route>
           <Route
             path="/introductionPage"
             element={<IntroductionPage/>}
           ></Route>
-        <Route path="/update-premises/:id" element={<UpdatePremises/>}></Route>
           <Route path="/contract" element={<LisContract/>}></Route>
           <Route path={"/login"} element={<Login/>}></Route>
           <Route path={"/otp"} element={<Otp/>}></Route>
           <Route path="/customer" element={<ListCustomer />}></Route>
           <Route path="/add" element={<AddCustomer />}></Route>
+          <Route path="/update-premises/:id" element={<UpdatePremises/>}></Route>
         </Routes>
       </BrowserRouter>
 
