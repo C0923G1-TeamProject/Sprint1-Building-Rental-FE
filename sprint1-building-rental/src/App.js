@@ -23,7 +23,7 @@ import ShowInfoUser from "./components/PersonalInsormation/ShowInfoUser";
 import ListPremises from "./components/Premises/ListPremises";
 import { log } from "handlebars";
 import UpdatePremises from "./components/Premises/UpdatePremises";
-function App() { 
+function App() {
 
   return (
     <>

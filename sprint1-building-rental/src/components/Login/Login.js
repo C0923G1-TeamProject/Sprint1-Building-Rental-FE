@@ -6,7 +6,7 @@ import view from '../Css/Login/icon-m6/view.png'
 import {Field, Form, Formik} from "formik";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import * as LoginService from '../Services/LoginService/LoginService'
+import * as LoginService from '../../service/LoginService/LoginService'
 import {Otp} from "./Otp";
 
 export function Login() {
@@ -14,6 +14,7 @@ export function Login() {
     const navigation = useNavigate();
     const [recentAccount, setRecentAccount] = useState();
     const [isRedirectOtp, setIsRedirectOtp] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -43,7 +44,6 @@ export function Login() {
 
             if(isVisited == 1 && isValidPass) {
 
-
                 const info = await LoginService.login(value);
 
                 const token = info.token;
@@ -66,6 +66,7 @@ export function Login() {
             } else {
                 console.log("nhap sai roi")
                 // them gia trị lỗi vào 1 biến và truyền xuống cho return
+                setErrorMessage("Tài khoản hoặc mật khẩu không chính xác");
             }
         } catch (e) {
             console.log(e);
@@ -99,7 +100,7 @@ export function Login() {
 
                                     <Form className="login">
                                         <div className="login__field">
-                                            <i className="login__icon fas fa-user"><span
+                                            <i className="login__icon fas"><span
                                                 className="material-symbols-outlined">
 										account_circle
 									</span></i>
@@ -108,7 +109,7 @@ export function Login() {
                                                    placeholder="Tài khoản"/>
                                         </div>
                                         <div className="login__field">
-                                            <i className="login__icon fas fa-lock"><span
+                                            <i className="login__icon fas"><span
                                                 className="material-symbols-outlined">
 										lock
 									</span></i>
@@ -123,6 +124,7 @@ export function Login() {
                                             <div className="k-break-wall-eye"></div>
                                         </div>
 
+                                        <p className={"k-err-login"}>{errorMessage}</p>
                                         <div className="checkbox-wrapper-1 k-checkbox">
                                             <Field name="remember-me" id="example-1" className="substituted"
                                                    type="checkbox"
