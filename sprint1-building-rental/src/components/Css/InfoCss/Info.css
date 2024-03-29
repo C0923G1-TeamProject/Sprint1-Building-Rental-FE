@@ -203,3 +203,9 @@
     top: 115px;
 }
 
+.error-message {
+    color: rgba(255, 0, 0, 0.821);
+    font-size: 16px;
+    margin-top: 5px;
+}
+
