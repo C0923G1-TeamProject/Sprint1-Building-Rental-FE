@@ -14,8 +14,9 @@ import * as Method from "../Method/MethodHomePage";
 import { useEffect, useState } from "react";
 
 function HomePage() {
-  const [premises, setPremises] = useState([]);
 
+  // Lọc hiển thị danh sách, điều kiện mặt bằng === chưa bàn giao thì hiển thị Start //
+  const [premises, setPremises] = useState([]);
   const getAll = async () => {
     let res = await Method.getAllPremisesHomePage();
     if (res) {
@@ -25,6 +26,10 @@ function HomePage() {
       setPremises(premisesFiltered);
     }
   };
+  // Lọc hiển thị danh sách, điều kiện mặt bằng === chưa bàn giao thì hiển thị Start //
+
+
+  // hiệu ứng xoay xoay load danh sách Start //
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     getAll();
@@ -36,10 +41,13 @@ function HomePage() {
   useEffect(() => {
     getAll();
     setTimeout(() => {
-      setIsLoading(false); // Set loading to false after a simulated delay
-    }, 1000); // Adjust the delay as needed
+      setIsLoading(false); 
+    }, 1000); 
   }, []);
+  // hiệu ứng xoay xoay load danh sách End //
 
+
+  // Croll top page Start //
   useEffect(() => {
     const timeout = setTimeout(() => {
       window.scrollTo(0, 0);
@@ -47,10 +55,18 @@ function HomePage() {
 
     return () => clearTimeout(timeout);
   }, []);
+  // Croll top page End //
 
+
+  // format giá tiền Start //
   if (!premises) {
     return "";
   }
+  function formatPrice(price) {
+    return price.toLocaleString("vi-VN");
+  }
+  // format giá tiền End //
+
 
   return (
     <>
@@ -84,7 +100,7 @@ function HomePage() {
                         color: "#452D14",
                       }}
                     >
-                      Một số mặt bằng tại MediaMond
+                      Một số mặt bằng tại Diamond
                     </h3>
                   </div>
                   <div className="flex">
@@ -132,31 +148,21 @@ function HomePage() {
                                 src="/img/HomePage/icon-1.png"
                                 alt="Icon"
                               />
+
                               <h6>
                                 <a style={{ "font-weight": "bold" }}>
-                                  Mã mặt Bằng:
+                                  Diện tích:
                                 </a>{" "}
-                                {premise.code}
-                              </h6>
-                              <a style={{ "font-weight": "bold" }}>
-                                Diện tích:{" "}
-                              </a>
-                              <span style={{ display: "inline-block" }}>
                                 {premise.area} m<sup>2</sup>
-                              </span>
-                              <br />
-                              <a style={{ "font-weight": "bold" }}>Giá: </a>
-                              <span style={{ display: "inline-block" }}>
-                                {premise.price} {"vnđ"}
-                              </span>
-                              <br />
-                              <a style={{ "font-weight": "bold" }}>
-                                Tình trạng:{" "}
-                              </a>
-                              <span style={{ display: "inline-block" }}>
-                                {premise.typePremises.name}
-                              </span>
-                              <br />
+                              </h6>
+                              <h6>
+                                <a style={{ "font-weight": "bold" }}>Giá: </a>{" "}
+                                {formatPrice(premise.price)} {"vnđ"}
+                              </h6>
+                              <h6>
+                                <a style={{ "font-weight": "bold" }}>Tầng: </a>{" "}
+                                {premise.floor}
+                              </h6>
                               <br />
                               <Link
                                 className="btn"

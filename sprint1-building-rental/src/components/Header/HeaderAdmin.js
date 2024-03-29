@@ -144,14 +144,14 @@ function HeaderAdmin({ name, ...props }) {
                   </Link>
                 </div>
                 <div>
-                  <Link className="text-sideba" to={""}>
+                  <Link className="text-sideba" to={"/customer"}>
                     <button className="button-sideba">
                       <span>Quản lý khách hàng</span>
                     </button>
                   </Link>
                 </div>
                 <div>
-                  <Link className="text-sideba" to={""}>
+                  <Link className="text-sideba" to={"/contract"}>
                     <button className="button-sideba">
                       <a
                         href="/contract"

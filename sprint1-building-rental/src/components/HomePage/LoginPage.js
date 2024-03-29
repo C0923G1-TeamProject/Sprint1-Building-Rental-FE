@@ -14,8 +14,10 @@ import { useEffect, useState } from "react";
 import HeaderAdmin from "../Header/HeaderAdmin";
 
 function LoginPage() {
-  const [premises, setPremises] = useState([]);
 
+  // Lọc hiển thị danh sách, điều kiện mặt bằng === chưa bàn giao thì hiển thị Start //
+
+  const [premises, setPremises] = useState([]);
   const getAll = async () => {
     let res = await Method.getAllPremisesHomePage();
     if (res) {
@@ -25,6 +27,10 @@ function LoginPage() {
       setPremises(premisesFiltered);
     }
   };
+  // Lọc hiển thị danh sách, điều kiện mặt bằng === chưa bàn giao thì hiển thị End //
+
+
+  // icon load trước khi hiển thị danh sách mặt bằng Start //
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     getAll();
@@ -36,21 +42,37 @@ function LoginPage() {
   useEffect(() => {
     getAll();
     setTimeout(() => {
-      setIsLoading(false); // Set loading to false after a simulated delay
-    }, 1000); // Adjust the delay as needed
+      setIsLoading(false); 
+    }, 1000);
   }, []);
+  // icon load trước khi hiển thị danh sách mặt bằng End //
 
+
+  // Croll top page Start //
   useEffect(() => {
     const timeout = setTimeout(() => {
-        window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
     }, 1000);
+  // Croll top page End //
+
 
     return () => clearTimeout(timeout);
-}, []);
+  }, []);
 
+  // Nếu danh sách rỗng Start //
   if (!premises) {
     return "";
   }
+  // Nếu danh sách rỗng Start //
+
+  // format giá tiền Start //
+  if (!premises) {
+    return "";
+  }
+  function formatPrice(price) {
+    return price.toLocaleString("vi-VN");
+  }
+  // format giá tiền End //
 
   return (
     <>
@@ -84,7 +106,7 @@ function LoginPage() {
                         color: "#452D14",
                       }}
                     >
-                      Một số mặt bằng tại MediaMond
+                      Một số mặt bằng tại Diamond
                     </h3>
                   </div>
                   <div className="flex">
@@ -100,18 +122,18 @@ function LoginPage() {
                     </button>
                   </div>
                   <br />
-                   {/* Hiển thị danh sách mặt bằng Start */}
+                  {/* Hiển thị danh sách mặt bằng Start */}
                   {isLoading ? (
                     <div className="loading-homePage">
-                    <Hourglass 
-                      visible={true}
-                      height="40"
-                      width="40"
-                      ariaLabel="hourglass-loading"
-                      wrapperStyle={{}}
-                      wrapperClass=""
-                      colors={["#306cce", "#72a1ed"]}
-                    />
+                      <Hourglass
+                        visible={true}
+                        height="40"
+                        width="40"
+                        ariaLabel="hourglass-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                        colors={["#306cce", "#72a1ed"]}
+                      />
                     </div>
                   ) : (
                     <div className="row g-4">
@@ -120,7 +142,7 @@ function LoginPage() {
                           <div className="service-item d-flex position-relative text-center h-100">
                             <img
                               className="bg-img"
-                              src="/img/HomePage/card-1.jpg"
+                              src="/img/HomePage/card-6.jpg"
                               alt=""
                             />
                             <div
@@ -132,19 +154,21 @@ function LoginPage() {
                                 src="/img/HomePage/icon-1.png"
                                 alt="Icon"
                               />
-                              <h6 >
-                                <a style={{"font-weight": 'bold'}}>Mã mặt Bằng:</a> {premise.code}
+
+                              <h6>
+                                <a style={{ "font-weight": "bold" }}>
+                                  Diện tích:
+                                </a>{" "}
+                                {premise.area} m<sup>2</sup>
                               </h6>
-                              <a style={{"font-weight": 'bold'}}>Giá: </a>
-                              <span style={{ display: "inline-block" }}>
-                                {premise.price} {"vnđ"}
-                              </span>
-                              <br />
-                              <a style={{"font-weight": 'bold'}}>Tình trạng: </a>
-                              <span style={{ display: "inline-block" }}>
-                                {premise.typePremises.name}
-                              </span>
-                              <br />
+                              <h6>
+                                <a style={{ "font-weight": "bold" }}>Giá: </a>{" "}
+                                {formatPrice(premise.price)} {"vnđ"}
+                              </h6>
+                              <h6>
+                                <a style={{ "font-weight": "bold" }}>Tầng: </a>{" "}
+                                {premise.floor}
+                              </h6>
                               <br />
                               <Link
                                 className="btn"
@@ -162,9 +186,7 @@ function LoginPage() {
                     </div>
                   )}
                 </div>
-                   {/* Hiển thị danh sách mặt bằng End */}
-
-
+                {/* Hiển thị danh sách mặt bằng End */}
 
                 {/* <!-- phân trang Start --> */}
                 <div>
