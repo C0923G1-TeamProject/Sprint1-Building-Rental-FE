@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import ChangePasswordModal from "./ChangePasswordModal";
 import UploadImage from "./firebase/UploadImage";
+
+import moment from "moment";
+import { Field, Form, Formik } from "formik";
 import {
   getInfoUser,
   updateInfoUser,
-} from "./../Services/PersonalInformationService/information-service";
-import moment from "moment";
-import { Field, Form, Formik } from "formik";
-import { useParams } from "react-router-dom";
+} from "../../service/PersonalInformationService/information-service";
 
 function ShowInfoUser() {
   const [show, setShow] = useState(false);
@@ -95,10 +95,9 @@ function ShowInfoUser() {
                           <img
                             src={
                               user.employee.profilePicture
-                                ? 
-                                image
-                                  // user.employee.profilePicture
-                                : "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"
+                                ? image
+                                : // user.employee.profilePicture
+                                  "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"
                             }
                             alt="Maxwell Admin"
                           />
@@ -148,7 +147,7 @@ function ShowInfoUser() {
                       style={{
                         boxShadow:
                           "rgba(0, 0, 0, 0.1) 0px 0em 0.5em 0em, rgba(1, 10, 10, 0.02) 0px 0px 0px 1px",
-                      }} 
+                      }}
                     >
                       <p className="is-5" style={{ color: "#ddb673" }}>
                         <h4>Thông tin cá nhân</h4>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import view from "./Icon/view.png";
 import hide from "./Icon/hide.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { changePassword } from "../Services/PersonalInformationService/information-service";
+import { changePassword } from "../../service/PersonalInformationService/information-service";
 import * as Yup from "yup";
 import "../Css/InfoCss/Info.css";
 
