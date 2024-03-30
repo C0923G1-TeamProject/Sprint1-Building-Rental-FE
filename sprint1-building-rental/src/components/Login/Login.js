@@ -3,11 +3,12 @@ import '../Css/Login/Login.css'
 import '../Css/Login/js/LoginJs'
 import hide from '../Css/Login/icon-m6/hide.png'
 import view from '../Css/Login/icon-m6/view.png'
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import * as LoginService from '../../service/LoginService/LoginService'
 import {Otp} from "./Otp";
+import * as Yup from "yup"
 
 export function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -15,6 +16,8 @@ export function Login() {
     const [recentAccount, setRecentAccount] = useState();
     const [isRedirectOtp, setIsRedirectOtp] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [nameRequiredMess, setNameRequiredMess] = useState("Vui lòng nhập tên tài khoản");
+    const [passRequiredMess, setPassRequiredMess] = useState("Vui lòng nhập mật khẩu");
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -24,6 +27,12 @@ export function Login() {
             navigation("/otp");
         }
     }, [isRedirectOtp]);
+
+
+    const validation = {
+        username: Yup.string().required("Vui lòng nhập tên tài khoản").max(50,"Số ký tự tối đa có thể nhập là 50"),
+        password: Yup.string().required("Vui lòng nhập mật khẩu").max(24,"Mật khẩu không quá 24 ký tự")
+    }
 
 
 
@@ -75,6 +84,8 @@ export function Login() {
     }
 
 
+
+
     return (
         <>
             <Helmet>
@@ -96,7 +107,7 @@ export function Login() {
                                         "password": "",
                                         "remember-me": false
                                     }
-                                } onSubmit={handleSubmit}>
+                                } onSubmit={handleSubmit} validationSchema={Yup.object(validation)}>
 
                                     <Form className="login">
                                         <div className="login__field">
@@ -107,6 +118,8 @@ export function Login() {
 
                                             <Field name="username" type="text" className="login__input"
                                                    placeholder="Tài khoản"/>
+                                            <ErrorMessage name="username" component="span" className={"k-required-name"}></ErrorMessage>
+
                                         </div>
                                         <div className="login__field">
                                             <i className="login__icon fas"><span
@@ -122,9 +135,13 @@ export function Login() {
                                                  className="k-eye-icon"
                                                  onClick={togglePasswordVisibility}/>
                                             <div className="k-break-wall-eye"></div>
+
+                                            <ErrorMessage name="password" component="span" className={"k-required-pass"}></ErrorMessage>
+
                                         </div>
 
                                         <p className={"k-err-login"}>{errorMessage}</p>
+
                                         <div className="checkbox-wrapper-1 k-checkbox">
                                             <Field name="remember-me" id="example-1" className="substituted"
                                                    type="checkbox"

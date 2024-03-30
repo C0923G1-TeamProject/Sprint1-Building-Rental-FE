@@ -5,11 +5,18 @@ export const getInfoUser = async () => {
   );
   return res.data;
 };
-export const updateInfoUser = async (user) => {
-  console.log(user);
+
+export const updateInfo = async (user) => {
+  const obj = {...user, gender: user.gender === '1' ? true : false}
   const res = await axiosCof.post(
     "http://localhost:8080/information/updateInformation",
-    user
+    obj  );
+  return res.data;
+};
+export const updateInfoUser = async (imageDto) => {
+  const res = await axiosCof.post(
+    "http://localhost:8080/information/updateImage",
+    imageDto
   );
   return res.data;
 };
