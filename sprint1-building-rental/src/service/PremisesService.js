@@ -1,5 +1,5 @@
 import axios from 'axios';
-import async from "async";
+
 
 export const getAllPremises = async (floor, code, area, premisesName, page) => {
     try {
@@ -11,11 +11,10 @@ export const getAllPremises = async (floor, code, area, premisesName, page) => {
     }
 }
 
-export const updatePremises = async (id ,premises) =>{
-    console.log(premises);
+export const updatePremises = async (id, premises) =>{
     try {
+        // debugger;
         let rs = await axios.patch(`http://localhost:8080/api/premises/update/${id}`, premises);
-        console.log(rs)
     }catch (e) {
         console.log(e);
     }
