@@ -7,16 +7,18 @@ import ChangePasswordModal from "./ChangePasswordModal";
 import UploadImage from "./firebase/UploadImage";
 
 import moment from "moment";
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
 import {
   getInfoUser,
-  updateInfoUser,
+  updateInfo,
 } from "../../service/PersonalInformationService/information-service";
-
+import Swal from "sweetalert2";
 function ShowInfoUser() {
   const [show, setShow] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [image, setImage] = useState();
+  const [preview, setPreview] = useState();
   const [user, setUser] = useState();
 
   const formatDate = (date) => {
@@ -46,7 +48,14 @@ function ShowInfoUser() {
 
   useEffect(() => {
     getInfo();
-  });
+  }, []);
+
+  const renderImage = () => {
+    if (image) return image;
+    if (preview) return URL.createObjectURL(preview);
+    if (user.employee.profilePicture) return user.employee.profilePicture;
+    return "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg";
+  };
 
   if (!user) return <div>loadingg...</div>;
   return (
@@ -93,13 +102,9 @@ function ShowInfoUser() {
                       <div className="user-profile">
                         <div className="user-avatar">
                           <img
-                            src={
-                              user.employee.profilePicture
-                                ? image
-                                : // user.employee.profilePicture
-                                  "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"
-                            }
-                            alt="Maxwell Admin"
+                            style={{ width: "100%" }}
+                            src={renderImage()}
+                            alt="Ảnh đại diện"
                           />
                         </div>
                       </div>
@@ -113,8 +118,11 @@ function ShowInfoUser() {
                                 is-one-quarter-fullhd"
                   >
                     <div className="about" style={{ textAlign: "center" }}>
-                      {/* <button className="button is-light">Thay đổi ảnh</button> */}
-                      <UploadImage setImage={setImage} />
+                      <UploadImage
+                        user={user.employee}
+                        setImage={setImage}
+                        setPreview={setPreview}
+                      />
                     </div>
                   </p>
                 </div>
@@ -128,14 +136,36 @@ function ShowInfoUser() {
                   address: user.employee.address,
                   username: user.username,
                   date: user.employee.date,
-                  gender: user.employee.gender ? 1 : 0,
+                  gender: user.employee.gender === 1 ? "Nam" : "Nữ",
+                  profilePicture: user.employee.profilePicture,
                 }}
+                validationSchema={Yup.object({
+                  name: Yup.string()
+                    .required("Họ và tên Không được để trống")
+                    .matches("^[p{L}p{M}s]+$", "Vui lòng nhập Họ và tên hợp lệ")
+                    .min(1, "Họ và tên phải trên 1 kí tự")
+                    .max(50, "Họ và tên phải dưới 50 kí tự"),
+                  email: Yup.string()
+                    .email("Vui lòng nhập email đúng định dạng")
+                    .required("Email không được bỏ trống"),
+                  address: Yup.string()
+                    .min(4, "Địa chỉ phải trên 4 kí tự")
+                    .max(100, "Địa chỉ phải dưới 100 kí tự")
+                    .required("Địa chỉ không được bỏ trống"),
+                  date: Yup.date().required("Ngày sinh không được bỏ trống"),
+                })}
                 onSubmit={(values, { setSubmitting }) => {
-                  console.log(values);
-                  updateInfoUser(values).then(() => {
-                    console.log(values);
+                  updateInfo(values).then(() => {
+                    Swal.fire({
+                      position: "center",
+                      icon: "success",
+                      title: "Cập nhật thông tin thành công!",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
+                    setIsEditing(false);
                     setSubmitting(false);
-                    setIsEditing(true);
+                    getInfo();
                   });
                 }}
               >
@@ -160,7 +190,10 @@ function ShowInfoUser() {
                                     is-one-third-widescreen
                                     is-one-quarter-fullhd"
                         >
-                          <div className="column is-7">
+                          <div
+                            className="column is-7"
+                            style={{ "flex-wrap": "wrap" }}
+                          >
                             <table className="table">
                               <thead>
                                 <tr>
@@ -233,7 +266,7 @@ function ShowInfoUser() {
                             >
                               <thead>
                                 <tr>
-                                  <td width={"120px"}>Tài khoản:</td>
+                                  <td style={{ width: "130px" }}>Tài khoản:</td>
                                   <td>
                                     {isEditing ? (
                                       <Field
@@ -398,6 +431,7 @@ function ShowInfoUser() {
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );
