@@ -7,33 +7,19 @@ import Footer from "../Footer/Footer";
 import {useParams} from 'react-router-dom';
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-
+import "../Customer/CustomerAdd.css";
+import "../Css/Premises/ListPremises.css";
 export default function UpdatePremises() {
-    const param = useParams();
-    const [premises, setPremises] = useState({});
+    const {id} = useParams();
+    const [premises, setPremises] = useState ();
     const [listFloor, setListFloor] = useState([]);
     const [listType, setListType] = useState([]);
     const [listStatus, setListStatus] = useState([]);
 
-    useEffect(() => {
-            findAllFloor();
-        }, []);
-    const findAllFloor = async () => {
-        try {
-            const res = await service.getListFloor();
-            console.log(res);
-            setListFloor(res);
-        } catch (e) {
-            console.log(e)
-        }
-    }
     const findPremisesById = async () => {
         try {
-            const res = await service.findPremises(param.id);
-            if (res.status === 200) {
-                setPremises(res.data);
-
-            }
+            const res = await service.findPremises(id);
+                setPremises(res);
         } catch (err) {
             console.log(err);
         }
@@ -42,6 +28,21 @@ export default function UpdatePremises() {
     useEffect(() => {
         findPremisesById();
     }, []);
+
+    const findAllFloor = async () => {
+        try {
+            const res = await service.getListFloor();
+            setListFloor(res);
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        findAllFloor();
+    });
+
+
 
     const findAllType = async () => {
         try{
@@ -54,7 +55,7 @@ export default function UpdatePremises() {
 
     useEffect(() => {
         findAllType();
-    }, []);
+    });
 
     const findAllStatus = async () => {
         try{
@@ -70,30 +71,30 @@ export default function UpdatePremises() {
 
     //******* Điền form
     const handleSubmit = async (values) => {
-        console.log(values);
-        // debugger;
         try {
-            if (values) {
+            console.log("Values để submit", values)
+
                 const updatedPremises = {
                     ...values,
                     floor: values.floor,
-                    typePremises: values.typePremises ? JSON.parse(values.typePremises) : null, // Kiểm tra xem values.typepr có tồn tại không trước khi chuyển đổi thành JSON
+                    typePremises: JSON.parse(values.typePremises),
                     code: values.code,
-                    premisesStatus: values.premisesStatus ? JSON.parse(values.premisesStatus) : null,
+                    premisesStatus: values.premisesStatus,
                     area: values.area,
-                    description: values.description,
+                    description: values.description.toString(),
                     price: values.price,
                     cost: values.cost
                 };
+            console.log("đối tượng đc gửi đi", updatedPremises);
+                const res = await service.updatePremises(id, updatedPremises);
 
-                console.log(updatedPremises);
-                const res = await service.updatePremises(param.id, updatedPremises);
-                console.log(res.data);
-            }
+
         } catch (error) {
             console.log("Đã xảy ra lỗi khi cập nhật mặt bằng:", error);
         }
     };
+
+
 
     const validateObject = {
         code: Yup.string().required("Vui lòng nhập diện tích").matches("(MB-[0-9]{4})", "Vui lòng nhập đúng định dạng MB-XXXX"),
@@ -101,6 +102,12 @@ export default function UpdatePremises() {
         description: Yup.string().max(1500, "Mô tả tối đa 1500 ký tự"),
         price: Yup.number().min(1000, "Giá bán quá nhỏ").max(999999999999, "Giá bán quá lớn"),
         cost: Yup.number().min(1000, "Phí quản lý quá nhỏ").max(99999999999, "Phí quản lý quá lớn")
+    }
+
+    if(premises == null){
+        return <div>
+            Loading
+        </div>
     }
 
     return (<>
@@ -124,6 +131,7 @@ export default function UpdatePremises() {
                                                 style={{color: 'red'}}>*</span></span>
                                         </div>
                                         <div className="row">
+                                            {/*<Field name="id" value={id} hidden></Field>*/}
                                             <Field as="select" id="floor" name="floor"
                                                    className="form-control rounded-1">
                                                 {
@@ -201,9 +209,9 @@ export default function UpdatePremises() {
                                             <span className="px-0">Chú thích:</span>
                                         </div>
                                         <div className="row">
-                                            <Field type="text" className="form-control w-100" name="decscription"
-                                                   id="decscription"/>
-                                            <ErrorMessage name="decscription" component="span" className="text-danger"/>
+                                            <Field type="text" className="form-control w-100" name="description"
+                                                   id="description"/>
+                                            <ErrorMessage name="description" component="span" className="text-danger"/>
 
                                         </div>
                                     </div>
@@ -213,7 +221,7 @@ export default function UpdatePremises() {
                                             <span className="px-0">Giá thuê (tháng):  </span>
                                         </div>
                                         <div className="row">
-                                            <Field type="text" className="form-control w-100" name="price" id="price"/>
+                                            <Field type="number" className="form-control w-100" name="price" id="price"/>
                                             <ErrorMessage name="price" component="span" className="text-danger"/>
 
                                         </div>
@@ -224,7 +232,7 @@ export default function UpdatePremises() {
                                             <span className="px-0">Phí quản lý: </span>
                                         </div>
                                         <div className="row">
-                                            <Field type="text" className="form-control w-100" name="cost" id="cost"/>
+                                            <Field type="number" className="form-control w-100" name="cost" id="cost"/>
                                             <ErrorMessage name="cost" component="span" className="text-danger"/>
 
                                         </div>
@@ -234,17 +242,16 @@ export default function UpdatePremises() {
                                         <div className="row my-1">
 
                                             <div className=" d-flex col-6 justify-content-center align-items-center">
-                                                <Link to={`/premises`}>
-                                                    <button type="button" className="btn btn-primary">
-                                                        Quay lại
+
+                                                    <button type="button" className="btn cus custom-btn">
+                                                        <Link to={`/premises`}>  Huỷ chỉnh sửa </Link>
                                                     </button>
-                                                </Link>
 
                                             </div>
 
                                             <div className=" d-flex col-6 justify-content-center align-items-center">
-                                                <button type="submit" className="btn btn-success">
-                                                    Xác nhận
+                                                <button type="submit" className="btn cus custom-btn">
+                                                    Xác nhận chỉnh sửa
                                                 </button>
                                             </div>
                                         </div>
