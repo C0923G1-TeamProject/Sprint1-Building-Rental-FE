@@ -1,5 +1,4 @@
 import axios from 'axios';
-// ?floor=${floor}&code=${code}&area=${area}&premisesName=${premisesName}&page=${page}
 
 export const getAllPremises = async (floor, code, area, premisesName, page) => {
     try {
@@ -14,7 +13,7 @@ export const getAllPremises = async (floor, code, area, premisesName, page) => {
     
 }
 
-export const getAllPremisesHomepage = async (floor, code, area, premisesName, page) => {
+export const getAllPremisesHomePage = async (floor, code, area, premisesName, page) => {
     try {
         let rs = await axios.get(`http://localhost:8080/api/premises/search`, {params: {floor, code, area, premisesName, page}} );
       

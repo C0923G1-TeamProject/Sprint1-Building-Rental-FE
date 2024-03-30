@@ -172,6 +172,7 @@ export default function ListPremises() {
                 placeholder="Loại mặt bằng"
               />
 
+<<<<<<< HEAD
               <div>
                 <button
                   onClick={() => submitSearch()}
@@ -181,6 +182,105 @@ export default function ListPremises() {
                   Tìm kiếm
                 </button>
               </div>
+=======
+                                <input onChange={(event) => handleCode(event.target.value)} type="text"
+                                       className="form-control rounded-1 me-2" name="name-search" size="25"
+                                       placeholder="Mã mặt bằng"/>
+
+
+                                <input onChange={(event) => handleArea(event.target.value)} type="text"
+                                       className="form-control rounded-1 me-2" name="name-search" size="25"
+                                       placeholder="Diện tích tối đa"/>
+
+
+                                <input onChange={(event) => handlePremisesName(event.target.value)} type="text"
+                                       className="form-control rounded-1 me-2" name="name-search" size="25"
+                                       placeholder="Loại mặt bằng"/>
+
+                                <div>
+                                    <button onClick={() => submitSearch()} type="button" className="btn btn-in-list">Tìm
+                                        kiếm
+                                    </button>
+                                </div>
+                            </div>
+
+                    </div>
+
+                    <div className="col-1"></div>
+                </div>
+                <div className="row my-3">
+                    <table className="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Mã mặt bằng</th>
+                            <th>Loại mặt bằng</th>
+                            <th>Diện tích (m²)</th>
+                            <th>Trạng thái</th>
+                            <th>Giá bán</th>
+                            <th>Phí quản lý</th>
+                            <th className="text-center">Tuỳ chọn</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {premisesList ? (
+                            premisesList.map((premises, index) => (
+                                    <tr key={premises.id}>
+                                        <td>{(currentPage - 1) * 3 + (index + 1) + 3}</td>
+                                        <td>{premises.code}</td>
+                                        <td>{premises.typePremises.name}</td>
+                                        <td>{premises.area}</td>
+                                        <td>{premises.premisesStatus.name}</td>
+                                        <td>{VND.format(premises.price)}</td>
+                                        <td>{VND.format(premises.cost)}</td>
+                                        <td className="text-center"><Link to={`/update-premises/${premises.id}`} className="custom-link-style">
+                                            <button className="btn btn-feature">Sửa</button>
+                                        </Link></td>
+
+                                    </tr>
+
+                                )
+                            )
+                        ) : (
+                            <tr>
+                                <td colSpan={9}>
+                                    Không tìm thấy dữ liệu
+                                </td>
+                            </tr>
+                        )
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <div className="row pb-5">
+                    {premisesList ? (
+                        <div className="d-flex justify-content-center align-items-center">
+                            <ReactPaginate
+                                forcePage={currentPage}
+                                breakLabel="..."
+                                nextLabel="Trang sau"
+                                previousLabel="Trang trước"
+                                onPageChange={handlePageClick}
+                                pageRangeDisplayed={2}
+                                marginPagesDisplayed={2}
+                                pageCount={totalPages}
+                                pageClassName="page-item"
+                                pageLinkClassName="page-link"
+                                previousClassName="page-item"
+                                previousLinkClassName="page-link"
+                                nextClassName="page-item"
+                                nextLinkClassName="page-link"
+                                breakClassName="page-item"
+                                breakLinkClassName="page-link"
+                                containerClassName="pagination"
+                                activeClassName="active"
+                            />
+                        </div>
+                    ):(<div></div>)
+                    }
+                </div>
+>>>>>>> 7b9d6ce2cb41b1107380e59d029b6a8147e2c9e4
             </div>
           </div>
 
