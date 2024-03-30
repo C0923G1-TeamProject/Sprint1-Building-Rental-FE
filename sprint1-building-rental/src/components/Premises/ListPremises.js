@@ -203,7 +203,7 @@ export default function ListPremises() {
                         </tbody>
                     </table>
                 </div>
-                <div className="row">
+                <div className="row pb-5">
                     {premisesList ? (
                         <div className="d-flex justify-content-center align-items-center">
                             <ReactPaginate
