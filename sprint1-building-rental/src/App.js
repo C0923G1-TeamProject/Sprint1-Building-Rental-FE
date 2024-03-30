@@ -22,7 +22,8 @@ import AddCustomer from "./components/Customer/AddCustomer";
 import ShowInfoUser from "./components/PersonalInsormation/ShowInfoUser";
 import ListPremises from "./components/Premises/ListPremises";
 import { log } from "handlebars";
-function App() { 
+import UpdatePremises from "./components/Premises/UpdatePremises";
+function App() {
 
   return (
     <>
@@ -43,6 +44,7 @@ function App() {
           <Route path={"/otp"} element={<Otp/>}></Route>
           <Route path="/customer" element={<ListCustomer />}></Route>
           <Route path="/add" element={<AddCustomer />}></Route>
+          <Route path="/update-premises/:id" element={<UpdatePremises/>}></Route>
         </Routes>
       </BrowserRouter>
 

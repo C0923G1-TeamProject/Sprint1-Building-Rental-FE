@@ -160,10 +160,10 @@
 }
 
 .background-modal{
-    background-color: rgba(0, 0, 0, 0.5); 
-     backdrop-filter: blur(8px); 
+    background-color: rgba(0, 0, 0, 0.5);
+     backdrop-filter: blur(8px);
      z-index: 999;
-  
+
 }
 
 .table{
@@ -201,5 +201,11 @@
     opacity: 70%;
     right: 52px !important;
     top: 115px;
+}
+
+.error-message {
+    color: rgba(255, 0, 0, 0.821);
+    font-size: 16px;
+    margin-top: 5px;
 }
 

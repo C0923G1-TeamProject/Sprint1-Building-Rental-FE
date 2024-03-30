@@ -10,63 +10,132 @@ import Footer from "../Footer/Footer";
 import { Hourglass } from "react-loader-spinner";
 import Helmet from "react-helmet";
 import "../Css/HomePage/Messgae.css";
-import * as Method from "../Method/MethodHomePage";
+import SearchIcon from "@mui/icons-material/Search";
+import * as service from "../../service/PremisesService";
+import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
 
-function HomePage() {
 
-  // Lọc hiển thị danh sách, điều kiện mặt bằng === chưa bàn giao thì hiển thị Start //
+function HomePage() {
   const [premises, setPremises] = useState([]);
+  const [floor, setFloor] = useState("");
+  const [code] = useState("");
+  const [area, setArea] = useState(99999);
+  const [premisesName] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+
   const getAll = async () => {
-    let res = await Method.getAllPremisesHomePage();
-    if (res) {
-      let premisesFiltered = res.content.filter(
-        (premise) => premise.typePremises.name === "chưa bàn giao"
+    const result = await service.getAllPremises();
+    if (result) {
+      let premisesFiltered = result.content.filter(
+        (premise) => premise.premisesStatus.name === "Chưa bàn giao"
       );
       setPremises(premisesFiltered);
     }
   };
-  // Lọc hiển thị danh sách, điều kiện mặt bằng === chưa bàn giao thì hiển thị Start //
+  const handleFloor = (value) => {
+    setFloor(value);
+  };
 
+  const handleArea = (value) => {
+    setArea(value);
+  };
+
+
+ 
+  const submitSearch = async () => {
+    try {
+      if (floor !== undefined || null || " ") { // Kiểm tra xem tầng  có underfine không
+        let x1 = await service.getAllPremisesHomepage(floor, code, area, premisesName, 0);
+        console.log("kkkkkk",typeof x1);
+        
+        setPremises(x1.content);
+        setTotalPages(x1.totalPages);
+        setCurrentPage(0);
+        console.log("submit success");
+      } else {
+        // Xử lý khi tầng không được chọn
+        console.log("Tầng không được chọn");
+      }
+    
+    } catch (e) {
+      console.log("submit Fail");
+    }
+  };
+
+useEffect(() => {
+  const fetchApi = async () => {
+    try {
+      const result = await service.getAllPremisesHomepage(
+        floor,
+        code,
+        area,
+        premisesName,
+        0
+      );
+      console.log(result);
+      setPremises(result.content);
+      setTotalPages(result.totalPages);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  fetchApi(floor, code, area, premisesName, 0);
+}, []);
 
   // hiệu ứng xoay xoay load danh sách Start //
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    getAll();
-  }, []);
+
 
   useEffect(() => {
-    console.log(Permissions[0]);
+    console.log("LINE 94",premises);
+   
   }, [premises]);
-  useEffect(() => {
-    getAll();
-    setTimeout(() => {
-      setIsLoading(false); 
-    }, 1000); 
-  }, []);
-  // hiệu ứng xoay xoay load danh sách End //
 
+  // hiệu ứng xoay xoay load danh sách End //
 
   // Croll top page Start //
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      window.scrollTo(0, 0);
+    getAll();
+    setTimeout(() => {
+      setIsLoading(false);
     }, 1000);
-
-    return () => clearTimeout(timeout);
   }, []);
   // Croll top page End //
-
-
-  // format giá tiền Start //
-  if (!premises) {
-    return "";
-  }
+ 
   function formatPrice(price) {
     return price.toLocaleString("vi-VN");
   }
   // format giá tiền End //
 
+  const fetchData = async (page) => {
+    try {
+      const result = await service.getAllPremisesHomepage(
+        floor,
+        code,
+        area,
+        premisesName,
+        page
+      );
+      setPremises(result.content);
+      setTotalPages(result.totalPages);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handlePageClick = async (event) => {
+    try {
+      const pageNumber = event.selected;
+      setCurrentPage(pageNumber);
+      // Gọi fetchData với currentPage mới
+      fetchData(pageNumber);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -103,20 +172,44 @@ function HomePage() {
                       Một số mặt bằng tại Diamond
                     </h3>
                   </div>
-                  <div className="flex">
-                    <input style={{ margin: "5px" }} />
-                    <button
-                      style={{
-                        background: "#E9D8AE",
-                        "border-radius": "2px",
-                        "border-color": "#E9D8AE",
-                      }}
-                    >
-                      Tìm kiếm
-                    </button>
+                 
+                  <br />
+                  <div className="display">
+                    <div className="col-lg-2">
+                      <select
+                        className=" select-floor-homePage"
+                        onChange={(event) => handleFloor(event.target.value)}
+                      >
+                        <option value="">Tầng: Tất cả</option>
+                        <option value="1">Tầng 1</option>
+                        <option value="2">Tầng 2</option>
+                        <option value="3">Tầng 3</option>
+                        <option value="4">Tầng 4</option>
+                        <option value="5">Tầng 5</option>
+                        <option value="6">Tầng 6</option>
+                        <option value="7">Tầng 7</option>
+                        <option value="8">Tầng 8</option>
+                        <option value="9">Tầng 9</option>
+                      </select>
+                    </div>
+                
+                    <div className="display">
+                      <input
+                        onChange={(event) => handleArea(event.target.value)}
+                        type="text"
+                        name="name-search"
+                        size="25"
+                        placeholder="Diện tích tối đa"
+                        className="placehoder-search-area-homePage"
+                      />
+                      <button onClick={() => submitSearch()} type="button">
+                        <span className="icon-search-homePage">
+                          <SearchIcon />
+                        </span>
+                      </button>
+                    </div>
                   </div>
                   <br />
-                  {/* Hiển thị danh sách mặt bằng Start */}
                   {isLoading ? (
                     <div className="loading-homePage">
                       <Hourglass
@@ -129,6 +222,8 @@ function HomePage() {
                         colors={["#306cce", "#72a1ed"]}
                       />
                     </div>
+                  ) : ( !premises?.length ? (
+                    <p>Không có danh sách....</p>
                   ) : (
                     <div className="row g-4">
                       {premises.map((premise, index) => (
@@ -164,6 +259,13 @@ function HomePage() {
                                 {premise.floor}
                               </h6>
                               <br />
+                              <h6>
+                                <a style={{ "font-weight": "bold" }}>
+                                  Test xem đã bàn giao:{" "}
+                                </a>{" "}
+                                {premise.premisesStatus.name}
+                              </h6>
+                              <br />
                               <Link
                                 className="btn"
                                 to={`/premises/${premise.id}`}
@@ -178,44 +280,39 @@ function HomePage() {
                         </div>
                       ))}
                     </div>
-                  )}
+                  ))}
                 </div>
                 {/* Hiển thị danh sách mặt bằng End */}
+                <br />
 
                 {/* <!-- phân trang Start --> */}
-                <div>
-                  <nav
-                    aria-label="Page navigation example"
-                    className="float-paging"
-                  >
-                    <ul className="pagination">
-                      <li className="page-item">
-                        <a className="page-link" href="#">
-                          Previous
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="#">
-                          1
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="#">
-                          2
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="#">
-                          3
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="#">
-                          Next
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
+                <div className="row float-paging-homepage">
+                  {premises ? (
+                    <div className="d-flex justify-content-center align-items-center">
+                      <ReactPaginate
+                        forcePage={currentPage}
+                        breakLabel="..."
+                        nextLabel="Trang sau"
+                        previousLabel="Trang trước"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={2}
+                        marginPagesDisplayed={2}
+                        pageCount={totalPages}
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        containerClassName="pagination"
+                        activeClassName="active"
+                      />
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
                 {/* <!-- phân trang End --> */}
               </div>

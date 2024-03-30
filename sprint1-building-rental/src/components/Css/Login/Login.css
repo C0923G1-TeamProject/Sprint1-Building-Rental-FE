@@ -149,7 +149,7 @@
 .button__icon {
     font-size: 24px;
     margin-left: auto;
-    color: #7875B5;
+    color: #ec7608;
 }
 
 .social-login {
@@ -212,12 +212,12 @@
 
 .k-eye-icon {
     position: absolute;
-    scale: 0.045;
-    right: -175px;
-    bottom: -212px;
+    scale: 0.09;
+    right: -52px;
+    bottom: -87px;
     background-color: white;
     z-index: 10;
-    opacity: 70%;
+    opacity: 60%;
 }
 
 .k-break-wall-eye {
@@ -228,6 +228,13 @@
     height: 22px;
     width: 38px;
     z-index: 9;
+}
+
+.k-err-login {
+    color: red;
+    position: absolute;
+    top: 316px;
+    font-size: 13px;
 }
 
 /* checkbox */

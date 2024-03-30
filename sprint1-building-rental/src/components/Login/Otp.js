@@ -1,9 +1,10 @@
 import Helmet from "react-helmet";
 import '../Css/Login/Otp.css'
 import {useEffect, useState} from "react";
-import * as LoginService from '../Services/LoginService/LoginService'
+import * as LoginService from '../../service/LoginService/LoginService'
 import {Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
+import {Cookie} from "@mui/icons-material";
 
 export function Otp() {
     const [otp, setOtp] = useState();
@@ -60,7 +61,7 @@ export function Otp() {
                 localStorage.setItem("role", role);
                 localStorage.setItem("nameAccount", nameAccount);
                 // localStorage.setItem("isVisited", 1);
-                localStorage.setItem("isVisited", 0);
+                localStorage.setItem("isVisited", 1);
 
                 navigation("/")
                 //hien modal
@@ -99,7 +100,7 @@ export function Otp() {
                             </div>
 
                             <div className="k-center-row">
-                                <p className={"k-error-mess"}>{errorMessage}</p>
+                            <p className={"k-error-mess"}>{errorMessage}</p>
                             </div>
 
                             <Formik initialValues={{inputOtp: ""}} onSubmit={handleSubmit}>
