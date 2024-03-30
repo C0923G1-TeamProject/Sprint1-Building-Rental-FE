@@ -7,16 +7,10 @@ export const getInfoUser = async () => {
 };
 
 export const updateInfo = async (user) => {
-  console.log(user);
-  if (user.gender == "Nam") {
-    user.gender = 1;
-  } else {
-    user.gender = 0;
-  }
+  const obj = {...user, gender: user.gender === '1' ? true : false}
   const res = await axiosCof.post(
     "http://localhost:8080/information/updateInformation",
-    user
-  );
+    obj  );
   return res.data;
 };
 export const updateInfoUser = async (imageDto) => {
