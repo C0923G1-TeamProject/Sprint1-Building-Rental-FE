@@ -29,7 +29,6 @@ export const getAllPremisesHomePage = async (floor, code, area, premisesName, pa
 
 
 export const updatePremises = async (id ,premises) =>{
-    debugger;
     console.log(premises);
     try {
         let rs = await axiosCof.patch(`http://localhost:8080/api/premises/update/${id}`, premises);
