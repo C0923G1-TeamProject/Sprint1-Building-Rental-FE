@@ -10,7 +10,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import "../Customer/CustomerAdd.css";
 import "../Css/Premises/ListPremises.css";
 import Swal from "sweetalert2";
-import {TextareaAutosize} from "@mui/material";
+
 
 export default function UpdatePremises() {
     const {id} = useParams();
@@ -19,6 +19,7 @@ export default function UpdatePremises() {
     const [listType, setListType] = useState([]);
     const [listStatus, setListStatus] = useState([]);
     const navigate = useNavigate();
+    const [isSaving, setIsSaving] = useState(false);
 
 
     const findPremisesById = async () => {
@@ -77,6 +78,7 @@ export default function UpdatePremises() {
     const handleSubmit = async (values) => {
         try {
             console.log("Values để submit", values)
+            setIsSaving(true);
 
             const updatedPremises = {
                 ...values,
@@ -91,9 +93,10 @@ export default function UpdatePremises() {
             };
             console.log("đối tượng đc gửi đi", updatedPremises);
             const res = await service.updatePremises(id, updatedPremises);
-            Swal.fire("Chỉnh sửa thành công!", "", "success").then(() => {
-                navigate('/premises');
-            });
+
+                Swal.fire("Chỉnh sửa thành công!", "", "success").then(() => {
+                    navigate('/premises');
+                });
 
         } catch (error) {
             console.log("Đã xảy ra lỗi khi cập nhật mặt bằng:", error);
@@ -214,7 +217,7 @@ export default function UpdatePremises() {
                                                           className="text-danger"/>
                                         </div>
                                         <div className="row my-1">
-                                            <span className="px-0">Diện tích: <span
+                                            <span className="px-0">Diện tích(m²): <span
                                                 style={{color: 'red'}}>*</span></span>
                                         </div>
                                         <div className="row">
@@ -227,7 +230,7 @@ export default function UpdatePremises() {
 
                                     <div className="col-5">
                                         <div className="row my-1">
-                                            <span className="px-0">Giá bán (tháng):  </span>
+                                            <span className="px-0">Giá bán (VND/tháng):  </span>
                                         </div>
                                         <div className="row">
                                             <Field type="number" className="form-control w-100" name="price"
@@ -238,7 +241,7 @@ export default function UpdatePremises() {
 
 
                                         <div className="row my-1">
-                                            <span className="px-0">Phí quản lý: </span>
+                                            <span className="px-0">Phí quản lý (VND): </span>
                                         </div>
                                         <div className="row">
                                             <Field type="number" className="form-control w-100" name="cost"
@@ -265,7 +268,7 @@ export default function UpdatePremises() {
                                                     <Link to={`/premises`}> Huỷ chỉnh sửa </Link>
                                                 </button>
 
-                                                <button onClick={handleConfirmation} type="submit"
+                                                <button onClick={handleConfirmation} disabled={isSaving} type="button"
                                                         className="btn cus custom-btn">
                                                     Xác nhận chỉnh sửa
                                                 </button>
