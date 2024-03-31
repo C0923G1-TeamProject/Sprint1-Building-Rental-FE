@@ -11,7 +11,7 @@ import { Hourglass } from "react-loader-spinner";
 import Helmet from "react-helmet";
 import "../Css/HomePage/Messgae.css";
 import SearchIcon from "@mui/icons-material/Search";
-import * as service from "../../service/PremisesService";
+import * as service from "../../service/PremisesService"
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
 
@@ -49,7 +49,7 @@ function HomePage() {
   const submitSearch = async () => {
     try {
       if (floor !== undefined || null || " ") { // Kiểm tra xem tầng  có underfine không
-        let x1 = await service.getAllPremisesHomepage(floor, code, area, premisesName, 0);
+        let x1 = await service.getAllPremisesHomePage(floor, code, area, premisesName, 0);
         console.log("kkkkkk",typeof x1);
         
         setPremises(x1.content);
@@ -69,7 +69,7 @@ function HomePage() {
 useEffect(() => {
   const fetchApi = async () => {
     try {
-      const result = await service.getAllPremisesHomepage(
+      const result = await service.getAllPremisesHomePage(
         floor,
         code,
         area,
@@ -112,7 +112,7 @@ useEffect(() => {
 
   const fetchData = async (page) => {
     try {
-      const result = await service.getAllPremisesHomepage(
+      const result = await service.getAllPremisesHomePage(
         floor,
         code,
         area,
