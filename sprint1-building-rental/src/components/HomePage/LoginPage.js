@@ -1,7 +1,7 @@
 import CarouselBody from "../Carousel/Carousel";
 import "../Css/HomePage/Body.css";
 import AddIcon from "@mui/icons-material/Add";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -14,7 +14,7 @@ import HeaderAdmin from "../Header/HeaderAdmin";
 import SearchIcon from "@mui/icons-material/Search";
 import * as service from "../../service/PremisesService";
 import ReactPaginate from "react-paginate";
-import { Alert } from 'react-bootstrap';
+
 
 function LoginPage() {
   const [premises, setPremises] = useState([]);
@@ -26,6 +26,7 @@ function LoginPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
+  const navigation = useNavigate();
   const getAll = async () => {
     debugger;
     const result = await service.getAllPremisesHomePage(
@@ -153,6 +154,10 @@ function LoginPage() {
       console.log(e);
     }
   };
+
+  if(!localStorage.getItem("token")){
+    navigation("/")
+  }
   return (
     <>
       <Helmet>

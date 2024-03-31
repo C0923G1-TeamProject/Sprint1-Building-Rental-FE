@@ -37,6 +37,8 @@ function HeaderAdmin({ name, ...props }) {
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
 
+  const [accName, setAccName] = useState(localStorage.getItem("nameOfSigninUser"));
+
   const handleLogout = () => {
     setShowModal(true); // Hiển thị Modal khi người dùng nhấn vào nút "Đăng xuất"
   };
@@ -172,7 +174,7 @@ function HeaderAdmin({ name, ...props }) {
             <div>
               <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle>
-                  <AccountCircleIcon sx={{ fontSize: 30 }} />
+                  <AccountCircleIcon sx={{ fontSize: 30 }} /> {accName}
                 </DropdownToggle>
 
                 <DropdownMenu>
@@ -212,7 +214,7 @@ function HeaderAdmin({ name, ...props }) {
           <Button className="nologout" onClick={handleCloseModal}>
             Không
           </Button>
-          <Link to="/">
+          <Link to="/logout">
             <Button className="button-logout">Đăng xuất</Button>
           </Link>
         </Modal.Footer>

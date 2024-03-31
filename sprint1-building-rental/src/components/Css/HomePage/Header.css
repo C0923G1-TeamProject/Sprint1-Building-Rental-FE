@@ -97,9 +97,6 @@ h1 {
   color: black !important;
   background: none !important;
   border: none !important;
-  /* position: relative;
-  left: 315px;
-  top: 34px; */
 }
 
 .offcanvas-start {
@@ -236,3 +233,11 @@ h1 {
   position: relative;
   left: 14px;
 }
+/* #icon-login-responsive1 {
+  position: relative;
+  left: 168px;
+}
+#icon-login-responsive2 {
+  position: relative;
+  left: 268px;
+} */

@@ -14,7 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import * as service from "../../service/PremisesService";
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
-import { log } from "handlebars";
+import "../Css/HomePage/CardListHomePage.css";
 
 function HomePage() {
   const [premises, setPremises] = useState([]);
@@ -142,6 +142,7 @@ function HomePage() {
       console.log(e);
     }
   };
+
   return (
     <>
       <Helmet>
@@ -233,58 +234,99 @@ function HomePage() {
                     <div className="row g-4">
                       {premises
                         .filter((premise) => premise.premisesStatus.id === 1)
-
                         .map((premise, index) => (
-                          <div className="col-lg-4 col-md-6" key={index}>
-                            <div className="service-item d-flex position-relative text-center h-100">
+                          // <div className="col-lg-4 col-md-6" key={index}>
+                          //   <div className="service-item d-flex position-relative text-center h-100">
+                          //     <img
+                          //       className="bg-img"
+                          //       src="https://example.com/path/to/your/image.jpg"
+                          //       alt=""
+                          //     />
+                          //     <div
+                          //       className="service-text p-5"
+                          //       style={{ width: "100%" }}
+                          //     >
+                          //       <img
+                          //         className="mb-4"
+                          //         src="/img/HomePage/icon-1.png"
+                          //         alt="Icon"
+                          //       />
+
+                          //       <h6>
+                          //         <a style={{ "font-weight": "bold" }}>
+                          //           Diện tích:
+                          //         </a>{" "}
+                          //         {premise.area} m<sup>2</sup>
+                          //       </h6>
+                          //       <h6>
+                          //         <a style={{ "font-weight": "bold" }}>Giá: </a>{" "}
+                          //         {formatPrice(premise.price)} {"vnđ"}
+                          //       </h6>
+                          //       <h6>
+                          //         <a style={{ "font-weight": "bold" }}>
+                          //           Tầng:{" "}
+                          //         </a>{" "}
+                          //         {premise.floor}
+                          //       </h6>
+
+                          //       <br />
+                          //       <Link
+                          //         className="btn"
+                          //         to={`/premises/${premise.id}`}
+                          //       >
+                          //         <span style={{ marginRight: "5px" }}>
+                          //           <AddIcon />
+                          //         </span>
+                          //         Xem thêm
+                          //       </Link>
+                          //     </div>
+                          //   </div>
+
+                          //   </div>
+
+                          <div
+                            class="col-lg-4 col-md-6 wow fadeInUp"
+                            data-wow-delay="0.1s"
+                          >
+                            <div class="team-item position-relative">
                               <img
-                                className="bg-img"
-                                src="/img/HomePage/card-6.jpg"
+                                class="img-fluid rounded"
+                                src="img/homePage/card-1.jpg"
                                 alt=""
                               />
-                              <div
-                                className="service-text p-5"
-                                style={{ width: "100%" }}
-                              >
-                                <img
-                                  className="mb-4"
-                                  src="/img/HomePage/icon-1.png"
-                                  alt="Icon"
-                                />
+                              <div class="team-text bg-#b7acac rounded-end p-4">
+                                <div>
+                                  <h6>
+                                    <a style={{ "font-weight": "bold" }}>
+                                      Diện tích:
+                                    </a>{" "}
+                                    {premise.area} m<sup>2</sup>
+                                  </h6>
+                                  <h6>
+                                    <a style={{ "font-weight": "bold" }}>
+                                      Giá:{" "}
+                                    </a>{" "}
+                                    {formatPrice(premise.price)} {"vnđ"}
+                                  </h6>
+                                  <h6>
+                                    <a style={{ "font-weight": "bold" }}>
+                                      Tầng:{" "}
+                                    </a>{" "}
+                                    {premise.floor}
+                                  </h6>
 
-                                <h6>
-                                  <a style={{ "font-weight": "bold" }}>
-                                    Diện tích:
-                                  </a>{" "}
-                                  {premise.area} m<sup>2</sup>
-                                </h6>
-                                <h6>
-                                  <a style={{ "font-weight": "bold" }}>Giá: </a>{" "}
-                                  {formatPrice(premise.price)} {"vnđ"}
-                                </h6>
-                                <h6>
-                                  <a style={{ "font-weight": "bold" }}>
-                                    Tầng:{" "}
-                                  </a>{" "}
-                                  {premise.floor}
-                                </h6>
-                                <br />
-                                <h6>
-                                  <a style={{ "font-weight": "bold" }}>
-                                    Test xem đã bàn giao:{" "}
-                                  </a>{" "}
-                                  {premise.premisesStatus.name}
-                                </h6>
-                                <br />
-                                <Link
-                                  className="btn"
-                                  to={`/premises/${premise.id}`}
-                                >
-                                  <span style={{ marginRight: "5px" }}>
-                                    <AddIcon />
-                                  </span>
-                                  Xem thêm
-                                </Link>
+                                  <br />
+                                  {/* <Link
+                                   className="btn"
+                                   to={`/premises/${premise.id}`}
+                                 >
+                                   <span style={{ marginRight: "5px" }}>
+                                     <AddIcon />
+                                   </span>
+                                   Xem thêm
+                                 </Link> */}
+                                </div>
+                                {/* <i class="fa fa-arrow-right fa-2x text-primary"></i> */}
                               </div>
                             </div>
                           </div>
@@ -303,8 +345,8 @@ function HomePage() {
                       <ReactPaginate
                         forcePage={currentPage}
                         breakLabel="..."
-                        nextLabel=">>"
-                        previousLabel="<<"
+                        nextLabel="Trang sau"
+                        previousLabel="Trang trước"
                         onPageChange={handlePageClick}
                         pageRangeDisplayed={1} // Chỉ hiển thị số trang đầu và cuối cùng
                         marginPagesDisplayed={1} // Số lượng trang hiển thị ở trước và sau dấu chấm chấm
@@ -575,6 +617,7 @@ function HomePage() {
           {/* <!-- Body End --> */}
         </div>
       </div>
+
       <Footer />
     </>
   );
