@@ -1,15 +1,18 @@
 import "./CustomerAdd.css"
 import {Link, useNavigate} from "react-router-dom";
 import * as Yup from "yup";
-import * as CustomerService from "../Services/CustomerService/CustomerService";
+import * as CustomerService from "../../service/CustomerService/CustomerService";
+import UploadImage from "./UploadImage"
 import {toast} from "react-toastify";
 import Helmet from "react-helmet";
 import HeaderAdmin from "../Header/HeaderAdmin";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import Footer from "../Footer/Footer";
+import {useState} from "react";
 
 function AddCustomer() {
     const navigation = useNavigate();
+    const [imageUrl, setImageUrl] = useState("");
     const validation = {
         name: Yup.string().matches(/^[a-zA-ZÀ-ỹ\s]*$/, "Tên không đúng định dạng VD: Nguyễn Văn An").required("Vui lòng nhập tên"),
         card: Yup.string().matches(/^\d{12}$/, "Số căn cước cần chính xác 12 ký tự số").required("Vui lòng nhập căn cước công dân"),
@@ -29,11 +32,12 @@ function AddCustomer() {
         address: Yup.string().trim().required("Vui lòng nhập địa chỉ"),
         url: Yup.string().url("Website không hợp lệ").required("Vui lòng nhập website"),
         company: Yup.string().trim().required("Vui lòng nhập trên công ty khách hàng"),
-        img: Yup.string().required("Vui lòng thêm ảnh")
     }
-    const handleSubmit = async (value) => {
+    const handleSubmit = async (values) => {
         try {
-            await CustomerService.createCustomer(value);
+            // Gán giá trị URL của ảnh từ Firebase vào trường img của values
+            values.img = imageUrl;
+            await CustomerService.createCustomer(values);
             navigation("/customer")
             toast.success("Thêm mới thành công");
         } catch (e) {
@@ -71,9 +75,9 @@ function AddCustomer() {
                                     <ErrorMessage name="name" component="span" className="k-span"></ErrorMessage>
                                 </div>
                                 <div className="form-group cus-group">
-                                    <label className="form-label cus-label">Hình ảnh<span className="cus-col">*</span>:</label>
-                                    <Field name="img" type="file" className="form-control cus-input"/>
-                                    <ErrorMessage name="img" component="span" className="k-span"></ErrorMessage>
+                                    <label className="form-label cus-label">Hình ảnh:</label>
+                                    <UploadImage setImage={setImageUrl} className="form-control cus-input"/>
+                                    {imageUrl && (<img src={imageUrl} alt="Uploaded" style={{maxWidth: "200px"}}/>)}
                                 </div>
                                 <div className="form-group cus-group">
                                     <label htmlFor="date" className="form-label cus-label">Ngày sinh<span
@@ -127,8 +131,6 @@ function AddCustomer() {
 
                             </Form>
                         </Formik>
-
-
                     </div>
                 </div>
                 <Footer/>
