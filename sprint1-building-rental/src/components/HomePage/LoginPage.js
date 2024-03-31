@@ -11,7 +11,6 @@ import Helmet from "react-helmet";
 import "../Css/HomePage/Messgae.css";
 import { useEffect, useState } from "react";
 import HeaderAdmin from "../Header/HeaderAdmin";
-import HeaderUser from "../Header/HeaderUser";
 import SearchIcon from "@mui/icons-material/Search";
 import * as service from "../../service/PremisesService";
 import ReactPaginate from "react-paginate";
@@ -27,14 +26,16 @@ function LoginPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
+
   const getAll = async () => {
-    let res = await service.getAllPremises();
-    if (res) {
-      let premisesFiltered = res.content.filter(
-        (premise) => premise.premisesStatus.name === "Chưa bàn giao"
-      );
-      setPremises(premisesFiltered);
-    }
+    const result = await service.getAllPremisesHomePage();
+    // if (result) {
+    //   let premisesFiltered = result.content.filter(
+    //     (premise) => premise.premisesStatus.name === "Chưa bàn giao"
+    //   );
+    //   setPremises(premisesFiltered);
+    // }
+    setPremises(result);
   };
   const handleFloor = (value) => {
     setFloor(value);
@@ -44,60 +45,66 @@ function LoginPage() {
     setArea(value);
   };
 
+
+ 
   const submitSearch = async () => {
-    console.log(2);
     try {
-      let res = await service
-        .getAllPremises(floor, code, area, premisesName, 0)
-        .then();
-      setPremises(res.content);
-      setTotalPages(res.totalPages);
-      setCurrentPage(0);
-      console.log("submit success");
+      if (floor !== undefined || null || " ") { // Kiểm tra xem tầng  có underfine không
+        let x1 = await service.getAllPremisesHomePage(floor, code, area, premisesName, 0);
+        console.log("kkkkkk",typeof x1);
+        
+        setPremises(x1.content);
+        setTotalPages(x1.totalPages);
+        setCurrentPage(0);
+        console.log("submit success");
+      } else {
+        // Xử lý khi tầng không được chọn
+        console.log("Tầng không được chọn");
+      }
+    
     } catch (e) {
       console.log("submit Fail");
     }
   };
 
-  useEffect(() => {
-    const fetchApi = async () => {
-      try {
-        const result = await service.getAllPremises(
-          floor,
-          code,
-          area,
-          premisesName,
-          0
-        );
-        console.log(result);
-        setPremises(result.content);
-        setTotalPages(result.totalPages);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchApi(floor, code, area, premisesName, 0);
-  }, []);
+useEffect(() => {
+  const fetchApi = async () => {
+    try {
+      const result = await service.getAllPremisesHomePage(
+        floor,
+        code,
+        area,
+        premisesName,
+        0
+      );
+      console.log(result);
+      setPremises(result.content);
+      setTotalPages(result.totalPages);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  fetchApi(floor, code, area, premisesName, 0);
+}, []);
 
   // hiệu ứng xoay xoay load danh sách Start //
 
-  useEffect(() => {
-    getAll();
-  }, []);
 
   useEffect(() => {
-    console.log(Permissions[0]);
+    console.log("LINE 94",premises);
+   
   }, [premises]);
+
+  // hiệu ứng xoay xoay load danh sách End //
+
+  // Croll top page Start //
   useEffect(() => {
     getAll();
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
   }, []);
-
-  // hiệu ứng xoay xoay load danh sách End //
-
-  // Croll top page Start //
+ 
   useEffect(() => {
     const timeout = setTimeout(() => {
       window.scrollTo(0, 0);
@@ -105,12 +112,8 @@ function LoginPage() {
 
     return () => clearTimeout(timeout);
   }, []);
-  // Croll top page End //
-
-  // format giá tiền Start //
-  if (!premises) {
-    return <Alert variant="danger">Đã hết danh sách mặt bằng</Alert>;
-  }
+   // Croll top page End //
+ 
   function formatPrice(price) {
     return price.toLocaleString("vi-VN");
   }
@@ -118,7 +121,7 @@ function LoginPage() {
 
   const fetchData = async (page) => {
     try {
-      const result = await service.getAllPremises(
+      const result = await service.getAllPremisesHomePage(
         floor,
         code,
         area,
@@ -146,10 +149,10 @@ function LoginPage() {
   return (
     <>
       <Helmet>
-        <title>Quản lý</title>
+        <title>Trang chủ</title>
       </Helmet>
       <div>
-        <HeaderAdmin />
+        <HeaderAdmin/>
         <CarouselBody />
         <a
           id="myBtn2"
@@ -178,7 +181,7 @@ function LoginPage() {
                       Một số mặt bằng tại Diamond
                     </h3>
                   </div>
-
+                 
                   <br />
                   <div className="display">
                     <div className="col-lg-2">
@@ -186,7 +189,7 @@ function LoginPage() {
                         className=" select-floor-homePage"
                         onChange={(event) => handleFloor(event.target.value)}
                       >
-                        <option value="">Chọn tầng: Tất cả</option>
+                        <option value="">Tầng: Tất cả</option>
                         <option value="1">Tầng 1</option>
                         <option value="2">Tầng 2</option>
                         <option value="3">Tầng 3</option>
@@ -198,7 +201,7 @@ function LoginPage() {
                         <option value="9">Tầng 9</option>
                       </select>
                     </div>
-
+                
                     <div className="display">
                       <input
                         onChange={(event) => handleArea(event.target.value)}
@@ -228,8 +231,8 @@ function LoginPage() {
                         colors={["#306cce", "#72a1ed"]}
                       />
                     </div>
-                  ) : premises.length === 0 ? (
-                    <p>Hiện tại mặt bằng ở DiamondTime đang cập nhật.....</p>
+                  ) : ( !premises?.length ? (
+                    <p>Không có danh sách....</p>
                   ) : (
                     <div className="row g-4">
                       {premises.map((premise, index) => (
@@ -286,7 +289,7 @@ function LoginPage() {
                         </div>
                       ))}
                     </div>
-                  )}
+                  ))}
                 </div>
                 {/* Hiển thị danh sách mặt bằng End */}
                 <br />

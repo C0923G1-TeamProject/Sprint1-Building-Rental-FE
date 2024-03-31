@@ -15,8 +15,7 @@ export const getAllPremises = async (floor, code, area, premisesName, page) => {
 
 export const getAllPremisesHomePage = async (floor, code, area, premisesName, page) => {
     try {
-        let rs = await axios.get(`http://localhost:8080/api/premises/search, {params: {floor, code, area, premisesName, page}}` );
-      
+        let rs = await axios.get('http://localhost:8080/api/premises/search', {params: {floor, code, area, premisesName, page}} );
         return rs.data
     
 
@@ -25,8 +24,6 @@ export const getAllPremisesHomePage = async (floor, code, area, premisesName, pa
     }
     
 }
-
-
 
 
 
