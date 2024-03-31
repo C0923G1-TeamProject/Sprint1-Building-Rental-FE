@@ -1,18 +1,10 @@
 import axios from "axios";
+import {axiosCof} from "../../components/Config/axios-config";
 
-export const submit = async (account) => {
-    try {
-        const res = await axios.post("http://localhost:8080/api/auth/test", account);
-        console.log(res.data);
-        return res.data;
-    } catch (e) {
-        console.log(e);
-    }
-}
 
-export const getInfoOtp = async (acc) => {
+export const loginOtp = async (acc) => {
     try {
-        const res = await axios.post("http://localhost:8080/api/auth/send-otp", acc);
+        const res = await axiosCof.post("http://localhost:8080/api/auth/login-otp", acc);
         return res.data;
     } catch (e) {
         console.log(e);
@@ -21,7 +13,7 @@ export const getInfoOtp = async (acc) => {
 
 export const login = async (account) => {
     try {
-        const res = await axios.post("http://localhost:8080/api/auth/login", account);
+        const res = await axiosCof.post("http://localhost:8080/api/auth/login", account);
         return res.data;
     } catch (e) {
         console.log(e);
