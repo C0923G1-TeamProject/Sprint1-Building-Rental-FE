@@ -13,20 +13,23 @@ import {useState} from "react";
 function AddCustomer() {
     const navigation = useNavigate();
     const [imageUrl, setImageUrl] = useState("");
+    const [errorMessageEmail, setErrorMessageEmail] = useState("");
+    const [errorMessageCard, setErrorMessageCard] = useState("");
+    const [errorMessagePhone, setErrorMessagePhone] = useState("");
     const validation = {
         name: Yup.string().matches(/^[a-zA-ZÀ-ỹ\s]*$/, "Tên không đúng định dạng VD: Nguyễn Văn An").required("Vui lòng nhập tên"),
         card: Yup.string().matches(/^\d{12}$/, "Số căn cước cần chính xác 12 ký tự số").required("Vui lòng nhập căn cước công dân"),
         email: Yup.string().matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, "Email không đúng định dạng").required("Vui lòng nhập email"),
-        date: Yup.string().required("Vui lòng thêm ngày sinh").test("Trên 18 tuổi", "Bạn cần phải trên 18 tuổi", function (value) {
+        date: Yup.string().required("Vui lòng thêm ngày sinh").test("Tuổi từ 18 đến 110", "Bạn cần phải trong độ tuổi từ 18 đến 110", function (value) {
             if (!value) return false;
             const birthDate = new Date(value);
             const currentDate = new Date();
-            const age = currentDate.getFullYear() - birthDate.getFullYear();
+            let age = currentDate.getFullYear() - birthDate.getFullYear();
             const monthDiff = currentDate.getMonth() - birthDate.getMonth();
             if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDate.getDate())) {
-                return age - 1 >= 18;
+                age--;
             }
-            return age >= 18;
+            return age >= 18 && age <= 110;
         }),
         phoneNumber: Yup.string().matches(/^[0-9]{10,11}$/, "Số điện thoại không hợp lệ").required("Vui lòng nhập số điện thoại"),
         address: Yup.string().trim().required("Vui lòng nhập địa chỉ"),
@@ -37,11 +40,33 @@ function AddCustomer() {
         try {
             // Gán giá trị URL của ảnh từ Firebase vào trường img của values
             values.img = imageUrl;
-            await CustomerService.createCustomer(values);
-            navigation("/customer")
-            toast.success("Thêm mới thành công");
+            let rs = await CustomerService.createCustomer(values);
+            switch (rs) {
+                case "phone":
+                    setErrorMessagePhone("Số điện thoại này đã tồn tại.");
+                    setErrorMessageEmail("");
+                    setErrorMessageCard("");
+                    break;
+                case "card":
+                    setErrorMessageCard("Số căn cước này đã tồn tại.");
+                    setErrorMessageEmail("");
+                    setErrorMessagePhone("");
+                    break;
+                case "email":
+                    setErrorMessageEmail("Địa chỉ email này đã tồn tại.");
+                    setErrorMessageCard("");
+                    setErrorMessagePhone("");
+                    break;
+                default:
+                    setErrorMessageEmail("");
+                    break;
+            }
+            if (rs === "ok") {
+                navigation("/customer");
+                toast.success("Thêm mới thành công");
+            }
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
     }
     return (
@@ -90,11 +115,21 @@ function AddCustomer() {
                                         className="cus-col">*</span>:</label>
                                     <Field name="card" type="text" className="form-control cus-input" id="card"/>
                                     <ErrorMessage name="card" component="span" className="k-span"></ErrorMessage>
+                                    <div>
+                                        {errorMessageCard && (
+                                            <span className="error-message">{errorMessageCard}</span>
+                                        )}
+                                    </div>
                                 </div>
                                 <div className="form-group cus-group">
                                     <label htmlFor="email" className="form-label cus-label">Email<span
                                         className="cus-col">*</span>:</label>
                                     <Field name="email" type="email" className="form-control cus-input" id="email"/>
+                                    <div>
+                                        {errorMessageEmail && (
+                                            <span className="error-message">{errorMessageEmail}</span>
+                                        )}
+                                    </div>
                                     <ErrorMessage name="email" component="span" className="k-span"></ErrorMessage>
                                 </div>
                                 <div className="form-group cus-group">
@@ -103,6 +138,11 @@ function AddCustomer() {
                                     <Field name="phoneNumber" type="text" className="form-control cus-input"
                                            id="phone"/>
                                     <ErrorMessage name="phoneNumber" component="span" className="k-span"></ErrorMessage>
+                                    <div>
+                                        {errorMessagePhone && (
+                                            <span className="error-message">{errorMessagePhone}</span>
+                                        )}
+                                    </div>
                                 </div>
                                 <div className="form-group cus-group">
                                     <label htmlFor="address" className="form-label cus-label">Địa chỉ<span

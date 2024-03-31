@@ -4,7 +4,7 @@ import Helmet from "react-helmet";
 import HeaderAdmin from "../Header/HeaderAdmin";
 import Footer from "../Footer/Footer";
 import './CustomerCss.css';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
 
@@ -16,6 +16,7 @@ function ListCustomer() {
     const [totalPages, setTotalPages] = useState(0);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const navigation = useNavigate();
     useEffect(() => {
         const timeout = setTimeout(() => {
             window.scrollTo(0, 0);
@@ -71,6 +72,11 @@ function ListCustomer() {
     useEffect(() => {
         getAll(currentPage);
     }, [currentPage]);
+
+    // if (localStorage.getItem("token") == null) {
+    //     navigation("/login");
+    //
+    // }
     return (
         <>
             <Helmet>
@@ -150,7 +156,7 @@ function ListCustomer() {
                         </tbody>
                     </table>
 
-                    <div className="row pagination-wrapper">
+                    <div className="row pagination">
                         {customers ? (
                             <div className="d-flex justify-content-center align-items-center">
                                 <ReactPaginate

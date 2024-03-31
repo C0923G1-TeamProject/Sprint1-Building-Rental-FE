@@ -45,27 +45,33 @@
     margin-right: 10.25rem !important;
 }
 
-.pagination-wrapper {
+.pagination {
     display: flex;
     justify-content: center;
+    margin-top: 20px;
     margin-bottom: 50px;
 }
-
+.page-item {
+    margin: 0 5px;
+    list-style: none;
+}
 .page-link {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     color: #747264 !important;
+    text-decoration: none;
+    transition: background-color 0.3s;
 }
-
 .page-link:hover {
-    color: #92883E !important;
+    background-color: #92883E;
 }
-
-.active > .page-link {
+.active .page-link {
     background-color: #E0CCBE !important;
-    border: none !important;
-    color: black !important;
+    color: black;
+    border-color: #E0CCBE;
 }
-
-.active > .page-link:hover {
+.active .page-link:hover{
     background-color: #B89C8A;
 }
 

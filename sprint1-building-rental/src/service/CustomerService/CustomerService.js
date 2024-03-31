@@ -11,7 +11,8 @@ export const getAll = async (name, email, page) => {
 
 export const createCustomer = async (customer) => {
     try {
-        const res = await axios.post("http://localhost:8080/customer/add", customer)
+        const res = await axios.post("http://localhost:8080/customer/add", customer);
+        return res.data;
     } catch (e) {
         console.log(e);
     }
