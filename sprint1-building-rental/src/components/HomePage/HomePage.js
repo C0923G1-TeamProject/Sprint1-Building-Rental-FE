@@ -11,7 +11,7 @@ import { Hourglass } from "react-loader-spinner";
 import Helmet from "react-helmet";
 import "../Css/HomePage/Messgae.css";
 import SearchIcon from "@mui/icons-material/Search";
-import * as service from "../../service/PremisesService";
+import * as service from "../../service/PremisesService"
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
 
