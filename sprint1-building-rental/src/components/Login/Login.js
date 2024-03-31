@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import * as LoginService from '../../service/LoginService/LoginService'
 import {Otp} from "./Otp";
 import * as Yup from "yup"
+import {useUserData} from "../Context/useUserData";
 
 export function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -16,74 +17,75 @@ export function Login() {
     const [recentAccount, setRecentAccount] = useState();
     const [isRedirectOtp, setIsRedirectOtp] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [nameRequiredMess, setNameRequiredMess] = useState("Vui lòng nhập tên tài khoản");
-    const [passRequiredMess, setPassRequiredMess] = useState("Vui lòng nhập mật khẩu");
+
+    const { setUserData } = useUserData();
+
+
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
     useEffect(() => {
-        if(isRedirectOtp) {
+        if (isRedirectOtp) {
             navigation("/otp");
         }
     }, [isRedirectOtp]);
 
 
     const validation = {
-        username: Yup.string().required("Vui lòng nhập tên tài khoản").max(50,"Số ký tự tối đa có thể nhập là 50"),
-        password: Yup.string().required("Vui lòng nhập mật khẩu").max(24,"Mật khẩu không quá 24 ký tự")
+        username: Yup.string().required("Vui lòng nhập tên tài khoản").max(50, "Số ký tự tối đa có thể nhập là 50"),
+        password: Yup.string().required("Vui lòng nhập mật khẩu").max(24, "Mật khẩu không quá 24 ký tự")
     }
-
 
 
     const handleSubmit = async (value) => {
         try {
 
+            const listVisit = localStorage.getItem("isVisited");
 
-            const isValidPass = await LoginService.submit(value);
-
-            if (isValidPass) {
-
-                sessionStorage.setItem("reUsername", value.username);
-                sessionStorage.setItem("rePass", value.password);
-
-            }
-            const isVisited = localStorage.getItem("isVisited");
+            const newValue = {...value, isVisited: listVisit}
 
 
-            if(isVisited == 1 && isValidPass) {
+            const responseData = await LoginService.login(newValue);
 
-                const info = await LoginService.login(value);
+            console.log(responseData);
 
-                const token = info.token;
-                const nameOfSigninUser = info.name;
-                const role = info.authorities[0].authority;
-                const nameAccount = info.username;
-                localStorage.setItem("token", token);
-                localStorage.setItem("nameOfSigninUser", nameOfSigninUser);
-                localStorage.setItem("role", role);
-                localStorage.setItem("nameAccount", nameAccount);
+            if (responseData) {
+                if (responseData.statusLogin == "redirect-to-otp") {
 
-                //hien modal
+                    const userData = {otp: responseData.otp, email: responseData.email, reUsername: value.username, rePassword: value.password};
+                    setUserData(userData);
 
-                navigation("/");
+                    setIsRedirectOtp(!isRedirectOtp);
+                } else if (responseData.statusLogin == "direct-access") {
 
-
-
-            } else if (isVisited !== 1 && isValidPass) {
-               setIsRedirectOtp(!isRedirectOtp);
+                    const token = responseData.token;
+                    const nameOfSigninUser = responseData.name;
+                    const role = responseData.authorities[0].authority;
+                    const nameAccount = responseData.username;
+                    localStorage.setItem("token", token);
+                    localStorage.setItem("nameOfSigninUser", nameOfSigninUser);
+                    localStorage.setItem("role", role);
+                    localStorage.setItem("nameAccount", nameAccount);
+                    navigation("/");
+                } else {
+                    console.log("nhap sai roi")
+                    // them gia trị lỗi vào 1 biến và truyền xuống cho return
+                    setErrorMessage("Tài khoản hoặc mật khẩu không chính xác");
+                }
             } else {
                 console.log("nhap sai roi")
                 // them gia trị lỗi vào 1 biến và truyền xuống cho return
                 setErrorMessage("Tài khoản hoặc mật khẩu không chính xác");
             }
+
+
         } catch (e) {
             console.log(e);
         }
 
     }
-
-
 
 
     return (
@@ -118,7 +120,8 @@ export function Login() {
 
                                             <Field name="username" type="text" className="login__input"
                                                    placeholder="Tài khoản"/>
-                                            <ErrorMessage name="username" component="span" className={"k-required-name"}></ErrorMessage>
+                                            <ErrorMessage name="username" component="span"
+                                                          className={"k-required-name"}></ErrorMessage>
 
                                         </div>
                                         <div className="login__field">
@@ -136,7 +139,8 @@ export function Login() {
                                                  onClick={togglePasswordVisibility}/>
                                             <div className="k-break-wall-eye"></div>
 
-                                            <ErrorMessage name="password" component="span" className={"k-required-pass"}></ErrorMessage>
+                                            <ErrorMessage name="password" component="span"
+                                                          className={"k-required-pass"}></ErrorMessage>
 
                                         </div>
 
@@ -148,7 +152,6 @@ export function Login() {
                                                    aria-hidden="true"/>
                                             <label htmlFor="example-1">Ghi nhớ đăng nhập</label>
                                         </div>
-
 
 
                                         <button className="button login__submit" type="submit">
