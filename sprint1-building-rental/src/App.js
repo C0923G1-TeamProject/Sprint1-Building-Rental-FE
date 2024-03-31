@@ -60,6 +60,7 @@ function App() {
               element={<UpdatePremises />}
             ></Route>
             <Route path={"/logout"} element={<Logout />}></Route>
+            <Route path="/contract/create" element={<CreateContract />}></Route>
           </Routes>
         </BrowserRouter>
       </UserDataProvider>

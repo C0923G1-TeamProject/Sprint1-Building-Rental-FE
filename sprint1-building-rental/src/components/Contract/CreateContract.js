@@ -24,27 +24,27 @@ function CreateContract() {
   const [price, setPrice] = useState();
   const [premiseSelected, setPremiseSelected] = useState();
   const [totalPay, setTotalPay] = useState();
+  const [idAcc, setIdAcc] = useState();
 
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate("/contract");
   };
-  const initCreate = {
-    code: "",
-    startDate: "",
-    endDate: "",
-    deposit:
-      premiseSelected && premiseSelected.price
-        ? parseInt(premiseSelected.price)
-        : "",
-    content: "",
-    paymentTerm: totalPay ? totalPay : "",
-    idPremises: chooseIdPremises ? chooseIdPremises.id : "",
-    idCustomer: "",
-    idAccount: "",
-    idContractStatus: "",
-  };
+  // const initCreate = {
+  //   code: "",
+  //   startDate: "",
+  //   endDate: "",
+  //   deposit:
+  //     premiseSelected && premiseSelected.price
+  //       ? parseInt(premiseSelected.price)
+  //       : "",
+  //   content: "",
+  //   paymentTerm: totalPay ? totalPay : "",
+  //   idPremises: chooseIdPremises ? chooseIdPremises.id : "",
+  //   idCustomer: "",
+  //   idAccount: idAcc,
+  // };
   const validation = Yup.object({
     startDate: Yup.date()
       .nullable()
@@ -68,7 +68,7 @@ function CreateContract() {
     paymentTerm: Yup.string().required("Nội dung nay không được để trống"),
     idPremises: Yup.number().required("Vui lòng chọn mặt bằng"),
     idCustomer: Yup.number().required("Vui lòng chọn khách hàng"),
-    idAccount: Yup.number().required("Nội dung nay không được để trống"),
+    // idAccount: Yup.number().required("Nội dung nay không được để trống"),
   });
 
   useEffect(() => {
@@ -171,10 +171,7 @@ function CreateContract() {
     }
   }, [premiseSelected, numberOfMonths]);
 
-  const handlePrice = (e, setFieldValue) => {
-    setFieldValue("paymentTerm", e);
-    console.log(e);
-  };
+  
 
   const getTotal = (price, numberOfMonths) => {
     const totalPrice = parseInt(price * numberOfMonths);
@@ -207,7 +204,29 @@ function CreateContract() {
       setFieldValue("deposit", price);
     });
   };
+  //lấy thông tin nhân viên
 
+  const [info, setInfo] = useState();
+
+  useEffect(() => {
+    getInfo();
+
+  }, []);
+
+  const getInfo = async () => {
+    try {
+      const res = await contractService.getInfo();
+      console.log(res);
+      setInfo(res);
+      setIdAcc(res.idAccount);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  if (!info) {
+    return <div>loading</div>;
+  }
   return (
     <>
       <HeaderAdmin />
@@ -217,7 +236,18 @@ function CreateContract() {
           <h1 className="text-center">THÊM MỚI HỢP ĐỒNG</h1>
 
           <Formik
-            initialValues={initCreate}
+            initialValues={{ code: "",
+            startDate: "",
+            endDate: "",
+            deposit:
+              premiseSelected && premiseSelected.price
+                ? parseInt(premiseSelected.price)
+                : "",
+            content: "",
+            paymentTerm: totalPay ? totalPay : "",
+            idPremises: chooseIdPremises ? chooseIdPremises.id : "",
+            idCustomer: "",
+            idAccount: idAcc,}}
             validationSchema={validation}
             validateOnChange={false}
             onSubmit={handleSubmitAdd}
@@ -296,15 +326,16 @@ function CreateContract() {
                   <Field
                     id="inputState"
                     className="form-select"
-                    name="idAccount"
-                  >
-                    <option value={localStorage.getId}>{localStorage.getItem("nameOfSigninUser")}</option>
-                  </Field>
+                    value={info.nameEmployee}
+                    disabled
+                  ></Field>
                   <ErrorMessage
                     name="idCustomer"
                     style={{ color: "red" }}
                     component={"span"}
                   />
+                    
+                  <Field name="idAccount" value={info.idAccount} hidden></Field>
                 </div>
                 <div className="col-md-4">
                   <label
