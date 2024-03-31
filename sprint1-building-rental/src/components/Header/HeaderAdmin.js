@@ -139,14 +139,14 @@ function HeaderAdmin({ name, ...props }) {
                 <div>
                   <Link className="text-sideba" to={"/premises"}>
                     <button className="button-sideba">
-                      <span>Quản lý mặt bằng</span>
+                       Mặt bằng
                     </button>
                   </Link>
                 </div>
                 <div>
                   <Link className="text-sideba" to={"/customer"}>
                     <button className="button-sideba">
-                      <span>Quản lý khách hàng</span>
+                       Khách hàng
                     </button>
                   </Link>
                 </div>
@@ -157,7 +157,7 @@ function HeaderAdmin({ name, ...props }) {
                         href="/contract"
                         style={{ color: `black`, textDecoration: `none` }}
                       >
-                        <span>Quản lý hợp đồng</span>
+                        <span> Hợp đồng</span>
                       </a>
                     </button>
                   </Link>
