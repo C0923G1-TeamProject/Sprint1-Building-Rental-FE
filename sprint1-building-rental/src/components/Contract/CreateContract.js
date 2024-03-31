@@ -3,15 +3,15 @@ import Footer from "../Footer/Footer";
 import HeaderAdmin from "../Header/HeaderAdmin";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, useFormik } from "formik";
 import "../Css/Contract/list-contract.css";
-import * as contractStatusService from "../ThamService/ContractStatusService";
-import axios from "axios";
-import * as contractService from "../ThamService/ContractService";
+import * as contractStatusService from "../../service/ThamService/ContractStatusService";
+import * as contractService from "../../service/ThamService/ContractService";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import * as premisesService from "../../service/PremisesService";
 
 function CreateContract() {
   const [status, setStatus] = useState([]);
@@ -20,15 +20,27 @@ function CreateContract() {
   const [customer, setCustomer] = useState([]);
 
   const [contentContract, setContentContract] = useState("");
+  const [chooseIdPremises, setChooseIdPremises] = useState();
+  const [price, setPrice] = useState();
+  const [premiseSelected, setPremiseSelected] = useState();
+  const [totalPay, setTotalPay] = useState();
+
   const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate("/contract");
+  };
   const initCreate = {
     code: "",
     startDate: "",
     endDate: "",
-    deposit: "",
+    deposit:
+      premiseSelected && premiseSelected.price
+        ? parseInt(premiseSelected.price)
+        : "",
     content: "",
-    paymentTerm: "",
-    idPremises: "",
+    paymentTerm: totalPay ? totalPay : "",
+    idPremises: chooseIdPremises ? chooseIdPremises.id : "",
     idCustomer: "",
     idAccount: "",
     idContractStatus: "",
@@ -57,10 +69,12 @@ function CreateContract() {
     idPremises: Yup.number().required("Vui lòng chọn mặt bằng"),
     idCustomer: Yup.number().required("Vui lòng chọn khách hàng"),
     idAccount: Yup.number().required("Nội dung nay không được để trống"),
-    idContractStatus: Yup.number().required(
-      "Vui lòng chọn trạng thái hợp đồng"
-    ),
   });
+
+  useEffect(() => {
+    document.title = "Tạo mới hợp đồng";
+  });
+
   //lấy status
   useEffect(() => {
     getAllStatus();
@@ -106,16 +120,92 @@ function CreateContract() {
   };
   //contentChange
 
-  const contentChange = (e) => {
-    setContentContract(e.target);
-    console.log(e);
-  };
   //
   const handleSubmitAdd = async (contract) => {
     const newContract = { ...contract };
+    console.log(newContract);
     await contractService.addContract(newContract);
     toast.success("Add new success!");
     navigate("/contract");
+  };
+  //hàm để tính ngày kết thúc
+  const [startDate, setStartDate] = useState("");
+  const [numberOfMonths, setNumberOfMonths] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const handleStartDateChange = (e, setFieldValue) => {
+    const { name, value } = e.target;
+    setFieldValue(name, value);
+    const selectedDate = e.target.value;
+    setStartDate(selectedDate);
+    if (selectedDate && numberOfMonths) {
+      calculateEndDate(selectedDate, numberOfMonths, setFieldValue);
+    }
+  };
+
+  const handleNumberOfMonthsChange = (e, setFieldValue) => {
+    const { name, value } = e.target;
+    setFieldValue(name, value);
+    const months = parseInt(e.target.value);
+    setNumberOfMonths(months);
+    if (startDate && !isNaN(months)) {
+      calculateEndDate(startDate, months, setFieldValue);
+    }
+  };
+
+  const calculateEndDate = (start, months, setFieldValue) => {
+    const startDateObj = new Date(start);
+    const endDateObj = new Date(
+      startDateObj.getFullYear(),
+      startDateObj.getMonth() + months,
+      startDateObj.getDate()
+    );
+    setEndDate(endDateObj.toISOString().split("T")[0]);
+    setFieldValue("endDate", endDateObj);
+  };
+
+  //tính tổng tiền
+  useEffect(() => {
+    if (premiseSelected && premiseSelected.price && numberOfMonths) {
+      getTotal(premiseSelected.price, numberOfMonths);
+    }
+  }, [premiseSelected, numberOfMonths]);
+
+  const handlePrice = (e, setFieldValue) => {
+    setFieldValue("paymentTerm", e);
+    console.log(e);
+  };
+
+  const getTotal = (price, numberOfMonths) => {
+    const totalPrice = parseInt(price * numberOfMonths);
+    setTotalPay(totalPrice);
+  };
+
+  // tiền đặt cọc bắt buộc cọc trước 1 tháng tiền thuê, nên sẽ bằng với giá
+
+  //tự động lấy tiền theo id mặt bằng
+
+  const handelGetIdPremises = (e, setFieldValue) => {
+    const { name, value } = e.target;
+    setFieldValue(name, value);
+    const newValue = parseInt(e.target.value);
+    setChooseIdPremises(newValue);
+    handleRenderPrice(newValue, setFieldValue);
+    // console.log(newValue);
+  };
+
+  // useEffect(() => {
+  //   handleRenderPrice(chooseIdPremises);
+  // }, [chooseIdPremises]);
+
+  const handleRenderPrice = (chooseIdPremises, setFieldValue) => {
+    premisesService.getPrimeseById(chooseIdPremises).then((res) => {
+      setPremiseSelected(res);
+      const price = res.price;
+      setPrice(price);
+      setFieldValue("paymentTerm", price);
+      setFieldValue("deposit", price);
+    });
   };
 
   return (
@@ -129,11 +219,11 @@ function CreateContract() {
           <Formik
             initialValues={initCreate}
             validationSchema={validation}
+            validateOnChange={false}
             onSubmit={handleSubmitAdd}
-          >
-            <Form className="row g-3 mt-3">
-              <div className="row">
-                {premisese.content && (
+            render={({ setFieldValue }) => (
+              <Form className="row g-3 mt-3">
+                {premisese.length > 0 ? (
                   <div className="col-md-4">
                     <label
                       for="inputState"
@@ -146,43 +236,26 @@ function CreateContract() {
                       id="inputState"
                       className="form-select"
                       name="idPremises"
+                      value={chooseIdPremises}
+                      onChange={(e) => handelGetIdPremises(e, setFieldValue)}
                     >
-                      <option selected>Chọn mặt bằng</option>
+                      <option>Chọn mặt bằng</option>
 
-                      {premisese.content.map((item) => (
+                      {premisese.map((item) => (
                         <option key={item.id} value={item.id}>
                           Mã: {item.code} - Tầng: {item.floor}
                         </option>
                       ))}
                     </Field>
-                    <ErrorMessage name="idPremises" />
+                    <ErrorMessage
+                      name="idPremises"
+                      style={{ color: "red" }}
+                      component={"span"}
+                    />
                   </div>
+                ) : (
+                  <div>Hiện đã hết mặt bằng cho thuê</div>
                 )}
-
-                <div className="col-md-4">
-                  <label
-                    for="inputAddress"
-                    className="form-label title-create-contract"
-                  >
-                    Trạng thái
-                  </label>
-                  <Field
-                    as="select"
-                    className="form-select"
-                    name="idContractStatus"
-                    // onChange={handelSearchChange}
-                  >
-                    <option selected value="">
-                      Chọn trạng thái
-                    </option>
-                    {status.map((item) => (
-                      <option value={item.id} key={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage name="idContractStatus" />
-                </div>
                 {customer.content && (
                   <div className="col-md-4">
                     <label
@@ -206,167 +279,210 @@ function CreateContract() {
                         </option>
                       ))}
                     </Field>
-                    <ErrorMessage name="idCustomer" />
+                    <ErrorMessage
+                      name="idCustomer"
+                      style={{ color: "red" }}
+                      component={"span"}
+                    />
                   </div>
                 )}
-              </div>
-
-              <div className="col-md-4">
-                <label
-                  for="inputPassword4"
-                  className="form-label title-create-contract"
-                >
-                  Ngày bắt đầu thuê<span className="required-note"> *</span>
-                </label>
-                <Field
-                  type="date"
-                  className="form-control"
-                  id="inputPassword4"
-                  name="startDate"
-                />
-                <ErrorMessage name="startDate" />
-              </div>
-              <div className="col-md-4">
-                <label
-                  for="inputPassword4"
-                  className="form-label title-create-contract"
-                >
-                  Ngày kết thúc thuê<span className="required-note"> *</span>
-                </label>
-                <Field
-                  type="date"
-                  className="form-control"
-                  id="inputPassword4"
-                  name="endDate"
-                />
-                <ErrorMessage name="endDate" />
-              </div>
-              <div className="col-md-4">
-                <label
-                  for="inputEmail4"
-                  className="form-label title-create-contract"
-                >
-                  Kỳ hạn (tháng) <span className="required-note"> *</span>
-                </label>
-                <Field
-                  type="number"
-                  className="form-control"
-                  id="inputEmail4"
-                  disabled
-                  value="1"
-                />
-              </div>
-              {/* <ErrorMessage name="idCustomer"/> */}
-
-              {/* <div className="col-md-6">
-                <label
-                  for=""
-                  className="form-label title-create-contract"
-                >
-                  Giá tiền mỗi tháng (VNĐ)
-                  <span className="required-note"> *</span>
-                </label>
-                <Field
-                  type="number"
-                  className="form-control"
-                  id="inputAddress"
-                />
-              </div> */}
-
-              <div className="col-md-6">
-                <label
-                  for="inputAddress"
-                  className="form-label title-create-contract"
-                >
-                  Tiền cọc (VNĐ)<span className="required-note"> *</span>
-                </label>
-                <Field
-                  type="number"
-                  className="form-control"
-                  id="inputAddress"
-                  name="deposit"
-                />
-                <ErrorMessage name="deposit" />
-              </div>
-
-              <div className="col-md-6">
-                <label
-                  for="inputAddress"
-                  className="form-label title-create-contract"
-                >
-                  Tổng tiền (VNĐ)<span className="required-note"> *</span>
-                </label>
-                <Field
-                  type="number"
-                  className="form-control"
-                  id="inputAddress"
-                  name="paymentTerm"
-                />
-                <ErrorMessage name="paymentTerm" />
-              </div>
-
-              <div className="col-md-6">
-                <label
-                  for="inputState"
-                  className="form-label title-create-contract"
-                >
-                  Họ và tên nhân viên<span className="required-note"> *</span>
-                </label>
-                <Field
-                  as="select"
-                  id="inputState"
-                  className="form-select"
-                  name="idAccount"
-                >
-                  <option selected>Chọn tên nhân viên</option>
-                  <option value="1">Trần Kim Tiểu Vi</option>
-                </Field>
-                <ErrorMessage name="idCustomer" />
-              </div>
-
-              <div className="col-md-12">
-                <label
-                  for="inputZip"
-                  className="form-label title-create-contract"
-                >
-                  Nội dung hợp đồng<span className="required-note"> *</span>
-                </label>
-                <div>
+                <div className="col-md-4">
+                  <label
+                    for="inputState"
+                    className="form-label title-create-contract"
+                  >
+                    Họ và tên nhân viên<span className="required-note"> *</span>
+                  </label>
                   <Field
-                    type="text"
+                    as="select"
+                    id="inputState"
+                    className="form-select"
+                    name="idAccount"
+                  >
+                    <option selected>Chọn tên nhân viên</option>
+                    <option value="1">Trần Kim Tiểu Vi</option>
+                  </Field>
+                  <ErrorMessage
+                    name="idCustomer"
+                    style={{ color: "red" }}
+                    component={"span"}
+                  />
+                </div>
+                <div className="col-md-4">
+                  <label
+                    for="inputPassword4"
+                    className="form-label title-create-contract"
+                  >
+                    Ngày bắt đầu thuê<span className="required-note"> *</span>
+                  </label>
+                  <Field
+                    type="date"
+                    className="form-control"
+                    id="inputPassword4"
+                    name="startDate"
+                    onChange={(e) => handleStartDateChange(e, setFieldValue)}
+                    value={startDate}
+                  />
+                  <ErrorMessage
+                    name="startDate"
+                    style={{ color: "red" }}
+                    component={"span"}
+                  />
+                </div>
+                <div className="col-md-4">
+                  <label
+                    for="inputEmail4"
+                    className="form-label title-create-contract"
+                  >
+                    Kỳ hạn (tháng) <span className="required-note"> *</span>
+                  </label>
+                  <Field
+                    type="number"
+                    className="form-control"
+                    id="inputEmail4"
+                    value={numberOfMonths}
+                    onChange={(e) =>
+                      handleNumberOfMonthsChange(e, setFieldValue)
+                    }
+                  />
+                </div>
+                <div className="col-md-4">
+                  <label
+                    for="inputPassword4"
+                    className="form-label title-create-contract"
+                  >
+                    Ngày kết thúc thuê<span className="required-note"> *</span>
+                  </label>
+                  <Field
+                    type="date"
+                    className="form-control"
+                    id="inputPassword4"
+                    disabled
+                    name="endDate"
+                    value={endDate}
+                  />
+                  <ErrorMessage
+                    name="endDate"
+                    style={{ color: "red" }}
+                    component={"span"}
+                  />
+                </div>
+                {/* <ErrorMessage name="idCustomer"/> */}
+                <div className="col-md-4">
+                  <label for="" className="form-label title-create-contract">
+                    Giá tiền mỗi tháng (VNĐ)
+                    <span className="required-note"> *</span>
+                  </label>
+                  <Field
+                    type="number"
                     className="form-control"
                     id="inputAddress"
-                    name="content"
-                  />
-                  <ErrorMessage name="paymentTerm" />
-                  {/* <ErrorMessage name="content" /> */}
-                </div>
-              </div>
+                    name="paymentTerm"
 
-              {/* <ReactQuill
+                    // value={
+                    //   premiseSelected && premiseSelected.price
+                    //     ? premiseSelected.price
+                    //     : ""
+                    // }
+                  />
+                  <ErrorMessage
+                    name="paymentTerm"
+                    style={{ color: "red" }}
+                    component={"span"}
+                  />
+                </div>
+                <div className="col-md-4">
+                  <label
+                    for="inputAddress"
+                    className="form-label title-create-contract"
+                  >
+                    Tiền cọc (VNĐ)<span className="required-note"> *</span>
+                  </label>
+                  <Field
+                    type="number"
+                    className="form-control"
+                    id="inputAddress"
+                    name="deposit"
+                    // value={
+                    //   premiseSelected && premiseSelected.price
+                    //     ? premiseSelected.price
+                    //     : ""
+                    // }
+                  />
+                  <ErrorMessage
+                    name="deposit"
+                    style={{ color: "red" }}
+                    component={"span"}
+                  />
+                </div>
+
+                <div className="col-md-4">
+                  <label
+                    for="inputAddress"
+                    className="form-label title-create-contract"
+                  >
+                    Tổng tiền (VNĐ)<span className="required-note"> *</span>
+                  </label>
+                  <Field
+                    type="number"
+                    className="form-control"
+                    id="inputAddress"
+                    value={totalPay}
+                  />
+                </div>
+
+                <div className="col-md-12">
+                  <label
+                    for="inputZip"
+                    className="form-label title-create-contract"
+                  >
+                    Nội dung hợp đồng<span className="required-note"> *</span>
+                  </label>
+                  <div>
+                    <Field
+                      type="text"
+                      className="form-control w-100"
+                      id="inputAddress"
+                      name="content"
+                    />
+                    <ErrorMessage
+                      name="paymentTerm"
+                      style={{ color: "red" }}
+                      component={"span"}
+                    />
+                    {/* <ErrorMessage name="content" /> */}
+                  </div>
+                </div>
+                {/* <ReactQuill
                 theme="snow"
                 value={contentContract}
                 onChange={contentChange}
                 name="content"
               /> */}
-
-              <div>
-                {/* <a
-                  href="../contract/list-contract.html"
-                  type="submit"
+                <div>
+                  {/* <a
+                  
+                  type="button"
                   className="btn btn-in-list mt-5 mr-3"
-                >
-                  <button type="button">Hủy thêm mới</button>
-                </a> */}
-                <button type="submit" className="btn btn-in-list mt-5 mr-3">
-                  Thêm mới
-                </button>
-                {/* <button type="submit" className="btn btn-in-list mt-5 mr-3">
+                > */}
+                  <button
+                    onClick={handleBack}
+                    className="btn btn-in-list mt-3 mr-3"
+                    type="button"
+                  >
+                    Hủy thêm mới
+                  </button>
+                  {/* </a> */}
+                  <button type="submit" className="btn btn-in-list mt-3 mr-3">
+                    Thêm mới
+                  </button>
+                  {/* <button type="submit" className="btn btn-in-list mt-5 mr-3">
                   In hợp đồng
                 </button> */}
-              </div>
-            </Form>
-          </Formik>
+                </div>
+              </Form>
+            )}
+          ></Formik>
         </div>
       </div>
 

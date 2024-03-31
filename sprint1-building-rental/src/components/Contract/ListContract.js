@@ -2,29 +2,34 @@ import HeaderAdmin from "../Header/HeaderAdmin";
 import Footer from "../Footer/Footer";
 import "../Css/Contract/list-contract.css";
 import { useEffect, useState } from "react";
-import * as contractStatusService from "../ThamService/ContractStatusService";
-import * as contractService from "../ThamService/ContractService";
+import * as contractStatusService from "../../service/ThamService/ContractStatusService";
+import * as contractService from "../../service/ThamService/ContractService";
 import Pagination from "react-bootstrap/Pagination";
+import moment from "moment";
 
 function LisContract() {
   const [status, setStatus] = useState([]);
   //search
   const initSearch = {
     nameCustomer: "",
-    statusContract: "",
+    idContractStatus: "",
   };
   //paginate
   const initPage = {
     page: 0,
-    size: 5,
+    size: 2,
     // sortDirection: "ASC",
     // sortBy: "endDate",
     nameCustomer: "",
-    statusContract: "",
+    idContractStatus: -1,
   };
   const [search, setSearch] = useState(initSearch);
   const [pageContract, setPageContract] = useState(initPage);
   const [contracts, setContracts] = useState();
+
+  useEffect(() => {
+    document.title = "Danh sách hợp đồng";
+  });
 
   useEffect(() => {
     getAllStatus();
@@ -37,6 +42,10 @@ function LisContract() {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const formatDate = (date) => {
+    return moment(date).format("DD/MM/YYYY");
   };
 
   useEffect(() => {
@@ -115,7 +124,7 @@ function LisContract() {
               <div className="col-sm-2 mb-3">
                 <select
                   className="form-select"
-                  name="statusContract"
+                  name="idContractStatus"
                   onChange={handelSearchChange}
                 >
                   <option selected value="">
@@ -159,14 +168,21 @@ function LisContract() {
                   scope="col"
                   style={{ color: `white`, backgroundColor: `#747264` }}
                 >
-                  Tên khách hàng
+                  Mã mặt bằng
                 </th>
                 <th
                   scope="col"
                   style={{ color: `white`, backgroundColor: `#747264` }}
                 >
-                  Tên mặt bằng
+                  Khách hàng
                 </th>
+                <th
+                  scope="col"
+                  style={{ color: `white`, backgroundColor: `#747264` }}
+                >
+                  Nhân viên tạo hợp đồng
+                </th>
+
                 <th
                   scope="col"
                   style={{ color: `white`, backgroundColor: `#747264` }}
@@ -177,25 +193,39 @@ function LisContract() {
                   scope="col"
                   style={{ color: `white`, backgroundColor: `#747264` }}
                 >
+                  Ngày bắt đầu
+                </th>
+                <th
+                  scope="col"
+                  style={{ color: `white`, backgroundColor: `#747264` }}
+                >
                   Ngày kết thúc
                 </th>
               </tr>
             </thead>
             <tbody>
-              {contracts.content &&
+              {contracts.content && contracts.content.length > 0 ? (
                 contracts.content.map((item, index) => {
                   return (
                     <tr key={item.id}>
                       <td>{index + 1}</td>
                       <td>{item.code}</td>
-                      <td>{item.nameCustomer}</td>
-                      <td>{item.deposit}</td>
-                      <td>{item.contractStatus}</td>
-
-                      <td>{item.endDate}</td>
+                      <td>
+                        Mã: {item.premises.code} - Tầng: {item.premises.floor}
+                      </td>
+                      <td>{item.customer.name}</td>
+                      <td>{item.account.username}</td>
+                      <td>{item.contractStatus.name}</td>
+                      <td>{formatDate(item.startDate)}</td>
+                      <td>{formatDate(item.endDate)}</td>
                     </tr>
                   );
-                })}
+                })
+              ) : (
+                <tr>
+                  <td colSpan="6">Không tìm thấy nội dung này</td>
+                </tr>
+              )}
             </tbody>
           </table>
           <div className="col-sm-2">

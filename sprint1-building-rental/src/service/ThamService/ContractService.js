@@ -1,8 +1,8 @@
 import axios from "axios";
 export const getAll = async (pageContract) => {
   try {
-    const res = await axios.get(
-      `http://localhost:8080/contract/search?page=${pageContract.page}&nameCustomer=${pageContract.nameCustomer}&statusContract=${pageContract.statusContract}`
+    const res = await axios.post(
+      `http://localhost:8080/contract`,pageContract
     );
     console.log(res.data);
     return res.data;
@@ -26,7 +26,7 @@ export const getAllPage = async (pageContract) => {
 
 export const getAllPremises = async () => {
   try {
-    const res = await axios.get("http://localhost:8080/api/premises/search");
+    const res = await axios.get("http://localhost:8080/api/premises/createContract");
     return res.data;
   } catch (e) {
     console.log(e);
