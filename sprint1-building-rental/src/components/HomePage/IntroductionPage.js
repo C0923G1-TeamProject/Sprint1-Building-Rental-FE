@@ -72,20 +72,21 @@ function IntroductionPage() {
             Một trong những đơn vị quản lý chuyên nghiệp & uy tín.
             <br />
             <br />
+           
             <span className="tick">&#x2713;</span>{" "}
-            <strong style={{ " margin": "6%" }}>Tên tòa nhà: </strong> DIAMOND
-            TIME <br />
-            <span className="tick">&#x2713;</span> <strong>Địa chỉ: </strong> 35
+            <span style={{ " margin": "6%","font-weight": 'bold' }}>Tên tòa nhà: </span> DIAMOND TIME{" "}
+            <br />
+            <span className="tick">&#x2713;</span> <span  style={{ "font-weight": "bold" }}>Địa chỉ: </span> 35
             đường Thái Phiên, Phường Phước Ninh, Quận Hải Châu, Thành phố Đà
             Nẵng <br />
-            <span className="tick">&#x2713;</span> <strong>Chủ đầu tư: </strong>
+            <span className="tick">&#x2713;</span> <span style={{ "font-weight": "bold" }}>Chủ đầu tư: </span>
             Công ty TNHH Phước Tiến
             <br />
             <span className="tick">&#x2713;</span>{" "}
-            <strong>Tổng diện tích xây dựng: </strong>5000 m<sup>2</sup>
+            <span  style={{ "font-weight": "bold" }}>Tổng diện tích xây dựng: </span>5000 m<sup>2</sup>
             <br />
             <span className="tick">&#x2713;</span>{" "}
-            <strong>Diện tích mặt sàn: </strong>1300 m<sup>2</sup>
+            <span  style={{ "font-weight": "bold" }}>Diện tích mặt sàn: </span>1300 m<sup>2</sup>
             <br />
             <br />
             <br />

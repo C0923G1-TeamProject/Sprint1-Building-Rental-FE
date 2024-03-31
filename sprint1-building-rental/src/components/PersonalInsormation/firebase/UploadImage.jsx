@@ -3,7 +3,7 @@ import { useState } from "react";
 import storage from "./firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { updateInfoUser } from "../../../service/PersonalInformationService/information-service";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 const UploadImage = ({ setImage, setPreview, user }) => {
   // State to store uploaded file
   const [file, setFile] = useState("");
@@ -49,7 +49,7 @@ const UploadImage = ({ setImage, setPreview, user }) => {
                 icon: "success",
                 title: "Cập nhật ảnh đại diện thành công!",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1500,
               });
               setShowButtons(false);
             });
@@ -79,7 +79,11 @@ const UploadImage = ({ setImage, setPreview, user }) => {
           style={{ display: "none" }}
           id="upload-input"
         />
-        <label htmlFor="upload-input" className="button is-info is-light">
+        <label
+          htmlFor="upload-input"
+          className="button is-info is-light"
+          style={{ "justify-content": "center", left: "10px" }}
+        >
           Chọn tệp
         </label>
       </p>

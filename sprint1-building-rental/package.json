@@ -33,6 +33,7 @@
     "reactstrap": "^9.2.2",
     "web-vitals": "^2.1.4",
     "yup": "^1.4.0"
+
   },
   "devDependencies": {
     "handlebars": "^4.0.6",

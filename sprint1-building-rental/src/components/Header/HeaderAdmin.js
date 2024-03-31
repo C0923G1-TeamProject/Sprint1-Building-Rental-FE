@@ -109,12 +109,12 @@ function HeaderAdmin({ name, ...props }) {
           data-bs-target="#navbarCollapse"
         >
           <span>
-          <button>
-            <MenuIcon />
-          </button>
-        </span>
+            <button>
+              <MenuIcon />
+            </button>
+          </span>
         </button>
-        
+
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <div class="navbar-nav ms-auto p-4 p-lg-0">
             <NavLink to={"/loginPage"} id="trang-chu" className={`nav-link`}>
@@ -139,25 +139,25 @@ function HeaderAdmin({ name, ...props }) {
                 <div>
                   <Link className="text-sideba" to={"/premises"}>
                     <button className="button-sideba">
-                      <span>Quản lý mặt bằng</span>
+                       Mặt bằng
                     </button>
                   </Link>
                 </div>
                 <div>
-                  <Link className="text-sideba" to={""}>
+                  <Link className="text-sideba" to={"/customer"}>
                     <button className="button-sideba">
-                      <span>Quản lý khách hàng</span>
+                       Khách hàng
                     </button>
                   </Link>
                 </div>
                 <div>
-                  <Link className="text-sideba" to={""}>
+                  <Link className="text-sideba" to={"/contract"}>
                     <button className="button-sideba">
                       <a
                         href="/contract"
                         style={{ color: `black`, textDecoration: `none` }}
                       >
-                        <span>Quản lý hợp đồng</span>
+                        <span> Hợp đồng</span>
                       </a>
                     </button>
                   </Link>
@@ -176,9 +176,17 @@ function HeaderAdmin({ name, ...props }) {
                 </DropdownToggle>
 
                 <DropdownMenu>
-                  <DropdownItem>Thông tin cá nhân</DropdownItem>
+                  <Link
+                    className="detailEmployee-homePage"
+                    to={"/information"}
+                  >
+                    <DropdownItem>Thông tin cá nhân</DropdownItem>
+                  </Link>
                   <DropdownItem>
-                    <p className="logout-button-header" onClick={handleLogout}>
+                    <p
+                      className="logout-button-header logout-homePage"
+                      onClick={handleLogout}
+                    >
                       Đăng xuất
                     </p>
                   </DropdownItem>
@@ -198,7 +206,7 @@ function HeaderAdmin({ name, ...props }) {
           <Modal.Title>Xác nhận đăng xuất</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <strong>Bạn có chắc chắn muốn đăng xuất?</strong>
+          <strong style={{"color": 'black'}}>Bạn có chắc chắn muốn đăng xuất?</strong>
         </Modal.Body>
         <Modal.Footer>
           <Button className="nologout" onClick={handleCloseModal}>
@@ -212,5 +220,7 @@ function HeaderAdmin({ name, ...props }) {
       {/* modal End */}
     </>
   );
+
+  
 }
 export default HeaderAdmin;
