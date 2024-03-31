@@ -294,13 +294,11 @@ function CreateContract() {
                     Họ và tên nhân viên<span className="required-note"> *</span>
                   </label>
                   <Field
-                    as="select"
                     id="inputState"
                     className="form-select"
                     name="idAccount"
                   >
-                    <option selected>Chọn tên nhân viên</option>
-                    <option value="1">Trần Kim Tiểu Vi</option>
+                    <option value={localStorage.getId}>{localStorage.getItem("nameOfSigninUser")}</option>
                   </Field>
                   <ErrorMessage
                     name="idCustomer"

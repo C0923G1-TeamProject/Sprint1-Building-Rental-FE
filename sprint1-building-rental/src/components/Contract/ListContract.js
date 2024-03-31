@@ -214,7 +214,7 @@ function LisContract() {
                         Mã: {item.premises.code} - Tầng: {item.premises.floor}
                       </td>
                       <td>{item.customer.name}</td>
-                      <td>{item.account.username}</td>
+                      <td>{localStorage.getItem("nameOfSigninUser")}</td>
                       <td>{item.contractStatus.name}</td>
                       <td>{formatDate(item.startDate)}</td>
                       <td>{formatDate(item.endDate)}</td>
