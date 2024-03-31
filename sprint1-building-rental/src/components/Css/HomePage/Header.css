@@ -201,3 +201,14 @@ h1 {
 }
 
 /* modal End */
+.logout-homePage {
+  text-align: center;
+  position: relative;
+  top: 12px;
+  left: 10px;
+}
+.detailEmployee-homePage{
+position: relative;
+left: 14px;
+}
+

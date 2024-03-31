@@ -21,10 +21,14 @@ import ListCustomer from "./components/Customer/ListCustomer";
 import AddCustomer from "./components/Customer/AddCustomer";
 import ShowInfoUser from "./components/PersonalInsormation/ShowInfoUser";
 import ListPremises from "./components/Premises/ListPremises";
+
 import CreateContract from "./components/Contract/CreateContract";
 
-import { log } from "handlebars";
-function App() { 
+import UpdatePremises from "./components/Premises/UpdatePremises";
+import {log} from "handlebars";
+import {Logout} from "./components/Login/Logout";
+
+function App() {
 
   return (
     <>
@@ -47,12 +51,15 @@ function App() {
 
           <Route path="/customer" element={<ListCustomer />}></Route>
           <Route path="/add" element={<AddCustomer />}></Route>
+          <Route path="/update-premises/:id" element={<UpdatePremises/>}></Route>
+        <Route path={"/logout"} element={<Logout/>}></Route>
         </Routes>
       </BrowserRouter>
 
 
-    </>
-  );
+
+        </>
+    );
 }
 
 export default App;
