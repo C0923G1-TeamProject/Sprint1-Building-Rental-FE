@@ -1,20 +1,36 @@
 import axios from 'axios';
-import async from "async";
 
 export const getAllPremises = async (floor, code, area, premisesName, page) => {
     try {
-        let rs = await axios.get(`http://localhost:8080/api/premises/search?floor=${floor}&code=${code}&area=${area}&premisesName=${premisesName}&page=${page}` );
-        return rs.data
+        let rs = await axios.get(`http://localhost:8080/api/premises/search?floor=${floor}&code=${code}&area=${area}&premisesName=${premisesName}&page=${page}`);
+      
+        return rs.data;
+    
 
     } catch (e) {
         console.log(e);
     }
+    
 }
+
+export const getAllPremisesHomePage = async (floor, code, area, premisesName, page) => {
+    try {
+        let rs = await axios.get('http://localhost:8080/api/premises/search', {params: {floor, code, area, premisesName, page}} );
+        return rs.data
+    
+
+    } catch (e) {
+        console.log(e);
+    }
+    
+}
+
+
 
 export const updatePremises = async (id ,premises) =>{
     console.log(premises);
     try {
-        let rs = await axios.patch(`http://localhost:8080/api/premises/update/${id}`, premises);
+        let rs = await axios.patch(`http://localhost:8080/api/premises/update/${id}, premises`);
         console.log(rs)
     }catch (e) {
         console.log(e);

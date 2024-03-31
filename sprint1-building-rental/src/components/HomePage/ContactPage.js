@@ -29,11 +29,11 @@ function ContactPage() {
   };
   useEffect(() => {
     const timeout = setTimeout(() => {
-        window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
     }, 1000);
 
     return () => clearTimeout(timeout);
-}, [])
+  }, []);
 
   return (
     <>
@@ -82,8 +82,8 @@ function ContactPage() {
             }}
           >
             <FmdGoodIcon />
-            <strong>Địa chỉ: </strong> Số 35 Thái Phiên, Phường Phước Ninh, Quận
-            Hải Châu, TP Đà Nẵng
+            <span style={{ "font-weight": "bold" }}>Địa chỉ: </span> Số 35 Thái
+            Phiên, Phường Phước Ninh, Quận Hải Châu, TP Đà Nẵng
           </p>
           <br />
           <p
@@ -94,26 +94,34 @@ function ContactPage() {
             }}
           >
             <PhoneIcon />
-            <strong>Điện thoại: </strong> 0813061636
+            <span style={{ "font-weight": "bold" }}>Điện thoại: </span>{" "}
+            0813061636
           </p>
         </div>
         <div className="col-sx-4 col-sm-4 col-md-4 col-lg-4">
           <section>
             <form ref={form} onSubmit={sendEmail}>
               <div className="form">
-                <i className="fab fa-app-store-ios"></i>
+                <i className="fab fa-app-store-is"></i>
+                <br />
                 <label style={{ "margin-left": "-187px" }}>Họ và tên</label>
-                <input type="text" name="user_name" />
+                <input required type="text" name="user_name" />
                 <br />
                 <label style={{ "margin-left": "-218px" }}>Email</label>
-                <input type="text" name="user_email" />
+                <input
+                  style={{ width: "256px" }}
+                  required
+                  type="email"
+                  name="user_email"
+                />
                 <br />
                 <label style={{ "margin-left": "-187px" }}>Nội dung</label>
                 <textarea
                   className="textera"
                   cols="30"
-                  rows="5"
+                  rows="6"
                   name="message"
+                  required
                 />
                 <input id="submit" type="submit" name="submit" value="Gửi" />
               </div>
@@ -121,7 +129,6 @@ function ContactPage() {
           </section>
         </div>
       </div>
-
       <br />
       <br />
       <br />
