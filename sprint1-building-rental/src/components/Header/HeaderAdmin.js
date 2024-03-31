@@ -130,7 +130,7 @@ function HeaderAdmin({ name, ...props }) {
               {name} <button className="text-manage">QUẢN LÝ</button>
             </NavLink>
             <Offcanvas show={show} onHide={handleClose} {...props}>
-              <Offcanvas.Header closeButton>
+              <Offcanvas.Header >
                 <Offcanvas.Title>
                   <span className="sidebar-title">Quản Lý</span>
                 </Offcanvas.Title>
@@ -221,6 +221,6 @@ function HeaderAdmin({ name, ...props }) {
     </>
   );
 
-  
+
 }
 export default HeaderAdmin;
