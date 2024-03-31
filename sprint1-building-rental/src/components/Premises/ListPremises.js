@@ -18,6 +18,8 @@ export default function ListPremises() {
     const [currentPage, setCurrentPage] = useState(0);
     const [listFloor, setListFloor] = useState([]);
     const [listType, setListType] = useState([]);
+    const navigation = useNavigate();
+
 
     useEffect(() => {
         const fetchApi = async () => {
@@ -124,6 +126,10 @@ export default function ListPremises() {
     });
 
     /*Giao diện*/
+    if(localStorage.getItem("token") == null){
+        navigation("/login");
+
+    }
     return (
         <>
             <HeaderAdmin/>
@@ -237,7 +243,7 @@ export default function ListPremises() {
                                 nextLabel="Trang sau"
                                 previousLabel="Trang trước"
                                 onPageChange={handlePageClick}
-                                pageRangeDisplayed={2}
+                                pageRangeDisplayed={1}
                                 marginPagesDisplayed={2}
                                 pageCount={totalPages}
                                 pageClassName="page-item"
