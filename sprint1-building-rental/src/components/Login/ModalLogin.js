@@ -14,8 +14,8 @@ export const ModalLogin = ({show}) => {
                     Đăng nhập thành công
                 </Modal.Header>
                 <Modal.Body>
-                    <Link to={"/LoginPage"} className="btn btn-warning mx-3">Đăng nhập vào hệ thống</Link>
-                    <Link to={"/information"} className="btn btn-warning mx-3">Thông tin cá nhân</Link>
+                    <Link to={"/LoginPage"} className="btn btn-primary k-btn-modal-login mx-3">Đăng nhập vào hệ thống</Link>
+                    <Link to={"/information"} className="btn btn-primary k-btn-modal-login mx-3">Thông tin cá nhân</Link>
                 </Modal.Body>
                 <Modal.Footer>
 

@@ -257,6 +257,23 @@
 
 }
 
+.k-spinner {
+    position: absolute;
+    scale: 5;
+    color: #c87221;
+    left: -267px;
+}
+
+.k-btn-modal-login {
+    background-color: #eeb043 !important;
+    border-color: #e5e8f3 !important;
+}
+
+.k-btn-modal-login:hover {
+    background-color: #edc278 !important;
+    border-color: #e5e8f3 !important;
+}
+
 /* checkbox */
 
 .k-checkbox {
