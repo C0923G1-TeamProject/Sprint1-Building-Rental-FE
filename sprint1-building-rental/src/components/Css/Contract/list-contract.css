@@ -1,0 +1,55 @@
+/* .container{
+    background-color: #E0CCBE;
+} */
+.table-header-list-contract {
+  background-color: #747264;
+  color: #fff;
+}
+.btn-action-list-contract {
+  background-color: #e0ccbe;
+}
+.btn-action-list-contract:hover {
+  background-color: #b89c8a;
+}
+
+.link-create-contract {
+  text-decoration: none;
+  text-align: right;
+}
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+.page-link {
+  color: #747264;
+}
+.page-link:hover {
+  color: #92883e;
+}
+.active > .page-link {
+  background-color: #e0ccbe;
+  border: none;
+  color: black;
+}
+.active > .page-link:hover {
+  background-color: #b89c8a;
+}
+.btn-action-create-contract {
+  background-color: #c77a29;
+  border-color: #c77a29;
+  color: white;
+}
+
+.btn-in-list {
+  color: #000 !important;
+  background-color: #fff !important;
+  border: 1px solid #000 !important;
+}
+.btn-in-list:hover {
+  background-color: #747264 !important;
+  color: #fff !important;
+}
+.required-note {
+  color: red !important;
+}

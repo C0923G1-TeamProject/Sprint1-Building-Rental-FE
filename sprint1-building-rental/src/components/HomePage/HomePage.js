@@ -29,6 +29,7 @@ function HomePage() {
 
   const getAll = async () => {
     const result = await service.getAllPremisesHomePage();
+
     // if (result) {
     //   let premisesFiltered = result.content.filter(
     //     (premise) => premise.premisesStatus.id === 1
