@@ -28,8 +28,15 @@ function HomePage() {
 
   const getAll = async () => {
     const result = await service.getAllPremisesHomePage("", "", "", "", 0);
-
     setPremises(result.content);
+    if (result) {
+      let premisesFiltered = result.content.filter(
+        (premise) => premise.premisesStatus.id === 1
+      );
+      setPremises(premisesFiltered);
+    }
+ 
+
   };
 
   const handleFloor = (value) => {
