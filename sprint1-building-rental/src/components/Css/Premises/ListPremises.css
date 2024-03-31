@@ -1,7 +1,12 @@
-.table>thead>tr>th{
+#tbl-custom table{
+    border: 1px solid #000;
+}
+
+#tbl-custom .table>thead>tr>th{
     background-color: #747264 !important;
     color: #fff !important;
 }
+
 
 .btn-feature{
     background-color: #E0CCBE !important;
@@ -12,6 +17,10 @@
 }
 
 .custom-link-style{
+    color: black;
+}
+
+.custom-link-style:hover{
     color: black;
 }
 
@@ -28,4 +37,30 @@
 .btn-cancel{
     border-color: #747264!important;
     background-color: #747264!important;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.page-item {
+    margin: 0 5px;
+    list-style: none;
+}
+.page-link {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+.page-link:hover {
+    background-color: #F2F2F2;
+}
+.active .page-link {
+    background-color: #007BFF;
+    color: #fff;
+    border-color: #007BFF;
 }

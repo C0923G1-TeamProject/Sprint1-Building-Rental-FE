@@ -9,17 +9,23 @@ import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import "../Customer/CustomerAdd.css";
 import "../Css/Premises/ListPremises.css";
+import Swal from "sweetalert2";
+
+
 export default function UpdatePremises() {
     const {id} = useParams();
-    const [premises, setPremises] = useState ();
+    const [premises, setPremises] = useState();
     const [listFloor, setListFloor] = useState([]);
     const [listType, setListType] = useState([]);
     const [listStatus, setListStatus] = useState([]);
+    const navigate = useNavigate();
+    const [isSaving, setIsSaving] = useState(false);
+
 
     const findPremisesById = async () => {
         try {
             const res = await service.findPremises(id);
-                setPremises(res);
+            setPremises(res);
         } catch (err) {
             console.log(err);
         }
@@ -43,12 +49,11 @@ export default function UpdatePremises() {
     });
 
 
-
     const findAllType = async () => {
-        try{
+        try {
             const res = await service.getListType();
             setListType(res);
-        }catch (err){
+        } catch (err) {
             console.log(err);
         }
     }
@@ -58,10 +63,10 @@ export default function UpdatePremises() {
     });
 
     const findAllStatus = async () => {
-        try{
+        try {
             const res = await service.getListStatus();
             setListStatus(res);
-        }catch (err){
+        } catch (err) {
             console.log(err);
         }
     }
@@ -73,27 +78,46 @@ export default function UpdatePremises() {
     const handleSubmit = async (values) => {
         try {
             console.log("Values để submit", values)
+            setIsSaving(true);
 
-                const updatedPremises = {
-                    ...values,
-                    floor: values.floor,
-                    typePremises: JSON.parse(values.typePremises),
-                    code: values.code,
-                    premisesStatus: values.premisesStatus,
-                    area: values.area,
-                    description: values.description.toString(),
-                    price: values.price,
-                    cost: values.cost
-                };
+            const updatedPremises = {
+                ...values,
+                floor: values.floor,
+                typePremises: values.typePremises,
+                code: values.code,
+                premisesStatus: values.premisesStatus,
+                area: values.area,
+                description: values.description.toString(),
+                price: values.price,
+                cost: values.cost
+            };
             console.log("đối tượng đc gửi đi", updatedPremises);
-                const res = await service.updatePremises(id, updatedPremises);
+            const res = await service.updatePremises(id, updatedPremises);
 
+                Swal.fire("Chỉnh sửa thành công!", "", "success").then(() => {
+                    navigate('/premises');
+                });
 
         } catch (error) {
             console.log("Đã xảy ra lỗi khi cập nhật mặt bằng:", error);
         }
     };
 
+    const handleConfirmation = () => {
+        Swal.fire({
+            title: "Bạn chắc chắn muốn cập nhật thông tin?",
+            text: "Lưu ý: Bạn không thể quay trở lại phiên bản trước đó!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Xác nhận!",
+            cancelButtonText: "Huỷ",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleSubmit(premises); // Gọi hàm handleSubmit khi người dùng xác nhận
+            }
+        });
+    };
 
 
     const validateObject = {
@@ -104,7 +128,7 @@ export default function UpdatePremises() {
         cost: Yup.number().min(1000, "Phí quản lý quá nhỏ").max(99999999999, "Phí quản lý quá lớn")
     }
 
-    if(premises == null){
+    if (premises == null) {
         return <div>
             Loading
         </div>
@@ -115,8 +139,8 @@ export default function UpdatePremises() {
         <div className="container-fluid">
             <h2 className="text-center fw-bold text-uppercase">chỉnh sửa mặt bằng</h2>
             <div className="row">
-                <div className="col-3"></div>
-                <div className="col-6 justify-content-center align-items-center px-0">
+                <div className="col-2"></div>
+                <div className="col-8 justify-content-center align-items-center px-0">
                     <div className="form-group">
                         <Formik
                             initialValues={premises}
@@ -124,8 +148,8 @@ export default function UpdatePremises() {
                             validationSchema={Yup.object(validateObject)}
                         >
                             <Form>
-                                <div className="my-3">
-                                    <div className="row mb-3">
+                                <div className="row my-3 justify-content-between">
+                                    <div className="col-5">
                                         <div className="row my-1">
                                             <span className="px-0">Chọn tầng: <span
                                                 style={{color: 'red'}}>*</span></span>
@@ -142,26 +166,27 @@ export default function UpdatePremises() {
                                             </Field>
                                             <ErrorMessage name="floor" component="span" className="text-danger"/>
                                         </div>
-                                    </div>
 
-                                    <div className="row mb-3">
+
                                         <div className="row my-1">
-                                            <span className="px-0">Loại mặt bằng: <span style={{color: 'red'}}>*</span></span>
+                                                <span className="px-0">Loại mặt bằng: <span
+                                                    style={{color: 'red'}}>*</span></span>
                                         </div>
                                         <div className="row">
                                             <Field as="select" id="typePremises" name="typePremises"
                                                    className="form-control rounded-1">
                                                 {
                                                     listType.map((item) => (
-                                                        <option key={item.id} value={JSON.stringify(item)}>{item.name}</option>
+                                                        <option key={item.id}
+                                                                value={JSON.stringify(item)}>{item.name}</option>
                                                     ))
                                                 }
                                             </Field>
-                                            <ErrorMessage name="typePremises" component="span" className="text-danger"/>
+                                            <ErrorMessage name="typePremises" component="span"
+                                                          className="text-danger"/>
                                         </div>
-                                    </div>
 
-                                    <div className="row mb-3">
+
                                         <div className="row my-1">
                                             <span className="px-0">Mã mặt bằng: <span
                                                 style={{color: 'red'}}>*</span></span>
@@ -172,9 +197,8 @@ export default function UpdatePremises() {
                                             <ErrorMessage name="code" component="span" className="text-danger"/>
 
                                         </div>
-                                    </div>
 
-                                    <div className="row mb-3">
+
                                         <div className="row my-1">
                                             <span className="px-0">Trạng thái: <span
                                                 style={{color: 'red'}}>*</span></span>
@@ -184,79 +208,71 @@ export default function UpdatePremises() {
                                                    className="form-control rounded-1">
                                                 {
                                                     listStatus.map((item) => (
-                                                        <option key={item.id} value={JSON.stringify(item)}>{item.name}</option>
+                                                        <option key={item.id}
+                                                                value={JSON.stringify(item)}>{item.name}</option>
                                                     ))
                                                 }
                                             </Field>
-                                            <ErrorMessage name="premisesStatus" component="span" className="text-danger"/>
+                                            <ErrorMessage name="premisesStatus" component="span"
+                                                          className="text-danger"/>
                                         </div>
-                                    </div>
-
-                                    <div className="row mb-3">
                                         <div className="row my-1">
-                                            <span className="px-0">Diện tích: <span
+                                            <span className="px-0">Diện tích(m²): <span
                                                 style={{color: 'red'}}>*</span></span>
                                         </div>
                                         <div className="row">
-                                            <Field type="number" className="form-control w-100" name="area" id="area"/>
+                                            <Field type="number" className="form-control w-100" name="area"
+                                                   id="area"/>
                                             <ErrorMessage name="area" component="span" className="text-danger"/>
 
                                         </div>
                                     </div>
 
-                                    <div className="row mb-3">
+                                    <div className="col-5">
+                                        <div className="row my-1">
+                                            <span className="px-0">Giá bán (VND/tháng):  </span>
+                                        </div>
+                                        <div className="row">
+                                            <Field type="number" className="form-control w-100" name="price"
+                                                   id="price"/>
+                                            <ErrorMessage name="price" component="span" className="text-danger"/>
+
+                                        </div>
+
+
+                                        <div className="row my-1">
+                                            <span className="px-0">Phí quản lý (VND): </span>
+                                        </div>
+                                        <div className="row">
+                                            <Field type="number" className="form-control w-100" name="cost"
+                                                   id="cost"/>
+                                            <ErrorMessage name="cost" component="span" className="text-danger"/>
+
+                                        </div>
+
+
                                         <div className="row my-1">
                                             <span className="px-0">Chú thích:</span>
                                         </div>
                                         <div className="row">
-                                            <Field type="text" className="form-control w-100" name="description"
+                                            <Field as="textarea" rows="7" type="text" className="form-control w-100" name="description"
                                                    id="description"/>
-                                            <ErrorMessage name="description" component="span" className="text-danger"/>
+                                            <ErrorMessage name="description" component="span"
+                                                          className="text-danger"/>
 
                                         </div>
                                     </div>
 
-                                    <div className="row mb-3">
-                                        <div className="row my-1">
-                                            <span className="px-0">Giá thuê (tháng):  </span>
-                                        </div>
-                                        <div className="row">
-                                            <Field type="number" className="form-control w-100" name="price" id="price"/>
-                                            <ErrorMessage name="price" component="span" className="text-danger"/>
+                                        <div className="row my-1 justify-content-between align-items-center">
+                                                <button type="button" className="btn cus custom-btn">
+                                                    <Link to={`/premises`}> Huỷ chỉnh sửa </Link>
+                                                </button>
 
-                                        </div>
-                                    </div>
-
-                                    <div className="row mb-3">
-                                        <div className="row my-1">
-                                            <span className="px-0">Phí quản lý: </span>
-                                        </div>
-                                        <div className="row">
-                                            <Field type="number" className="form-control w-100" name="cost" id="cost"/>
-                                            <ErrorMessage name="cost" component="span" className="text-danger"/>
-
-                                        </div>
-                                    </div>
-
-                                    <div className="row mb-3">
-                                        <div className="row my-1">
-
-                                            <div className=" d-flex col-6 justify-content-center align-items-center">
-
-                                                    <button type="button" className="btn cus custom-btn">
-                                                        <Link to={`/premises`}>  Huỷ chỉnh sửa </Link>
-                                                    </button>
-
-                                            </div>
-
-                                            <div className=" d-flex col-6 justify-content-center align-items-center">
-                                                <button type="submit" className="btn cus custom-btn">
+                                                <button onClick={handleConfirmation} disabled={isSaving} type="button"
+                                                        className="btn cus custom-btn">
                                                     Xác nhận chỉnh sửa
                                                 </button>
-                                            </div>
                                         </div>
-                                    </div>
-
                                 </div>
                             </Form>
                         </Formik>
@@ -264,10 +280,12 @@ export default function UpdatePremises() {
 
 
                 </div>
-                <div className="col-3"></div>
+                <div className="col-2"></div>
             </div>
         </div>
         <Footer></Footer>
     </>)
 
+
 }
+
