@@ -127,6 +127,16 @@ h1 {
   padding: 5px;
   margin-top: 25px;
   color: #090808;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding: 5px 10px;
+
+    @media (max-width: 768px) {
+      padding: 3px 6px;
+    }
+    max-width: 150px;
+  }
 }
 .offcanvas-header {
   background: #212529 !important;
@@ -147,7 +157,8 @@ h1 {
   opacity: 0.9;
   background-color: transparent;
   background-color: rgba(0, 0, 0, 0.5);
-  /* background-color: rgba(255, 255, 255, 0.5); */
+  background-color: rgba(255, 255, 255, 0.5);
+  height: 300px;
 }
 /* sideba End */
 
@@ -201,3 +212,13 @@ h1 {
 }
 
 /* modal End */
+.logout-homePage {
+  text-align: center;
+  position: relative;
+  top: 12px;
+  left: 10px;
+}
+.detailEmployee-homePage {
+  position: relative;
+  left: 14px;
+}

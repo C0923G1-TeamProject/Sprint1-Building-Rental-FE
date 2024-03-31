@@ -83,13 +83,15 @@
 .login {
     width: 320px;
     padding: 30px;
-    padding-top: 156px;
+    padding-top: 120px;
     box-sizing: border-box;
 }
 
 .login__field {
     padding: 20px 0px;
     position: relative;
+    margin-bottom: 4px;
+    margin-top: -4px;
 }
 
 .login__icon {
@@ -149,7 +151,7 @@
 .button__icon {
     font-size: 24px;
     margin-left: auto;
-    color: #7875B5;
+    color: #ec7608;
 }
 
 .social-login {
@@ -212,12 +214,12 @@
 
 .k-eye-icon {
     position: absolute;
-    scale: 0.045;
-    right: -175px;
-    bottom: -212px;
+    scale: 0.09;
+    right: -52px;
+    bottom: -87px;
     background-color: white;
     z-index: 10;
-    opacity: 70%;
+    opacity: 60%;
 }
 
 .k-break-wall-eye {
@@ -230,10 +232,35 @@
     z-index: 9;
 }
 
+.k-err-login {
+    color: red;
+    position: absolute;
+    top: 288px;
+    font-size: 13px;
+    left: 32px;
+}
+
+.k-required-name {
+    color: red;
+    position: absolute;
+    top: 67px;
+    left: 2px;
+    font-size: 13px;
+}
+
+.k-required-pass {
+    color: red;
+    position: absolute;
+    top: 67px;
+    left: 2px;
+    font-size: 13px;
+
+}
+
 /* checkbox */
 
 .k-checkbox {
-    margin-top: 17px;
+    margin-top: 23px;
     margin-left: -3px;
 }
 
@@ -241,7 +268,7 @@
 .checkbox-wrapper-1 ::after,
 .checkbox-wrapper-1 ::before {
     position: relative;
-    left: 128px;
+    left: 131px;
     box-sizing: border-box;
     font-family: Raleway, sans-serif;
 }

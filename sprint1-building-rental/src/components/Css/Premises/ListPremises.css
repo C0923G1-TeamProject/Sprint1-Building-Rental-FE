@@ -1,0 +1,31 @@
+.table>thead>tr>th{
+    background-color: #747264 !important;
+    color: #fff !important;
+}
+
+.btn-feature{
+    background-color: #E0CCBE !important;
+}
+
+.btn-feature:hover{
+    background-color: #b89c8a !important;
+}
+
+.custom-link-style{
+    color: black;
+}
+
+.btn-in-list {
+    color: #000 !important;
+    background-color: #fff !important;
+    border: 1px solid #000 !important;
+}
+.btn-in-list:hover {
+    background-color: #747264 !important;
+    color: #fff !important;
+}
+
+.btn-cancel{
+    border-color: #747264!important;
+    background-color: #747264!important;
+}
