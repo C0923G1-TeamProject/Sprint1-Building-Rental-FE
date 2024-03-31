@@ -37,6 +37,8 @@ function HeaderAdmin({ name, ...props }) {
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
 
+  const [accName, setAccName] = useState(localStorage.getItem("nameOfSigninUser"));
+
   const handleLogout = () => {
     setShowModal(true); // Hiển thị Modal khi người dùng nhấn vào nút "Đăng xuất"
   };
@@ -130,7 +132,7 @@ function HeaderAdmin({ name, ...props }) {
               {name} <button className="text-manage">QUẢN LÝ</button>
             </NavLink>
             <Offcanvas show={show} onHide={handleClose} {...props}>
-              <Offcanvas.Header closeButton>
+              <Offcanvas.Header >
                 <Offcanvas.Title>
                   <span className="sidebar-title">Quản Lý</span>
                 </Offcanvas.Title>
@@ -172,7 +174,7 @@ function HeaderAdmin({ name, ...props }) {
             <div>
               <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle>
-                  <AccountCircleIcon sx={{ fontSize: 30 }} />
+                  <AccountCircleIcon sx={{ fontSize: 30 }} /> {accName}
                 </DropdownToggle>
 
                 <DropdownMenu>
@@ -212,7 +214,7 @@ function HeaderAdmin({ name, ...props }) {
           <Button className="nologout" onClick={handleCloseModal}>
             Không
           </Button>
-          <Link to="/">
+          <Link to="/logout">
             <Button className="button-logout">Đăng xuất</Button>
           </Link>
         </Modal.Footer>
@@ -221,6 +223,6 @@ function HeaderAdmin({ name, ...props }) {
     </>
   );
 
-  
+
 }
 export default HeaderAdmin;
