@@ -11,7 +11,7 @@ import { Hourglass } from "react-loader-spinner";
 import Helmet from "react-helmet";
 import "../Css/HomePage/Messgae.css";
 import SearchIcon from "@mui/icons-material/Search";
-import * as service from "../../service/PremisesService";
+import * as service from "../../service/PremisesService"
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
 
@@ -29,13 +29,16 @@ function HomePage() {
 
   const getAll = async () => {
     const result = await service.getAllPremisesHomePage();
-    if (result) {
-      let premisesFiltered = result.content.filter(
-        (premise) => premise.premisesStatus.name === "Chưa bàn giao"
-      );
-      setPremises(premisesFiltered);
-    }
+
+    // if (result) {
+    //   let premisesFiltered = result.content.filter(
+    //     (premise) => premise.premisesStatus.id === 1
+    //   );
+    //   setPremises(premisesFiltered);
+    // }
+    setPremises(result);
   };
+  
   const handleFloor = (value) => {
     setFloor(value);
   };
@@ -49,7 +52,7 @@ function HomePage() {
   const submitSearch = async () => {
     try {
       if (floor !== undefined || null || " ") { // Kiểm tra xem tầng  có underfine không
-        let x1 = await service.getAllPremisesHomepage(floor, code, area, premisesName, 0);
+        let x1 = await service.getAllPremisesHomePage(floor, code, area, premisesName, 0);
         console.log("kkkkkk",typeof x1);
         
         setPremises(x1.content);
@@ -69,7 +72,7 @@ function HomePage() {
 useEffect(() => {
   const fetchApi = async () => {
     try {
-      const result = await service.getAllPremisesHomepage(
+      const result = await service.getAllPremisesHomePage(
         floor,
         code,
         area,
@@ -103,7 +106,15 @@ useEffect(() => {
       setIsLoading(false);
     }, 1000);
   }, []);
-  // Croll top page End //
+ 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, []);
+   // Croll top page End //
  
   function formatPrice(price) {
     return price.toLocaleString("vi-VN");
@@ -112,7 +123,7 @@ useEffect(() => {
 
   const fetchData = async (page) => {
     try {
-      const result = await service.getAllPremisesHomepage(
+      const result = await service.getAllPremisesHomePage(
         floor,
         code,
         area,
@@ -286,9 +297,9 @@ useEffect(() => {
                 <br />
 
                 {/* <!-- phân trang Start --> */}
-                <div className="row float-paging-homepage">
+                <div className=" float-paging-homepage">
                   {premises ? (
-                    <div className="d-flex justify-content-center align-items-center">
+                    <div >
                       <ReactPaginate
                         forcePage={currentPage}
                         breakLabel="..."

@@ -133,6 +133,17 @@ export default function ListPremises() {
                                     <option value="9">Tầng 9</option>
                                 </select>
 
+
+              <div>
+                <button
+                  onClick={() => submitSearch()}
+                  type="button"
+                  className="btn btn-in-list"
+                >
+                  Tìm kiếm
+                </button>
+              </div>
+
                                 <input onChange={(event) => handleCode(event.target.value)} type="text"
                                        className="form-control rounded-1 me-2" name="name-search" size="25"
                                        placeholder="Mã mặt bằng"/>
