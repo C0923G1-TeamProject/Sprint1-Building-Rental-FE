@@ -11,10 +11,10 @@ import { Hourglass } from "react-loader-spinner";
 import Helmet from "react-helmet";
 import "../Css/HomePage/Messgae.css";
 import SearchIcon from "@mui/icons-material/Search";
-import * as service from "../../service/PremisesService"
+import * as service from "../../service/PremisesService";
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
-
+import "../Css/HomePage/CardListHomePage.css";
 
 function HomePage() {
   const [premises, setPremises] = useState([]);
@@ -26,18 +26,19 @@ function HomePage() {
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-
   const getAll = async () => {
-    const result = await service.getAllPremisesHomePage();
-    // if (result) {
-    //   let premisesFiltered = result.content.filter(
-    //     (premise) => premise.premisesStatus.id === 1
-    //   );
-    //   setPremises(premisesFiltered);
-    // }
-    setPremises(result);
+    const result = await service.getAllPremisesHomePage("", "", "", "", 0);
+    setPremises(result.content);
+    if (result) {
+      let premisesFiltered = result.content.filter(
+        (premise) => premise.premisesStatus.id === 1
+      );
+      setPremises(premisesFiltered);
+    }
+ 
+
   };
-  
+
   const handleFloor = (value) => {
     setFloor(value);
   };
@@ -46,14 +47,19 @@ function HomePage() {
     setArea(value);
   };
 
-
- 
   const submitSearch = async () => {
     try {
-      if (floor !== undefined || null || " ") { // Kiểm tra xem tầng  có underfine không
-        let x1 = await service.getAllPremisesHomePage(floor, code, area, premisesName, 0);
-        console.log("kkkkkk",typeof x1);
-        
+      if (floor !== undefined || null || " ") {
+        // Kiểm tra xem tầng  có underfine không
+        let x1 = await service.getAllPremisesHomePage(
+          floor,
+          code,
+          area,
+          premisesName,
+          0
+        );
+        console.log("kkkkkk", typeof x1);
+
         setPremises(x1.content);
         setTotalPages(x1.totalPages);
         setCurrentPage(0);
@@ -62,38 +68,35 @@ function HomePage() {
         // Xử lý khi tầng không được chọn
         console.log("Tầng không được chọn");
       }
-    
     } catch (e) {
       console.log("submit Fail");
     }
   };
 
-useEffect(() => {
-  const fetchApi = async () => {
-    try {
-      const result = await service.getAllPremisesHomePage(
-        floor,
-        code,
-        area,
-        premisesName,
-        0
-      );
-      console.log(result);
-      setPremises(result.content);
-      setTotalPages(result.totalPages);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  fetchApi(floor, code, area, premisesName, 0);
-}, []);
+  useEffect(() => {
+    const fetchApi = async () => {
+      try {
+        const result = await service.getAllPremisesHomePage(
+          floor,
+          code,
+          area,
+          premisesName,
+          0
+        );
+        console.log(result);
+        setPremises(result.content);
+        setTotalPages(result.totalPages);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchApi(floor, code, area, premisesName, 0);
+  }, []);
 
   // hiệu ứng xoay xoay load danh sách Start //
 
-
   useEffect(() => {
-    console.log("LINE 94",premises);
-   
+    console.log("LINE 94", premises);
   }, [premises]);
 
   // hiệu ứng xoay xoay load danh sách End //
@@ -105,7 +108,7 @@ useEffect(() => {
       setIsLoading(false);
     }, 1000);
   }, []);
- 
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       window.scrollTo(0, 0);
@@ -113,8 +116,8 @@ useEffect(() => {
 
     return () => clearTimeout(timeout);
   }, []);
-   // Croll top page End //
- 
+  // Croll top page End //
+
   function formatPrice(price) {
     return price.toLocaleString("vi-VN");
   }
@@ -182,7 +185,7 @@ useEffect(() => {
                       Một số mặt bằng tại Diamond
                     </h3>
                   </div>
-                 
+
                   <br />
                   <div className="display">
                     <div className="col-lg-2">
@@ -202,7 +205,7 @@ useEffect(() => {
                         <option value="9">Tầng 9</option>
                       </select>
                     </div>
-                
+
                     <div className="display">
                       <input
                         onChange={(event) => handleArea(event.target.value)}
@@ -232,81 +235,128 @@ useEffect(() => {
                         colors={["#306cce", "#72a1ed"]}
                       />
                     </div>
-                  ) : ( !premises?.length ? (
+                  ) : !premises?.length ? (
                     <p>Không có danh sách....</p>
                   ) : (
                     <div className="row g-4">
-                      {premises.map((premise, index) => (
-                        <div className="col-lg-4 col-md-6" key={index}>
-                          <div className="service-item d-flex position-relative text-center h-100">
-                            <img
-                              className="bg-img"
-                              src="/img/HomePage/card-6.jpg"
-                              alt=""
-                            />
-                            <div
-                              className="service-text p-5"
-                              style={{ width: "100%" }}
-                            >
-                              <img
-                                className="mb-4"
-                                src="/img/HomePage/icon-1.png"
-                                alt="Icon"
-                              />
+                      {premises
+                        .filter((premise) => premise.premisesStatus.id === 1)
+                        .map((premise, index) => (
+                          // <div className="col-lg-4 col-md-6" key={index}>
+                          //   <div className="service-item d-flex position-relative text-center h-100">
+                          //     <img
+                          //       className="bg-img"
+                          //       src="https://example.com/path/to/your/image.jpg"
+                          //       alt=""
+                          //     />
+                          //     <div
+                          //       className="service-text p-5"
+                          //       style={{ width: "100%" }}
+                          //     >
+                          //       <img
+                          //         className="mb-4"
+                          //         src="/img/HomePage/icon-1.png"
+                          //         alt="Icon"
+                          //       />
 
-                              <h6>
-                                <a style={{ "font-weight": "bold" }}>
-                                  Diện tích:
-                                </a>{" "}
-                                {premise.area} m<sup>2</sup>
-                              </h6>
-                              <h6>
-                                <a style={{ "font-weight": "bold" }}>Giá: </a>{" "}
-                                {formatPrice(premise.price)} {"vnđ"}
-                              </h6>
-                              <h6>
-                                <a style={{ "font-weight": "bold" }}>Tầng: </a>{" "}
-                                {premise.floor}
-                              </h6>
-                              <br />
-                              <h6>
-                                <a style={{ "font-weight": "bold" }}>
-                                  Test xem đã bàn giao:{" "}
-                                </a>{" "}
-                                {premise.premisesStatus.name}
-                              </h6>
-                              <br />
-                              <Link
-                                className="btn"
-                                to={`/premises/${premise.id}`}
-                              >
-                                <span style={{ marginRight: "5px" }}>
-                                  <AddIcon />
-                                </span>
-                                Xem thêm
-                              </Link>
+                          //       <h6>
+                          //         <a style={{ "font-weight": "bold" }}>
+                          //           Diện tích:
+                          //         </a>{" "}
+                          //         {premise.area} m<sup>2</sup>
+                          //       </h6>
+                          //       <h6>
+                          //         <a style={{ "font-weight": "bold" }}>Giá: </a>{" "}
+                          //         {formatPrice(premise.price)} {"vnđ"}
+                          //       </h6>
+                          //       <h6>
+                          //         <a style={{ "font-weight": "bold" }}>
+                          //           Tầng:{" "}
+                          //         </a>{" "}
+                          //         {premise.floor}
+                          //       </h6>
+
+                          //       <br />
+                          //       <Link
+                          //         className="btn"
+                          //         to={`/premises/${premise.id}`}
+                          //       >
+                          //         <span style={{ marginRight: "5px" }}>
+                          //           <AddIcon />
+                          //         </span>
+                          //         Xem thêm
+                          //       </Link>
+                          //     </div>
+                          //   </div>
+
+                          //   </div>
+
+                          <div
+                            class="col-lg-4 col-md-6 wow fadeInUp"
+                            data-wow-delay="0.1s"
+                          >
+                            <div class="team-item position-relative">
+                              <img
+                                class="img-fluid rounded"
+                                src="img/homePage/card-1.jpg"
+                                alt=""
+                              />
+                              <div class="team-text bg-#b7acac rounded-end p-4">
+                                <div>
+                                  <h6>
+                                    <a style={{ "font-weight": "bold" }}>
+                                      Diện tích:
+                                    </a>{" "}
+                                    {premise.area} m<sup>2</sup>
+                                  </h6>
+                                  <h6>
+                                    <a style={{ "font-weight": "bold" }}>
+                                      Giá:{" "}
+                                    </a>{" "}
+                                    {formatPrice(premise.price)} {"vnđ"}
+                                  </h6>
+                                  <h6>
+                                    <a style={{ "font-weight": "bold" }}>
+                                      Tầng:{" "}
+                                    </a>{" "}
+                                    {premise.floor}
+                                  </h6>
+
+                                  <br />
+                                  {/* <Link
+                                   className="btn"
+                                   to={`/premises/${premise.id}`}
+                                 >
+                                   <span style={{ marginRight: "5px" }}>
+                                     <AddIcon />
+                                   </span>
+                                   Xem thêm
+                                 </Link> */}
+                                </div>
+                                {/* <i class="fa fa-arrow-right fa-2x text-primary"></i> */}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
-                  ))}
+                  )}
                 </div>
                 {/* Hiển thị danh sách mặt bằng End */}
                 <br />
 
                 {/* <!-- phân trang Start --> */}
-                <div className=" float-paging-homepage">
-                  {premises ? (
-                    <div >
+                {totalPages > 0 && (
+                  <div className=" float-paging-homepage">
+                    {/* {premises ? ( */}
+                    <div>
                       <ReactPaginate
                         forcePage={currentPage}
                         breakLabel="..."
                         nextLabel="Trang sau"
                         previousLabel="Trang trước"
                         onPageChange={handlePageClick}
-                        pageRangeDisplayed={2}
-                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={1} // Chỉ hiển thị số trang đầu và cuối cùng
+                        marginPagesDisplayed={1} // Số lượng trang hiển thị ở trước và sau dấu chấm chấm
                         pageCount={totalPages}
                         pageClassName="page-item"
                         pageLinkClassName="page-link"
@@ -320,10 +370,12 @@ useEffect(() => {
                         activeClassName="active"
                       />
                     </div>
-                  ) : (
-                    <div></div>
-                  )}
-                </div>
+
+                    {/* ) : ( */}
+
+                    {/* )} */}
+                  </div>
+                )}
                 {/* <!-- phân trang End --> */}
               </div>
             </div>
@@ -572,6 +624,7 @@ useEffect(() => {
           {/* <!-- Body End --> */}
         </div>
       </div>
+
       <Footer />
     </>
   );

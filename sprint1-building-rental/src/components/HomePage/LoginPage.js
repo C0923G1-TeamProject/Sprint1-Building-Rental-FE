@@ -1,7 +1,7 @@
 import CarouselBody from "../Carousel/Carousel";
 import "../Css/HomePage/Body.css";
 import AddIcon from "@mui/icons-material/Add";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -14,7 +14,7 @@ import HeaderAdmin from "../Header/HeaderAdmin";
 import SearchIcon from "@mui/icons-material/Search";
 import * as service from "../../service/PremisesService";
 import ReactPaginate from "react-paginate";
-import { Alert } from 'react-bootstrap';
+
 
 function LoginPage() {
   const [premises, setPremises] = useState([]);
@@ -26,17 +26,24 @@ function LoginPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-
+  const navigation = useNavigate();
   const getAll = async () => {
-    const result = await service.getAllPremisesHomePage();
-    // if (result) {
-    //   let premisesFiltered = result.content.filter(
-    //     (premise) => premise.premisesStatus.name === "Chưa bàn giao"
-    //   );
-    //   setPremises(premisesFiltered);
-    // }
-    setPremises(result);
+    debugger;
+    const result = await service.getAllPremisesHomePage(
+      "",
+      "",
+      "",
+      "",
+      0);
+    if (result) {
+      let premisesFiltered = result.content.filter(
+        (premise) => premise.premisesStatus.id === 1
+      );
+      setPremises(premisesFiltered);
+    }
+    setPremises(result.content);
   };
+
   const handleFloor = (value) => {
     setFloor(value);
   };
@@ -45,14 +52,19 @@ function LoginPage() {
     setArea(value);
   };
 
-
- 
   const submitSearch = async () => {
     try {
-      if (floor !== undefined || null || " ") { // Kiểm tra xem tầng  có underfine không
-        let x1 = await service.getAllPremisesHomePage(floor, code, area, premisesName, 0);
-        console.log("kkkkkk",typeof x1);
-        
+      if (floor !== undefined || null || " ") {
+        // Kiểm tra xem tầng  có underfine không
+        let x1 = await service.getAllPremisesHomePage(
+          floor,
+          code,
+          area,
+          premisesName,
+          0
+        );
+        console.log("kkkkkk", typeof x1);
+
         setPremises(x1.content);
         setTotalPages(x1.totalPages);
         setCurrentPage(0);
@@ -61,38 +73,35 @@ function LoginPage() {
         // Xử lý khi tầng không được chọn
         console.log("Tầng không được chọn");
       }
-    
     } catch (e) {
       console.log("submit Fail");
     }
   };
 
-useEffect(() => {
-  const fetchApi = async () => {
-    try {
-      const result = await service.getAllPremisesHomePage(
-        floor,
-        code,
-        area,
-        premisesName,
-        0
-      );
-      console.log(result);
-      setPremises(result.content);
-      setTotalPages(result.totalPages);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  fetchApi(floor, code, area, premisesName, 0);
-}, []);
+  useEffect(() => {
+    const fetchApi = async () => {
+      try {
+        const result = await service.getAllPremisesHomePage(
+          floor,
+          code,
+          area,
+          premisesName,
+          0
+        );
+        console.log(result);
+        setPremises(result.content);
+        setTotalPages(result.totalPages);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchApi(floor, code, area, premisesName, 0);
+  }, []);
 
   // hiệu ứng xoay xoay load danh sách Start //
 
-
   useEffect(() => {
-    console.log("LINE 94",premises);
-   
+    console.log("LINE 94", premises);
   }, [premises]);
 
   // hiệu ứng xoay xoay load danh sách End //
@@ -104,7 +113,7 @@ useEffect(() => {
       setIsLoading(false);
     }, 1000);
   }, []);
- 
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       window.scrollTo(0, 0);
@@ -112,8 +121,8 @@ useEffect(() => {
 
     return () => clearTimeout(timeout);
   }, []);
-   // Croll top page End //
- 
+  // Croll top page End //
+
   function formatPrice(price) {
     return price.toLocaleString("vi-VN");
   }
@@ -146,13 +155,16 @@ useEffect(() => {
     }
   };
 
+  if(!localStorage.getItem("token")){
+    navigation("/")
+  }
   return (
     <>
       <Helmet>
         <title>Trang chủ</title>
       </Helmet>
       <div>
-        <HeaderAdmin/>
+        <HeaderAdmin />
         <CarouselBody />
         <a
           id="myBtn2"
@@ -181,7 +193,7 @@ useEffect(() => {
                       Một số mặt bằng tại Diamond
                     </h3>
                   </div>
-                 
+
                   <br />
                   <div className="display">
                     <div className="col-lg-2">
@@ -201,7 +213,7 @@ useEffect(() => {
                         <option value="9">Tầng 9</option>
                       </select>
                     </div>
-                
+
                     <div className="display">
                       <input
                         onChange={(event) => handleArea(event.target.value)}
@@ -231,7 +243,7 @@ useEffect(() => {
                         colors={["#306cce", "#72a1ed"]}
                       />
                     </div>
-                  ) : ( !premises?.length ? (
+                  ) : !premises?.length ? (
                     <p>Không có danh sách....</p>
                   ) : (
                     <div className="row g-4">
@@ -289,23 +301,24 @@ useEffect(() => {
                         </div>
                       ))}
                     </div>
-                  ))}
+                  )}
                 </div>
                 {/* Hiển thị danh sách mặt bằng End */}
                 <br />
 
                 {/* <!-- phân trang Start --> */}
-                <div className="row float-paging-homepage">
-                  {premises ? (
-                    <div className="d-flex justify-content-center align-items-center">
+                {totalPages > 0 && (
+                  <div className=" float-paging-homepage">
+                    {/* {premises ? ( */}
+                    <div>
                       <ReactPaginate
                         forcePage={currentPage}
                         breakLabel="..."
                         nextLabel="Trang sau"
                         previousLabel="Trang trước"
                         onPageChange={handlePageClick}
-                        pageRangeDisplayed={2}
-                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={1} // Chỉ hiển thị số trang đầu và cuối cùng
+                        marginPagesDisplayed={1} // Số lượng trang hiển thị ở trước và sau dấu chấm chấm
                         pageCount={totalPages}
                         pageClassName="page-item"
                         pageLinkClassName="page-link"
@@ -319,10 +332,12 @@ useEffect(() => {
                         activeClassName="active"
                       />
                     </div>
-                  ) : (
-                    <div></div>
-                  )}
-                </div>
+
+                    {/* ) : ( */}
+
+                    {/* )} */}
+                  </div>
+                )}
                 {/* <!-- phân trang End --> */}
               </div>
             </div>
