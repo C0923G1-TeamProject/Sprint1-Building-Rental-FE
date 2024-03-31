@@ -1,8 +1,9 @@
 import axios from 'axios';
+import {axiosCof} from "../components/Config/axios-config";
 
 export const getAllPremises = async (floor, code, area, premisesName, page) => {
     try {
-        let rs = await axios.get(`http://localhost:8080/api/premises/search?floor=${floor}&code=${code}&area=${area}&premisesName=${premisesName}&page=${page}`);
+        let rs = await axiosCof.get(`http://localhost:8080/api/premises/search?floor=${floor}&code=${code}&area=${area}&premisesName=${premisesName}&page=${page}`);
       
         return rs.data;
     
@@ -15,7 +16,7 @@ export const getAllPremises = async (floor, code, area, premisesName, page) => {
 
 export const getAllPremisesHomePage = async (floor, code, area, premisesName, page) => {
     try {
-        let rs = await axios.get('http://localhost:8080/api/premises/search', {params: {floor, code, area, premisesName, page}} );
+        let rs = await axiosCof.get('http://localhost:8080/api/premises/search', {params: {floor, code, area, premisesName, page}} );
         return rs.data
     
 
@@ -28,9 +29,10 @@ export const getAllPremisesHomePage = async (floor, code, area, premisesName, pa
 
 
 export const updatePremises = async (id ,premises) =>{
+    debugger;
     console.log(premises);
     try {
-        let rs = await axios.patch(`http://localhost:8080/api/premises/update/${id}, premises`);
+        let rs = await axiosCof.patch(`http://localhost:8080/api/premises/update/${id}`, premises);
         console.log(rs)
     }catch (e) {
         console.log(e);
