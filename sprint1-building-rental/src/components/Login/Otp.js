@@ -4,44 +4,45 @@ import {useEffect, useState} from "react";
 import * as LoginService from '../../service/LoginService/LoginService'
 import {Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
-import {Cookie} from "@mui/icons-material";
+import {useUserData} from "../Context/useUserData";
 
 export function Otp() {
     const [otp, setOtp] = useState();
     const [account, setAccount] = useState();
-    const [currentUser, setCurrentUser] = useState({ username: sessionStorage.getItem("reUsername"),
-        password: sessionStorage.getItem("rePass")})
+    const [currentUser, setCurrentUser] = useState();
     const [errorMessage, setErrorMessage] = useState("");
     const navigation = useNavigate();
+
+    const { userData } = useUserData();
+
+
+
     useEffect(() => {
-        if(currentUser!== undefined) {
+
             getInfo();
-        }
-        sessionStorage.removeItem("reUsername");
-        sessionStorage.removeItem("rePass");
-    }, []);
+
+    }, [userData]);
 
 
-    const getInfo = async () => {
-        const info = await LoginService.getInfoOtp(currentUser);
-        if (info) {
-            console.log(info.otp)
-            setOtp(info.otp)
-            setAccount(info);
-            console.log("set roi")
-        }
-
+    const getInfo = () => {
+       setOtp(userData.otp);
+       setCurrentUser({username: userData.reUsername, password: userData.rePassword});
     }
+
+    useEffect(() => {
+        console.log(otp);
+        console.log(currentUser);
+    }, [otp, currentUser]);
 
     const resend = async () => {
         try {
-            const info = await LoginService.getInfoOtp(currentUser);
-            if (info) {
-                console.log(info.otp)
-                setOtp(info.otp)
-                setAccount(info);
-                console.log("set roi")
-            }
+            // const info = await LoginService.getInfoOtp(currentUser);
+            // if (info) {
+            //     console.log(info.otp)
+            //     setOtp(info.otp)
+            //     setAccount(info);
+            //     console.log("set roi")
+            // }
         } catch (e) {
             console.log(e);
         }
@@ -50,19 +51,26 @@ export function Otp() {
     const handleSubmit = async (value) => {
         try {
             if(value.inputOtp == otp) {
-                const loginInfo = await LoginService.login(currentUser);
-                const token = loginInfo.token;
-                const nameOfSigninUser = loginInfo.name;
-                const role = loginInfo.authorities[0].authority;
-                const nameAccount = loginInfo.username;
+                const response = await LoginService.loginOtp(currentUser);
+                const token = response.token;
+                const nameOfSigninUser = response.name;
+                const role = response.authorities[0].authority;
+                const nameAccount = response.username;
 
                 localStorage.setItem("token", token);
                 localStorage.setItem("nameOfSigninUser", nameOfSigninUser);
                 localStorage.setItem("role", role);
                 localStorage.setItem("nameAccount", nameAccount);
-                // localStorage.setItem("isVisited", 1);
-                localStorage.setItem("isVisited", 1);
 
+                let localList = localStorage.getItem("isVisited");
+                if(localList == undefined) {
+                    localList = "-5";
+                }
+                let newList = localList + "," + response.id;
+                localStorage.setItem("isVisited", newList);
+
+
+                console.log("dang nhap otp tahnh cong")
                 navigation("/")
                 //hien modal
 
@@ -75,9 +83,9 @@ export function Otp() {
     }
 
 
-    if (account == undefined) {
-        return (<div>loading</div>)
-    }
+    // if (account == undefined) {
+    //     return (<div>loading</div>)
+    // }
     return (
         <>
             <Helmet>
@@ -93,7 +101,7 @@ export function Otp() {
                         <div className="k-content-box">
                             <div className="k-element-content">
                                 <div className="k-center-row">
-                                    <p className="k-message">Nhập mã xác nhận gửi đến email {account.email}</p>
+                                    <p className="k-message">Nhập mã xác nhận gửi đến email {userData.email}</p>
                                 </div>
 
 
