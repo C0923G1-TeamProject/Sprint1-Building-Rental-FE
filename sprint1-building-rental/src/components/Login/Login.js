@@ -10,6 +10,8 @@ import * as LoginService from '../../service/LoginService/LoginService'
 import {Otp} from "./Otp";
 import * as Yup from "yup"
 import {useUserData} from "../Context/useUserData";
+import {ModalLogin} from "./ModalLogin";
+import {Spinner} from "reactstrap";
 
 export function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +21,28 @@ export function Login() {
     const [errorMessage, setErrorMessage] = useState("");
 
     const { setUserData } = useUserData();
+    const [showSpinner, setShowSpinner] = useState(false);
+    const [show, setShow] = useState(false);
 
+    const [authCheck, setAuthCheck] = useState(false);
+
+
+    useEffect(() => {
+        getAuth();
+    }, []);
+
+    const getAuth = async () => {
+        try {
+            const resAuth = await LoginService.checkAuth();
+            if(resAuth != undefined) {
+                setAuthCheck(true);
+            } else {
+                setAuthCheck(false);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
 
     const togglePasswordVisibility = () => {
@@ -40,6 +63,8 @@ export function Login() {
 
 
     const handleSubmit = async (value) => {
+
+        setShowSpinner(true);
         try {
 
             const listVisit = localStorage.getItem("isVisited");
@@ -57,6 +82,7 @@ export function Login() {
                     const userData = {otp: responseData.otp, email: responseData.email, reUsername: value.username, rePassword: value.password};
                     setUserData(userData);
 
+
                     setIsRedirectOtp(!isRedirectOtp);
                 } else if (responseData.statusLogin == "direct-access") {
 
@@ -68,7 +94,8 @@ export function Login() {
                     localStorage.setItem("nameOfSigninUser", nameOfSigninUser);
                     localStorage.setItem("role", role);
                     localStorage.setItem("nameAccount", nameAccount);
-                    navigation("/");
+                    setShowSpinner(false);
+                    setShow(true);
                 } else {
                     console.log("nhap sai roi")
                     // them gia trị lỗi vào 1 biến và truyền xuống cho return
@@ -87,6 +114,9 @@ export function Login() {
 
     }
 
+
+
+    if(authCheck) {navigation("/loginPage")}
 
     return (
         <>
@@ -139,6 +169,14 @@ export function Login() {
                                                  onClick={togglePasswordVisibility}/>
                                             <div className="k-break-wall-eye"></div>
 
+                                            {
+                                                showSpinner ? (<Spinner animation="border" role="status" className={"position-absolute k-spinner"}>
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </Spinner>): (<></>)
+                                            }
+
+
+
                                             <ErrorMessage name="password" component="span"
                                                           className={"k-required-pass"}></ErrorMessage>
 
@@ -178,7 +216,7 @@ export function Login() {
             </div>
 
 
-            {/*<Otp acc={recentAccount}/>*/}
+           <ModalLogin show={show}/>
         </>
     )
 }

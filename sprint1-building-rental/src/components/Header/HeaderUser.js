@@ -6,7 +6,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
 import React, { useEffect, useState } from "react";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   Dropdown,
   DropdownToggle,
@@ -91,7 +91,9 @@ function HeaderUser() {
           data-bs-target="#navbarCollapse"
         >
           <span>
-            <button><MenuIcon/></button>
+            <button>
+              <MenuIcon />
+            </button>
           </span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -112,12 +114,13 @@ function HeaderUser() {
             <div>
               <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle>
-                  <AccountCircleIcon sx={{ fontSize: 30 }} />
+                  <AccountCircleIcon  sx={{ fontSize: 30 }} />
                 </DropdownToggle>
                 <Link to={"/loginPage"}>
                   <DropdownMenu>
-                    
-                    <DropdownItem><Link to={"/login"}>Đăng nhập</Link></DropdownItem>
+                    <DropdownItem>
+                      <Link to={"/login"}>Đăng nhập</Link>
+                    </DropdownItem>
                   </DropdownMenu>
                 </Link>
               </Dropdown>

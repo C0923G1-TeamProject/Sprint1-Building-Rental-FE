@@ -49,8 +49,10 @@ function ContactPage() {
         <title>Liên hệ</title>
       </Helmet>
       <HeaderUser />
-      <div className="text-img-contact">
-        <img className="picture-contact" src="img/HomePage/contact.jpg" />
+      <div className=" text-img-contact">
+        <img className="picture-contact" 
+        src="img/HomePage/contact.jpg" 
+        />
       </div>
       <br />
       <br />

@@ -19,3 +19,32 @@ export const login = async (account) => {
         console.log(e);
     }
 }
+
+export const resend = async (account) => {
+    try {
+        const res = await axiosCof.post("http://localhost:8080/api/auth/resend-otp", account);
+        return res.data;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export const checkAuth = async () => {
+    try {
+        const res = await axiosCof.get("http://localhost:8080/api/auth/getInfo");
+        return res.data;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export const logout = async () => {
+    try {
+        debugger;
+        const res = await axiosCof.post("http://localhost:8080/api/auth/logout");
+        console.log(res.data);
+        return res.data;
+    } catch (e) {
+        console.log(e);
+    }
+}

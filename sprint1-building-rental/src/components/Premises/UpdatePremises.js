@@ -74,12 +74,16 @@ export default function UpdatePremises() {
         findAllStatus();
     })
 
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 100);
+
+        return () => clearTimeout(timeout);
+    }, []);
     //******* Điền form
     const handleSubmit = async (values) => {
         try {
-            console.log("Values để submit", values)
-            setIsSaving(true);
-
             const updatedPremises = {
                 ...values,
                 floor: values.floor,
@@ -87,37 +91,36 @@ export default function UpdatePremises() {
                 code: values.code,
                 premisesStatus: values.premisesStatus,
                 area: values.area,
-                description: values.description.toString(),
+                description: values.description,
                 price: values.price,
                 cost: values.cost
             };
-            console.log("đối tượng đc gửi đi", updatedPremises);
-            const res = await service.updatePremises(id, updatedPremises);
 
-                Swal.fire("Chỉnh sửa thành công!", "", "success").then(() => {
-                    navigate('/premises');
-                });
+            const res = await service.updatePremises(id, updatedPremises);
+            Swal.fire("Chỉnh sửa thành công!", "", "success").then(() => {
+                navigate('/premises');
+            });
 
         } catch (error) {
             console.log("Đã xảy ra lỗi khi cập nhật mặt bằng:", error);
         }
     };
 
-    const handleConfirmation = () => {
-        Swal.fire({
-            title: "Bạn chắc chắn muốn cập nhật thông tin?",
-            text: "Lưu ý: Bạn không thể quay trở lại phiên bản trước đó!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Xác nhận!",
-            cancelButtonText: "Huỷ",
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                handleSubmit(premises); // Gọi hàm handleSubmit khi người dùng xác nhận
-            }
-        });
-    };
+    // const handleConfirmation = () => {
+    //     Swal.fire({
+    //         title: "Bạn chắc chắn muốn cập nhật thông tin?",
+    //         text: "Lưu ý: Bạn không thể quay trở lại phiên bản trước đó!",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonText: "Xác nhận!",
+    //         cancelButtonText: "Huỷ",
+    //         reverseButtons: true
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             handleSubmit(premises);
+    //         }
+    //     });
+    // };
 
 
     const validateObject = {
@@ -132,6 +135,10 @@ export default function UpdatePremises() {
         return <div>
             Loading
         </div>
+    }
+
+    if (localStorage.getItem("token") == null) {
+        navigate("/login");
     }
 
     return (<>
@@ -255,24 +262,29 @@ export default function UpdatePremises() {
                                             <span className="px-0">Chú thích:</span>
                                         </div>
                                         <div className="row">
-                                            <Field as="textarea" rows="7" type="text" className="form-control w-100" name="description"
+                                            <Field as="textarea" rows="7" type="text" className="form-control w-100"
+                                                   name="description"
                                                    id="description"/>
                                             <ErrorMessage name="description" component="span"
                                                           className="text-danger"/>
 
                                         </div>
-                                    </div>
-
-                                        <div className="row my-1 justify-content-between align-items-center">
-                                                <button type="button" className="btn cus custom-btn">
-                                                    <Link to={`/premises`}> Huỷ chỉnh sửa </Link>
-                                                </button>
-
-                                                <button onClick={handleConfirmation} disabled={isSaving} type="button"
-                                                        className="btn cus custom-btn">
+                                        <div className="row my-2">
+                                            <div className="col-6 px-0">
+                                                <Link to={`/premises`} className="px-0">
+                                                    <button type="button" className="btn hisu-cancel">
+                                                        Huỷ chỉnh sửa
+                                                    </button>
+                                                </Link>
+                                            </div>
+                                            <div className="col-6 px-0">
+                                                <button onClick={handleSubmit} type="submit"
+                                                        className="btn hisu-confirm">
                                                     Xác nhận chỉnh sửa
                                                 </button>
+                                            </div>
                                         </div>
+                                    </div>
                                 </div>
                             </Form>
                         </Formik>
