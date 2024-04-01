@@ -32,7 +32,9 @@ function ShowInfoUser() {
   };
 
   const handleEdit = () => {
-    setIsEditing(true);
+    setIsEditing(false);
+    setUser(null)
+    getInfo();
   };
 
   useEffect(() => {
@@ -429,7 +431,7 @@ function ShowInfoUser() {
                               <button
                                 className="button button-cancel"
                                 type="button"
-                                onClick={() => setIsEditing(false)}
+                                onClick={handleEdit}
                                 style={{ color: "white" }}
                               >
                                 Hủy

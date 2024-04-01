@@ -41,39 +41,50 @@ function Example(props) {
             confirmNewPassword: "",
           }}
           onSubmit={(values, { setSubmitting }) => {
-            changePassword(values).then((req) => {
-              setSubmitting(false);
-              if (req.status === 200) {
-                Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "Đổi mật khẩu thành công!",
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-                handleClose();
-              } else if (req.data == "Mật khẩu không chính xác!" || req.status === 400) {
-                console.log("sai nk");
-                Swal.fire({
-                  position: "center",
-                  icon: "error",
-                  title: "Mật khẩu không chính xác!",
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-              }  else if (
-                req.data ==
-                "Mật khẩu mới không trùng khớp với xác nhận mật khẩu!"
-              ) {
-                Swal.fire({
-                  position: "center",
-                  icon: "error",
-                  title: "Mật khẩu mới không trùng khớp với xác nhận mật khẩu!",
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-              }
-            });
+            changePassword(values)
+              .then((req) => {
+                setSubmitting(false);
+                if (req.status === 200) {
+                  Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Password changed successfully!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                  handleClose();
+                } else if (req.status === 400) {
+                  if (req.data === "Mật khẩu không chính xác!") {
+                    console.log("Incorrect password!");
+                    Swal.fire({
+                      position: "center",
+                      icon: "error",
+                      title: "Incorrect password!",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
+                  } else if (
+                    req.data ===
+                    "Mật khẩu mới không trùng khớp với xác nhận mật khẩu!"
+                  ) {
+                    console.log(
+                      "New password does not match the confirmation password!"
+                    );
+                    Swal.fire({
+                      position: "center",
+                      icon: "error",
+                      title:
+                        "New password does not match the confirmation password!",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
+                  }
+                }
+              })
+              .catch((error) => {
+                console.log(error.response.data);
+                // console.error("Error occurred while changing password:", error);
+              });
           }}
           validationSchema={Yup.object({
             currentPassword: Yup.string().required(

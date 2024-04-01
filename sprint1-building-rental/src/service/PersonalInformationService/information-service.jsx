@@ -26,5 +26,4 @@ export const changePassword = async (user) => {
     const res = await axiosCof
     .post("http://localhost:8080/information/changed-password", user)
   return res.data;
- 
 };
