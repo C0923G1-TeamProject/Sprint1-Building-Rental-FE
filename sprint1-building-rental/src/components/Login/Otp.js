@@ -5,6 +5,7 @@ import * as LoginService from '../../service/LoginService/LoginService'
 import {Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {useUserData} from "../Context/useUserData";
+import {ModalLogin} from "./ModalLogin";
 
 export function Otp() {
     const [otp, setOtp] = useState();
@@ -12,21 +13,22 @@ export function Otp() {
     const [currentUser, setCurrentUser] = useState();
     const [errorMessage, setErrorMessage] = useState("");
     const navigation = useNavigate();
+    const [show, setShow] = useState(false);
+    const {userData} = useUserData();
 
-    const { userData } = useUserData();
 
 
 
     useEffect(() => {
 
-            getInfo();
+        getInfo();
 
     }, [userData]);
 
 
     const getInfo = () => {
-       setOtp(userData.otp);
-       setCurrentUser({username: userData.reUsername, password: userData.rePassword});
+        setOtp(userData.otp);
+        setCurrentUser({username: userData.reUsername, password: userData.rePassword});
     }
 
     useEffect(() => {
@@ -36,13 +38,13 @@ export function Otp() {
 
     const resend = async () => {
         try {
-            // const info = await LoginService.getInfoOtp(currentUser);
-            // if (info) {
-            //     console.log(info.otp)
-            //     setOtp(info.otp)
-            //     setAccount(info);
-            //     console.log("set roi")
-            // }
+            const info = await LoginService.resend(currentUser);
+            if (info) {
+                console.log(info.otp)
+                setOtp(info.otp)
+                setAccount(info);
+                console.log("set roi")
+            }
         } catch (e) {
             console.log(e);
         }
@@ -50,7 +52,7 @@ export function Otp() {
 
     const handleSubmit = async (value) => {
         try {
-            if(value.inputOtp == otp) {
+            if (value.inputOtp == otp) {
                 const response = await LoginService.loginOtp(currentUser);
                 const token = response.token;
                 const nameOfSigninUser = response.name;
@@ -63,7 +65,7 @@ export function Otp() {
                 localStorage.setItem("nameAccount", nameAccount);
 
                 let localList = localStorage.getItem("isVisited");
-                if(localList == undefined) {
+                if (localList == undefined) {
                     localList = "-5";
                 }
                 let newList = localList + "," + response.id;
@@ -71,8 +73,8 @@ export function Otp() {
 
 
                 console.log("dang nhap otp tahnh cong")
-                navigation("/")
                 //hien modal
+                setShow(true);
 
             } else {
                 setErrorMessage("Mã xác nhận không chính xác");
@@ -108,7 +110,7 @@ export function Otp() {
                             </div>
 
                             <div className="k-center-row">
-                            <p className={"k-error-mess"}>{errorMessage}</p>
+                                <p className={"k-error-mess"}>{errorMessage}</p>
                             </div>
 
                             <Formik initialValues={{inputOtp: ""}} onSubmit={handleSubmit}>
@@ -129,7 +131,9 @@ export function Otp() {
                                 </Form>
                             </Formik>
                             <div className="k-element-content k-foot-content">
-                                <p>Không nhận được mã,<span className="k-link-a" onClick={()=> {resend()}}>gửi lại</span></p>
+                                <p>Không nhận được mã,<span className="k-link-a" onClick={() => {
+                                    resend()
+                                }}>gửi lại</span></p>
 
                             </div>
 
@@ -148,7 +152,7 @@ export function Otp() {
                 </div>
 
             </div>
-
+            <ModalLogin show={show}/>
         </>
     )
 }
