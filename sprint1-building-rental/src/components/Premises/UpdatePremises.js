@@ -74,6 +74,13 @@ export default function UpdatePremises() {
         findAllStatus();
     })
 
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 100);
+
+        return () => clearTimeout(timeout);
+    }, []);
     //******* Điền form
     const handleSubmit = async (values) => {
         try {
