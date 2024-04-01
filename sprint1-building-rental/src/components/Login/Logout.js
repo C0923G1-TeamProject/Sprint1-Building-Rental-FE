@@ -27,7 +27,7 @@ export function Logout() {
             navigation("/");
             toast.success('Đăng xuất thành công', {
                 position: "top-right",
-                autoClose: 2000,
+                autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
