@@ -259,7 +259,7 @@
 
 .k-spinner {
     position: absolute;
-    scale: 5;
+    scale: 4;
     color: #c87221;
     left: -267px;
 }
@@ -274,8 +274,20 @@
     border-color: #e5e8f3 !important;
 }
 
+
 .k-style-input {
     font-family: "Open Sans", sans-serif;
+}
+
+.k-spinner-logout {
+    color: black;
+    scale: 1;
+    top: 300px;
+}
+
+.k-spinner-logout-bo {
+    display: flex;
+    justify-content: center;
 }
 
 /* checkbox */
