@@ -36,9 +36,9 @@
   background-color: #b89c8a;
 }
 .btn-action-create-contract {
-  background-color: #c77a29;
-  border-color: #c77a29;
-  color: white;
+  background-color: #c77a29 !important;
+  border-color: #c77a29 !important;
+  color: white !important;
 }
 
 .btn-in-list {
@@ -52,4 +52,30 @@
 }
 .required-note {
   color: red !important;
+}
+
+#tbl-custom table{
+  border: 1px solid #000;
+}
+
+.hisu-cancel{
+  color: #fff !important;
+  border-color: #747264 !important;
+  background-color: #747264 !important;
+}
+.hisu-cancel:hover{
+  color: #fff !important;
+  background-color: #5d5b54 !important;
+  border-color: #747264 !important;
+}
+
+.hisu-confirm{
+  border-color: #c77a29 !important;
+  color: white !important;
+  background-color: #c77a29 !important;
+}
+.hisu-confirm:hover{
+  background-color: #b77632 !important;
+  color: white !important;
+  border-color: #c77a29 !important;
 }

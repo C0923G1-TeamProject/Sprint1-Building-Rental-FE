@@ -69,7 +69,7 @@ const UploadImage = ({ setImage, setPreview, user }) => {
   return (
     <div
       class="field is-grouped"
-      style={{ "justify-content": "center", "margin-right": "-108px" }}
+      style={{ "justify-content": "center",    "column-gap": "20px"}}
     >
       <p class="control">
         <input

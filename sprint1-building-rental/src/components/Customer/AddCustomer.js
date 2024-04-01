@@ -7,7 +7,7 @@ import Helmet from "react-helmet";
 import HeaderAdmin from "../Header/HeaderAdmin";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import Footer from "../Footer/Footer";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import storage from "../PersonalInsormation/firebase/firebaseConfig";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import Swallow from "sweetalert2";
@@ -19,6 +19,14 @@ function AddCustomer() {
     const [errorMessagePhone, setErrorMessagePhone] = useState("");
     const [preview, setPreview] = useState();
     const [file, setFile] = useState("");
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 100);
+
+        return () => clearTimeout(timeout);
+    }, []);
 
     const validation = {
         name: Yup.string().matches(/^[a-zA-ZÀ-ỹ\s]*$/, "Tên không đúng định dạng VD: Nguyễn Văn An").required("Vui lòng nhập tên"),
