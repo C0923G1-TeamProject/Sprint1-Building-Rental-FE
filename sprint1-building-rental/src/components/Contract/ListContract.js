@@ -7,6 +7,7 @@ import * as contractService from "../../service/ThamService/ContractService";
 import Pagination from "react-bootstrap/Pagination";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 
 function LisContract() {
   const [status, setStatus] = useState([]);
@@ -53,9 +54,11 @@ function LisContract() {
   //lấy thông tin nhân viên
 
   const [info, setInfo] = useState();
+  const [idAcc, setIdAcc] = useState();
 
   useEffect(() => {
     getInfo();
+
   }, []);
 
   const getInfo = async () => {
@@ -63,6 +66,7 @@ function LisContract() {
       const res = await contractService.getInfo();
       console.log(res);
       setInfo(res);
+      setIdAcc(res.idAccount);
     } catch (e) {
       console.log(e);
     }
@@ -74,16 +78,15 @@ function LisContract() {
 
   //lấy hợp đồng theo idUser
   useEffect(() => {
-    getAllContractByUser(pageContract, info.idAccount);
+    getAllContractByUser(idAcc);
   }, []);
 
-  const getAllContractByUser = async (pageContract, idAccount) => {
+  const getAllContractByUser = async ( idAccount) => {
     try {
-      const res = await contractService.getAllContractByUser(
-        pageContract,
+      const res = await contractService.getAllContractByUser(   
         idAccount
       );
-      setContracts(res);
+      setContractsUser(res);
     } catch (e) {
       console.log(e);
     }
@@ -93,6 +96,7 @@ function LisContract() {
     try {
       const res = await contractService.getAll(pageContract);
       setContracts(res);
+      setTotalPages(res.totalPages);
     } catch (e) {
       console.log(e);
     }
@@ -117,6 +121,8 @@ function LisContract() {
     setPageContract(data);
     getAllContract(data);
   };
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   // useEffect(() => {
   //   getAllContract(search);
@@ -265,8 +271,34 @@ function LisContract() {
                 )}
               </tbody>
             </table>
-            <div className="col-sm-2">
-              {contracts.content.length > 0 && (
+            <div className="col-sm-4">
+
+{contracts ? (
+    <div className="d-flex justify-content-center align-items-center">
+      <ReactPaginate
+          forcePage={currentPage}
+          breakLabel="..."
+          nextLabel="Trang sau"
+          previousLabel="Trang trước"
+          onPageChange={handleChangePage}
+          pageRangeDisplayed={1}
+          marginPagesDisplayed={2}
+          pageCount={totalPages}
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination"
+          activeClassName="active"
+      />
+    </div>
+) : (<div></div>)
+}
+              {/* {contracts.content.length > 0 && (
                 <Pagination>
                   <Pagination.First
                     disabled={contracts.number <= 0}
@@ -295,7 +327,7 @@ function LisContract() {
                     onClick={() => handleChangePage(contracts.totalPages - 1)}
                   />
                 </Pagination>
-              )}
+              )} */}
             </div>
           </div>
         </div>
@@ -317,15 +349,7 @@ function LisContract() {
                   Tạo mới hợp đồng
                 </Link>
               </div>
-              <div className="col-sm-3 mb-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Tìm kiếm tên khách hàng"
-                  name="nameCustomer"
-                  onChange={handelSearchChange}
-                />
-              </div>
+             
               {/* <div className="col-sm-3 mb-3">
                 <input
                   type="text"
@@ -335,24 +359,7 @@ function LisContract() {
                   onChange={handelSearchChange}
                 />
               </div> */}
-              {status && (
-                <div className="col-sm-2 mb-3">
-                  <select
-                    className="form-select"
-                    name="idContractStatus"
-                    onChange={handelSearchChange}
-                  >
-                    <option selected value="">
-                      Tìm kiếm trạng thái
-                    </option>
-                    {status.map((item) => (
-                      <option value={item.id} key={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
+          
 
               <div className="col-sm-2">
                 <button
@@ -419,8 +426,8 @@ function LisContract() {
                 </tr>
               </thead>
               <tbody>
-                {contracts.content && contracts.content.length > 0 ? (
-                  contracts.content.map((item, index) => {
+                {contractsUser ? (
+                  contractsUser.map((item, index) => {
                     return (
                       <tr key={item.id}>
                         <td>{index + 1}</td>
@@ -444,7 +451,7 @@ function LisContract() {
               </tbody>
             </table>
             <div className="col-sm-2">
-              {contracts.content.length > 0 && (
+              {/* {contractsUser  && (
                 <Pagination>
                   <Pagination.First
                     disabled={contracts.number <= 0}
@@ -473,7 +480,7 @@ function LisContract() {
                     onClick={() => handleChangePage(contracts.totalPages - 1)}
                   />
                 </Pagination>
-              )}
+              )} */}
             </div>
           </div>
         </div>
