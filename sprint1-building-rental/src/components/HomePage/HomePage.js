@@ -2,7 +2,7 @@ import CarouselBody from "../Carousel/Carousel";
 import HeaderUser from "../Header/HeaderUser";
 import "../Css/HomePage/Body.css";
 import AddIcon from "@mui/icons-material/Add";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -25,6 +25,7 @@ function HomePage() {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const getAll = async () => {
     const result = await service.getAllPremisesHomePage("", "", "", "", 0);
@@ -35,8 +36,6 @@ function HomePage() {
       );
       setPremises(premisesFiltered);
     }
- 
-
   };
 
   const handleFloor = (value) => {
@@ -150,6 +149,10 @@ function HomePage() {
     }
   };
 
+  if (localStorage.getItem("token")) {
+    navigate("/loginPage");
+  }
+
   return (
     <>
       <Helmet>
@@ -242,66 +245,23 @@ function HomePage() {
                       {premises
                         .filter((premise) => premise.premisesStatus.id === 1)
                         .map((premise, index) => (
-                          // <div className="col-lg-4 col-md-6" key={index}>
-                          //   <div className="service-item d-flex position-relative text-center h-100">
-                          //     <img
-                          //       className="bg-img"
-                          //       src="https://example.com/path/to/your/image.jpg"
-                          //       alt=""
-                          //     />
-                          //     <div
-                          //       className="service-text p-5"
-                          //       style={{ width: "100%" }}
-                          //     >
-                          //       <img
-                          //         className="mb-4"
-                          //         src="/img/HomePage/icon-1.png"
-                          //         alt="Icon"
-                          //       />
-
-                          //       <h6>
-                          //         <a style={{ "font-weight": "bold" }}>
-                          //           Diện tích:
-                          //         </a>{" "}
-                          //         {premise.area} m<sup>2</sup>
-                          //       </h6>
-                          //       <h6>
-                          //         <a style={{ "font-weight": "bold" }}>Giá: </a>{" "}
-                          //         {formatPrice(premise.price)} {"vnđ"}
-                          //       </h6>
-                          //       <h6>
-                          //         <a style={{ "font-weight": "bold" }}>
-                          //           Tầng:{" "}
-                          //         </a>{" "}
-                          //         {premise.floor}
-                          //       </h6>
-
-                          //       <br />
-                          //       <Link
-                          //         className="btn"
-                          //         to={`/premises/${premise.id}`}
-                          //       >
-                          //         <span style={{ marginRight: "5px" }}>
-                          //           <AddIcon />
-                          //         </span>
-                          //         Xem thêm
-                          //       </Link>
-                          //     </div>
-                          //   </div>
-
-                          //   </div>
-
                           <div
                             class="col-lg-4 col-md-6 wow fadeInUp"
                             data-wow-delay="0.1s"
                           >
                             <div class="team-item position-relative">
                               <img
-                                class="img-fluid rounded"
-                                src="img/homePage/card-1.jpg"
+                                style={{
+                                  height: "200px",
+                                  width: "400px",
+                                  "border-radius": "7px",
+                                  "box-shadow": "2px 2px 2px #AAA",
+                                }}
+                                className="bg-img"
+                                src={premise.image}
                                 alt=""
                               />
-                              <div class="team-text bg-#b7acac rounded-end p-4">
+                              <div class="team-text bg-#504e4e rounded-end p-4">
                                 <div>
                                   <h6>
                                     <a style={{ "font-weight": "bold" }}>
@@ -313,7 +273,7 @@ function HomePage() {
                                     <a style={{ "font-weight": "bold" }}>
                                       Giá:{" "}
                                     </a>{" "}
-                                    {formatPrice(premise.price)} {"vnđ"}
+                                    {formatPrice(premise.price)} {"vnđ/tháng"}
                                   </h6>
                                   <h6>
                                     <a style={{ "font-weight": "bold" }}>
@@ -323,17 +283,13 @@ function HomePage() {
                                   </h6>
 
                                   <br />
-                                  {/* <Link
-                                   className="btn"
-                                   to={`/premises/${premise.id}`}
-                                 >
-                                   <span style={{ marginRight: "5px" }}>
-                                     <AddIcon />
-                                   </span>
-                                   Xem thêm
-                                 </Link> */}
                                 </div>
-                                {/* <i class="fa fa-arrow-right fa-2x text-primary"></i> */}
+                                <Link to={`/premises/${premise.id}`}>
+                                  <i
+                                    style={{ color: "#EEB043" }}
+                                    class="fa fa-arrow-right fa-2x"
+                                  ></i>
+                                </Link>
                               </div>
                             </div>
                           </div>
