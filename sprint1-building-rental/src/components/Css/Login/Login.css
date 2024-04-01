@@ -274,6 +274,10 @@
     border-color: #e5e8f3 !important;
 }
 
+.k-style-input {
+    font-family: "Open Sans", sans-serif;
+}
+
 /* checkbox */
 
 .k-checkbox {
