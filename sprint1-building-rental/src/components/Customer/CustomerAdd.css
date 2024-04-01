@@ -34,8 +34,8 @@
 }
 
 .custom-btn-1 {
-    border-color: #747264;
-    background-color: #747264;
+    border-color: #747264 !important;
+    background-color: #747264 !important;
 }
 
 .custom-btn-1 a {
@@ -43,8 +43,8 @@
 }
 
 .custom-btn-1:hover {
-    background-color: #5d5b54;
-    border-color: #747264;
+    background-color: #5d5b54 !important;
+    border-color: #747264 !important;
 }
 
 .custom-btn-1:hover a {
@@ -82,7 +82,7 @@
 
 .btn.cus {
     flex: 1;
-    margin-right: 0.5rem; /* Khoảng cách giữa các nút */
+    margin-right: 3.5rem; /* Khoảng cách giữa các nút */
 }
 
 .btn:last-child {
@@ -93,6 +93,7 @@
     text-decoration: none;
     color: inherit;
 }
+
 .custom-file-upload input[type="file"] {
     display: none;
 }
