@@ -19,7 +19,7 @@ function LisContract() {
   //paginate
   const initPage = {
     page: 0,
-    size: 2,
+    size: 6,
     // sortDirection: "ASC",
     // sortBy: "endDate",
     nameCustomer: "",
