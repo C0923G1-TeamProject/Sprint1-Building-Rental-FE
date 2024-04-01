@@ -118,9 +118,12 @@ export function Login() {
         navigation("/");
     }
 
+    useEffect(() => {
+        if(authCheck) {
+            navigation("/loginPage");
+        }
+    }, [authCheck]);
 
-
-    if(authCheck) {navigation("/loginPage")}
 
     return (
         <>
