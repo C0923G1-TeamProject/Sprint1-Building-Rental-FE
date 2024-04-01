@@ -15,7 +15,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import * as service from "../../service/PremisesService";
 import ReactPaginate from "react-paginate";
 
-
 function LoginPage() {
   const [premises, setPremises] = useState([]);
   const [floor, setFloor] = useState("");
@@ -28,19 +27,8 @@ function LoginPage() {
 
   const navigation = useNavigate();
   const getAll = async () => {
-    debugger;
-    const result = await service.getAllPremisesHomePage(
-      "",
-      "",
-      "",
-      "",
-      0);
-    if (result) {
-      let premisesFiltered = result.content.filter(
-        (premise) => premise.premisesStatus.id === 1
-      );
-      setPremises(premisesFiltered);
-    }
+    const result = await service.getAllPremisesHomePage("", "", "", "", 0);
+
     setPremises(result.content);
   };
 
@@ -155,8 +143,8 @@ function LoginPage() {
     }
   };
 
-  if(!localStorage.getItem("token")){
-    navigation("/")
+  if (!localStorage.getItem("token")) {
+    navigation("/");
   }
   return (
     <>
@@ -248,53 +236,48 @@ function LoginPage() {
                   ) : (
                     <div className="row g-4">
                       {premises.map((premise, index) => (
-                        <div className="col-lg-4 col-md-6" key={index}>
-                          <div className="service-item d-flex position-relative text-center h-100">
+                        <div
+                          class="col-lg-4 col-md-6 wow fadeInUp"
+                          data-wow-delay="0.1s"
+                        >
+                          <div class="team-item position-relative">
                             <img
+                              style={{
+                                height: "200px",
+                                width: "400px",
+                                "border-radius": "7px",
+                                "box-shadow": "2px 2px 2px #AAA",
+                              }}
                               className="bg-img"
-                              src="/img/HomePage/card-6.jpg"
+                              src={premise.image}
                               alt=""
                             />
-                            <div
-                              className="service-text p-5"
-                              style={{ width: "100%" }}
-                            >
-                              <img
-                                className="mb-4"
-                                src="/img/HomePage/icon-1.png"
-                                alt="Icon"
-                              />
+                            <div class="team-text bg-#6a6868 rounded-end p-4">
+                              <div>
+                                <h6>
+                                  <a style={{ "font-weight": "bold" }}>
+                                    Diện tích:
+                                  </a>{" "}
+                                  {premise.area} m<sup>2</sup>
+                                </h6>
+                                <h6>
+                                  <a style={{ "font-weight": "bold" }}>Giá: </a>{" "}
+                                  {formatPrice(premise.price)} {"vnđ/tháng"}
+                                </h6>
+                                <h6>
+                                  <a style={{ "font-weight": "bold" }}>
+                                    Tầng:{" "}
+                                  </a>{" "}
+                                  {premise.floor}
+                                </h6>
 
-                              <h6>
-                                <a style={{ "font-weight": "bold" }}>
-                                  Diện tích:
-                                </a>{" "}
-                                {premise.area} m<sup>2</sup>
-                              </h6>
-                              <h6>
-                                <a style={{ "font-weight": "bold" }}>Giá: </a>{" "}
-                                {formatPrice(premise.price)} {"vnđ"}
-                              </h6>
-                              <h6>
-                                <a style={{ "font-weight": "bold" }}>Tầng: </a>{" "}
-                                {premise.floor}
-                              </h6>
-                              <br />
-                              <h6>
-                                <a style={{ "font-weight": "bold" }}>
-                                  Test xem đã bàn giao:{" "}
-                                </a>{" "}
-                                {premise.premisesStatus.name}
-                              </h6>
-                              <br />
-                              <Link
-                                className="btn"
-                                to={`/premises/${premise.id}`}
-                              >
-                                <span style={{ marginRight: "5px" }}>
-                                  <AddIcon />
-                                </span>
-                                Xem thêm
+                                <br />
+                              </div>
+                              <Link to={`/premises/${premise.id}`}>
+                                <i
+                                  style={{ color: "#EEB043" }}
+                                  class="fa fa-arrow-right fa-2x"
+                                ></i>
                               </Link>
                             </div>
                           </div>
@@ -586,6 +569,7 @@ function LoginPage() {
           {/* <!-- Body End --> */}
         </div>
       </div>
+
       <Footer />
     </>
   );
