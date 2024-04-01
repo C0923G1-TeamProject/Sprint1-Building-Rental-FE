@@ -51,10 +51,12 @@
     margin-top: 20px;
     margin-bottom: 50px;
 }
+
 .page-item {
     margin: 0 5px;
     list-style: none;
 }
+
 .page-link {
     padding: 8px 12px;
     border: 1px solid #ccc;
@@ -63,15 +65,18 @@
     text-decoration: none;
     transition: background-color 0.3s;
 }
+
 .page-link:hover {
     background-color: #92883E;
 }
+
 .active .page-link {
     background-color: #E0CCBE !important;
     color: black;
     border-color: #E0CCBE;
 }
-.active .page-link:hover{
+
+.active .page-link:hover {
     background-color: #B89C8A;
 }
 
@@ -99,5 +104,14 @@
     font-weight: bold;
     text-align: center;
     color: red;
+}
+
+#tbl-custom table {
+    border: 1px solid #000;
+}
+
+#tbl-custom .table > thead > tr > th {
+    background-color: #747264 !important;
+    color: #fff !important;
 }
 

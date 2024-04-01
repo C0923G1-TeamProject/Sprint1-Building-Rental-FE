@@ -85,77 +85,86 @@ function ListCustomer() {
             <div>
                 <HeaderAdmin/>
                 <div className="container">
-                    <h2 className="cus-title">Danh sách khách hàng</h2>
-                    <div className="d-flex align-items-center py-4">
-                        <button className="btn btn-in-list me-5">
-                            <Link to={"/add"} className="cus_display">Thêm mới khách hàng</Link>
-                        </button>
-                        <Formik initialValues={{name: "", email: ""}} onSubmit={(values) => {
-                            CustomerService.getAll(values.name, values.email, 0).then((response) => {
-                                setCustomers(response.content);
-                                setTotalPages(response.totalPages);
-                                setCurrentPage(0);
-                                setName(values.name);
-                                setEmail(values.email);
-                            }).catch((error) => {
-                                console.log(error);
-                            });
-                        }}>
-                            <Form className="form-inline" method="get">
-                                <div className="input-group">
-                                    <Field name="name" className="form-control me-2"
-                                           placeholder="Nhập tên cần tìm"></Field>
-                                    <Field name="email" className="form-control me-2"
-                                           placeholder="Nhập email cần tìm" size="30"></Field>
-                                    <div>
-                                        <button type="submit" className="btn btn-in-list">Tìm kiếm</button>
-                                    </div>
-                                </div>
-                            </Form>
-                        </Formik>
+                    <h1 className="text-center">DANH SÁCH KHÁCH HÀNG</h1>
+                    <div className="row">
+                        <div className="col-1"></div>
+                        <div className="col-10">
+                            <div className="d-flex align-items-center">
+                                <button className="btn btn-in-list me-5">
+                                    <Link to={"/add"} className="cus_display">Thêm mới</Link>
+                                </button>
+                                <Formik initialValues={{name: "", email: ""}} onSubmit={(values) => {
+                                    CustomerService.getAll(values.name, values.email, 0).then((response) => {
+                                        setCustomers(response.content);
+                                        setTotalPages(response.totalPages);
+                                        setCurrentPage(0);
+                                        setName(values.name);
+                                        setEmail(values.email);
+                                    }).catch((error) => {
+                                        console.log(error);
+                                    });
+                                }}>
+                                    <Form className="form-inline" method="get">
+                                        <div className="input-group">
+                                            <Field name="name" className="form-control me-2"
+                                                   placeholder="Nhập tên cần tìm"></Field>
+                                            <Field name="email" className="form-control me-2"
+                                                   placeholder="Nhập email cần tìm" size="30"></Field>
+                                            <div>
+                                                <button type="submit" className="btn btn-in-list">Tìm kiếm</button>
+                                            </div>
+                                        </div>
+                                    </Form>
+                                </Formik>
+                            </div>
+                        </div>
                     </div>
-                    <table className="table table-striped">
-                        <thead>
-                        <tr className="table-header-list-customer">
-                            <th className="cus-th">#</th>
-                            <th className="cus-th">Họ Tên</th>
-                            <th className="cus-th">SĐT</th>
-                            <th className="cus-th">CCCD</th>
-                            <th className="cus-th">Email</th>
-                            <th className="cus-th">Công Ty</th>
-                            <th className="cus-th">Tuỳ chọn</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {customers && customers.length > 0 ? (
-                            customers.map((customer, index) => (
-                                    <tr key={customer.id}>
-                                        <td>{index + 1}</td>
-                                        <td>{customer.name}</td>
-                                        <td>{customer.phoneNumber}</td>
-                                        <td>{customer.card}</td>
-                                        <td>{customer.email}</td>
-                                        <td>{customer.company}</td>
-                                        <td>
-                                            <button className="btn btn-action-list-customer"
-                                                    onClick={() => handleDelete(customer)}>
-                                                Xóa
-                                            </button>
+                    <div id="tbl-custom" className="row my-3 table-responsive">
+                        <div className="col-1"></div>
+                        <div className="col-10">
+                            <table className="table table-striped">
+                                <thead>
+                                <tr className="table-header-list-customer">
+                                    <th className="cus-th">#</th>
+                                    <th className="cus-th">Họ Tên</th>
+                                    <th className="cus-th">SĐT</th>
+                                    <th className="cus-th">CCCD</th>
+                                    <th className="cus-th">Email</th>
+                                    <th className="cus-th">Công Ty</th>
+                                    <th className="cus-th">Tuỳ chọn</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {customers && customers.length > 0 ? (
+                                    customers.map((customer, index) => (
+                                            <tr key={customer.id}>
+                                                <td>{index + 1}</td>
+                                                <td>{customer.name}</td>
+                                                <td>{customer.phoneNumber}</td>
+                                                <td>{customer.card}</td>
+                                                <td>{customer.email}</td>
+                                                <td>{customer.company}</td>
+                                                <td>
+                                                    <button className="btn btn-action-list-customer"
+                                                            onClick={() => handleDelete(customer)}>
+                                                        Xóa
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    )
+                                ) : (
+                                    <tr>
+                                        <td colSpan={7} className="no-data-found">
+                                            Không tìm thấy dữ liệu
                                         </td>
                                     </tr>
                                 )
-                            )
-                        ) : (
-                            <tr>
-                                <td colSpan={7} className="no-data-found">
-                                    Không tìm thấy dữ liệu
-                                </td>
-                            </tr>
-                        )
-                        }
-                        </tbody>
-                    </table>
-
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div className="row pagination">
                         {customers ? (
                             <div className="d-flex justify-content-center align-items-center">
