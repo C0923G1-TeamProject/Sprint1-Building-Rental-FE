@@ -14,12 +14,14 @@ import {
   updateInfo,
 } from "../../service/PersonalInformationService/information-service";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 function ShowInfoUser() {
   const [show, setShow] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [image, setImage] = useState();
   const [preview, setPreview] = useState();
   const [user, setUser] = useState();
+  const navigation = useNavigate();
 
   const formatDate = (date) => {
     const newDate = moment(date).format("DD/MM/YYYY");
@@ -111,6 +113,9 @@ function ShowInfoUser() {
         };
   };
 
+  if (localStorage.getItem("token") == null) {
+    navigation("/login");
+  }
   return (
     <>
       <HeaderAdmin />
@@ -240,7 +245,7 @@ function ShowInfoUser() {
                         <p className="is-5" style={{ color: "#ddb673" }}>
                           <h4>Thông tin cá nhân</h4>
                         </p>
-                        <p className="subtitle">
+                        <p className="subtitle" style={{height: "351px"}}>
                           <div
                             className="columns is-three-quarters-mobile
                                     is-two-thirds-tablet

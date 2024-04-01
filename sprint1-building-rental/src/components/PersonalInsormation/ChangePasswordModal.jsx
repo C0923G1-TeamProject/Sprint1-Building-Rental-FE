@@ -7,7 +7,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { changePassword } from "../../service/PersonalInformationService/information-service";
 import * as Yup from "yup";
 import "../Css/InfoCss/Info.css";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 function Example(props) {
   const { show, setShow } = props;
   const [showPassword, setShowPassword] = useState({
@@ -41,16 +41,38 @@ function Example(props) {
             confirmNewPassword: "",
           }}
           onSubmit={(values, { setSubmitting }) => {
-            changePassword(values).then(() => {
+            changePassword(values).then((req) => {
               setSubmitting(false);
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Đổi mật khẩu thành công!",
-                showConfirmButton: false,
-                timer: 1500
-              });
-              handleClose();
+              if (req.status === 200) {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Đổi mật khẩu thành công!",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                handleClose();
+              } else if (req.data == "Mật khẩu không chính xác!" || req.status === 400) {
+                console.log("sai nk");
+                // Swal.fire({
+                //   position: "center",
+                //   icon: "error",
+                //   title: "Mật khẩu không chính xác!",
+                //   showConfirmButton: false,
+                //   timer: 1500,
+                // });
+              } else if (
+                req.data ==
+                "Mật khẩu mới không trùng khớp với xác nhận mật khẩu!"
+              ) {
+                Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: "Mật khẩu mới không trùng khớp với xác nhận mật khẩu!",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              }
             });
           }}
           validationSchema={Yup.object({
@@ -75,7 +97,7 @@ function Example(props) {
               <Modal.Title>Thông báo Đổi mật khẩu</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <table className="table">
+              <table className="table table-vvi">
                 <thead>
                   <tr>
                     <td>
@@ -147,11 +169,11 @@ function Example(props) {
                           height: "30px",
                         }}
                       />{" "}
-                      {/* <ErrorMessage
-                        name="currentPassword"
+                      <ErrorMessage
+                        name="newPassword"
                         className="error-message"
                         component="span"
-                      /> */}
+                      />
                     </td>
                     <td>
                       <img
@@ -191,11 +213,11 @@ function Example(props) {
                           /* Adjusted width */ height: "30px",
                         }}
                       />{" "}
-                      {/* <ErrorMessage
-                        name="currentPassword"
+                      <ErrorMessage
+                        name="confirmNewPassword"
                         className="error-message"
                         component="span"
-                      /> */}
+                      />
                     </td>
                     <td>
                       <img
