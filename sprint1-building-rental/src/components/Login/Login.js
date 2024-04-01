@@ -98,12 +98,12 @@ export function Login() {
                     setShow(true);
                 } else {
                     console.log("nhap sai roi")
-                    // them gia trị lỗi vào 1 biến và truyền xuống cho return
+                    setShowSpinner(false);
                     setErrorMessage("Tài khoản hoặc mật khẩu không chính xác");
                 }
             } else {
                 console.log("nhap sai roi")
-                // them gia trị lỗi vào 1 biến và truyền xuống cho return
+                setShowSpinner(false);
                 setErrorMessage("Tài khoản hoặc mật khẩu không chính xác");
             }
 
@@ -112,6 +112,10 @@ export function Login() {
             console.log(e);
         }
 
+    }
+
+    const exit = () => {
+        navigation("/");
     }
 
 
@@ -196,7 +200,7 @@ export function Login() {
                                             <span className="button__text">Đăng nhập</span>
                                             <i className="button__icon fas fa-chevron-right"></i>
                                         </button>
-                                        <button className="button login__submit">
+                                        <button className="button login__submit" type={"button"} onClick={exit}>
                                             <span className="button__text">Thoát</span>
                                             <i className="button__icon fas fa-chevron-right"></i>
                                         </button>
