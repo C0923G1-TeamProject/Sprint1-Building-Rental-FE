@@ -90,9 +90,11 @@ function ListCustomer() {
                         <div className="col-1"></div>
                         <div className="col-10">
                             <div className="d-flex align-items-center">
+                                <Link to={"/add"} className="cus_display">
                                 <button className="btn btn-in-list me-5">
-                                    <Link to={"/add"} className="cus_display">Thêm mới</Link>
+                                    Thêm mới
                                 </button>
+                                </Link>
                                 <Formik initialValues={{name: "", email: ""}} onSubmit={(values) => {
                                     CustomerService.getAll(values.name, values.email, 0).then((response) => {
                                         setCustomers(response.content);
@@ -126,11 +128,11 @@ function ListCustomer() {
                                 <thead>
                                 <tr className="table-header-list-customer">
                                     <th className="cus-th">#</th>
-                                    <th className="cus-th">Họ Tên</th>
+                                    <th className="cus-th">Họ tên</th>
                                     <th className="cus-th">SĐT</th>
                                     <th className="cus-th">CCCD</th>
                                     <th className="cus-th">Email</th>
-                                    <th className="cus-th">Công Ty</th>
+                                    <th className="cus-th">Công ty</th>
                                     <th className="cus-th">Tuỳ chọn</th>
                                 </tr>
                                 </thead>

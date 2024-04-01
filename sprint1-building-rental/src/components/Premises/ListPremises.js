@@ -142,7 +142,7 @@ export default function ListPremises() {
         <>
             <HeaderAdmin/>
             <div className="container">
-                <h2 className="text-center fw-bold text-uppercase">Danh sách mặt bằng</h2>
+                <h1 className="text-center fw-bold text-uppercase">Danh sách mặt bằng</h1>
                 <div className="row">
                     <div className="col-1"></div>
                     <div className="col-10">
