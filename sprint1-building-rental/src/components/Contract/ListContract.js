@@ -35,7 +35,7 @@ function LisContract() {
 
   useEffect(() => {
     document.title = "Danh sách hợp đồng";
-  });
+  }, []);
 
   useEffect(() => {
     getAllStatus();
@@ -60,7 +60,6 @@ function LisContract() {
 
   useEffect(() => {
     getInfo();
-
   }, []);
 
   const getInfo = async () => {
@@ -83,11 +82,9 @@ function LisContract() {
     getAllContractByUser(idAcc);
   }, []);
 
-  const getAllContractByUser = async ( idAccount) => {
+  const getAllContractByUser = async (idAccount) => {
     try {
-      const res = await contractService.getAllContractByUser(   
-        idAccount
-      );
+      const res = await contractService.getAllContractByUser(idAccount);
       setContractsUser(res);
     } catch (e) {
       console.log(e);
@@ -98,7 +95,6 @@ function LisContract() {
     try {
       const res = await contractService.getAll(pageContract);
       setContracts(res);
-      setTotalPages(res.totalPages);
     } catch (e) {
       console.log(e);
     }
@@ -118,13 +114,11 @@ function LisContract() {
 
   //phaan trang
 
-  const handleChangePage = async (selectedPage) => {
-    const data = { ...pageContract, page: selectedPage };
-    // setPageContract(data);
-    setCurrentPage(selectedPage);
+  const handleChangePage = async (page) => {
+    const data = { ...pageContract, page: page.selected };
+    setPageContract(data);
     getAllContract(data);
   };
-
 
   // useEffect(() => {
   //   getAllContract(search);
@@ -137,60 +131,190 @@ function LisContract() {
     return (
       <>
         <HeaderAdmin />
-          <div className="container">
-            <h1 className="text-center fw-bold text-uppercase">DANH SÁCH HỢP ĐỒNG</h1>
+        <div className="container">
+          <h1 className="text-center fw-bold text-uppercase">
+            DANH SÁCH HỢP ĐỒNG
+          </h1>
 
-            <div className="row">
-              <div className="col-1"></div>
-              <div className="col-10">
-                <div className="input-group">
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col-10">
+              <div className="input-group">
+                <div className="me-4">
+                  <Link className="btn btn-in-list" to="/contract/create">
+                    Tạo mới hợp đồng
+                  </Link>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    className="form-control rounded-1 me-2"
+                    placeholder="Tìm kiếm tên khách hàng"
+                    name="nameCustomer"
+                    onChange={handelSearchChange}
+                  />
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    className="form-control rounded-1 me-2"
+                    placeholder="Tìm kiếm tên nhân viên"
+                    name="nameEmployee"
+                    onChange={handelSearchChange}
+                  />
+                </div>
+                {status && (
                   <div className="me-4">
-                    <Link className="btn btn-in-list" to="/contract/create">
-                      Tạo mới hợp đồng
-                    </Link>
+                    <select
+                      className="form-select"
+                      name="idContractStatus"
+                      onChange={handelSearchChange}
+                    >
+                      <option selected value="">
+                        Tìm kiếm trạng thái
+                      </option>
+                      {status.map((item) => (
+                        <option value={item.id} key={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                  <div>
-                    <input
-                        type="text"
-                        className="form-control rounded-1 me-2"
-                        placeholder="Tìm kiếm tên khách hàng"
-                        name="nameCustomer"
-                        onChange={handelSearchChange}
-                    />
-                  </div>
-                  <div>
-                    <input
-                        type="text"
-                        className="form-control rounded-1 me-2"
-                        placeholder="Tìm kiếm tên nhân viên"
-                        name="nameEmployee"
-                        onChange={handelSearchChange}
-                    />
-                  </div>
-                  {status && (
-                      <div className="me-4">
-                        <select
-                            className="form-select"
-                            name="idContractStatus"
-                            onChange={handelSearchChange}
-                        >
-                          <option selected value="">
-                            Tìm kiếm trạng thái
-                          </option>
-                          {status.map((item) => (
-                              <option value={item.id} key={item.id}>
-                                {item.name}
-                              </option>
-                          ))}
-                        </select>
-                      </div>
-                  )}
+                )}
 
-                  <div>
-                    <button
-                        type="submit"
-                        className="btn btn-in-list"
-                        onClick={handleSearch}
+                <div className="col-sm-2">
+                  <button
+                    type="submit"
+                    className="btn btn-in-list"
+                    onClick={handleSearch}
+                  >
+                    Tìm kiếm
+                  </button>
+                </div>
+              </div>
+              <table className="table table-striped ">
+                <thead>
+                  <tr className="table-header-list-contract">
+                    <th
+                      scope="col"
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      #
+                    </th>
+                    <th
+                      scope="col"
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Mã hợp đồng
+                    </th>
+                    <th
+                      scope="col"
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Mã mặt bằng
+                    </th>
+                    <th
+                      scope="col"
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Khách hàng
+                    </th>
+                    <th
+                      scope="col"
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Nhân viên tạo hợp đồng
+                    </th>
+
+                    <th
+                      scope="col"
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Trạng thái
+                    </th>
+                    <th
+                      scope="col"
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Ngày bắt đầu
+                    </th>
+                    <th
+                      scope="col"
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Ngày kết thúc
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {contracts.content && contracts.content.length > 0 ? (
+                    contracts.content.map((item, index) => {
+                      return (
+                        <tr key={item.id}>
+                          <td>{index + 1}</td>
+                          <td>{item.code}</td>
+                          <td>
+                            Mã: {item.premises.code} - Tầng:{" "}
+                            {item.premises.floor}
+                          </td>
+                          <td>{item.customer.name}</td>
+                          <td>{item.nameEmployee}</td>
+                          <td>{item.contractStatus.name}</td>
+                          <td>{formatDate(item.startDate)}</td>
+                          <td>{formatDate(item.endDate)}</td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <tr>
+                      <td colSpan="8">Không tìm thấy nội dung này</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+              <div className="">
+                {contracts ? (
+                  // <div className="d-flex justify-content-center align-items-center">
+                  <ReactPaginate
+                    forcePage={contracts.number}
+                    breakLabel="..."
+                    nextLabel="Trang sau"
+                    previousLabel="Trang trước"
+                    onPageChange={handleChangePage}
+                    pageRangeDisplayed={1}
+                    marginPagesDisplayed={2}
+                    pageCount={contracts.totalPages}
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                  />
+                ) : (
+                  // </div>
+                  <div></div>
+                )}
+                {/* {contracts.content.length > 0 && (
+                <Pagination>
+                  <Pagination.First
+                    disabled={contracts.number <= 0}
+                    onClick={() => handleChangePage(0)}
+                  />
+                  <Pagination.Prev
+                    disabled={contracts.number <= 0}
+                    onClick={() => handleChangePage(contracts.number - 1)}
+                  />
+
+                  {Array.from(Array(contracts.totalPages)).map((e, i) => (
+                    <Pagination.Item
+                      active={contracts.number === i}
+                      key={i + 1}
+                      onClick={() => handleChangePage(i)}
                     >
                       Tìm kiếm
                     </button>
@@ -319,7 +443,7 @@ function LisContract() {
   }
   if (localStorage.getItem("role") == "ROLE_USER") {
     return (
-        <>
+        <div>
           <HeaderAdmin />
           <div className="container">
             <h1 className="text-center fw-bold text-uppercase">DANH SÁCH HỢP ĐỒNG</h1>
@@ -381,8 +505,7 @@ function LisContract() {
                 {/*  </div>*/}
                 {/*</div>*/}
               </div>
-              <div className="col-1">
-              </div>
+              <div className="col-1"></div>
             </div>
 
             <div id="tbl-custom" className="row my-3 table-responsive">
@@ -390,93 +513,92 @@ function LisContract() {
               <div className="col-10">
                 <table className="table table-striped ">
                   <thead>
-                  <tr className="table-header-list-contract">
-                    <th
+                    <tr className="table-header-list-contract">
+                      <th
                         scope="col"
                         style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      #
-                    </th>
-                    <th
+                      >
+                        #
+                      </th>
+                      <th
                         scope="col"
                         style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Mã hợp đồng
-                    </th>
-                    <th
+                      >
+                        Mã hợp đồng
+                      </th>
+                      <th
                         scope="col"
                         style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Mã mặt bằng
-                    </th>
-                    <th
+                      >
+                        Mã mặt bằng
+                      </th>
+                      <th
                         scope="col"
                         style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Khách hàng
-                    </th>
-                    <th
+                      >
+                        Khách hàng
+                      </th>
+                      <th
                         scope="col"
                         style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Nhân viên tạo hợp đồng
-                    </th>
+                      >
+                        Nhân viên tạo hợp đồng
+                      </th>
 
-                    <th
+                      <th
                         scope="col"
                         style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Trạng thái
-                    </th>
-                    <th
+                      >
+                        Trạng thái
+                      </th>
+                      <th
                         scope="col"
                         style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Ngày bắt đầu
-                    </th>
-                    <th
+                      >
+                        Ngày bắt đầu
+                      </th>
+                      <th
                         scope="col"
                         style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Ngày kết thúc
-                    </th>
-                  </tr>
+                      >
+                        Ngày kết thúc
+                      </th>
+                    </tr>
                   </thead>
                   <tbody>
                     {contractsUser ? (
-                        contractsUser.map((item, index) => {
-                          return (
-                              <tr key={item.id}>
-                                <td>{index + 1}</td>
-                                <td>{item.code}</td>
-                                <td>
-                                  Mã: {item.premises.code} - Tầng: {item.premises.floor}
-                                </td>
-                                <td>{item.customer.name}</td>
-                                <td>{item.nameEmployee}</td>
-                                <td>{item.contractStatus.name}</td>
-                                <td>{formatDate(item.startDate)}</td>
-                                <td>{formatDate(item.endDate)}</td>
-                              </tr>
-                          );
-                        })
+                      contractsUser.map((item, index) => {
+                        return (
+                          <tr key={item.id}>
+                            <td>{index + 1}</td>
+                            <td>{item.code}</td>
+                            <td>
+                              Mã: {item.premises.code} - Tầng:{" "}
+                              {item.premises.floor}
+                            </td>
+                            <td>{item.customer.name}</td>
+                            <td>{item.nameEmployee}</td>
+                            <td>{item.contractStatus.name}</td>
+                            <td>{formatDate(item.startDate)}</td>
+                            <td>{formatDate(item.endDate)}</td>
+                          </tr>
+                        );
+                      })
                     ) : (
-                        <tr>
-                          <td colSpan="6">Không tìm thấy nội dung này</td>
-                        </tr>
+                      <tr>
+                        <td colSpan="6">Không tìm thấy nội dung này</td>
+                      </tr>
                     )}
                   </tbody>
                 </table>
               </div>
               <div className="col-1"></div>
             </div>
-
-
           </div>
+        </div>
 
-
-          <Footer></Footer>
-        </>
+        <Footer></Footer>
+      </>
     );
   }
 }

@@ -253,7 +253,7 @@ function CreateContract() {
             onSubmit={handleSubmitAdd}
             render={({ setFieldValue }) => (
               <Form className="row g-3 mt-3">
-                {premisese.length > 0 ? (
+                {premisese && premisese.length > 0 ? (
                   <div className="col-md-4">
                     <label
                       for="inputState"
@@ -496,13 +496,13 @@ function CreateContract() {
                 > */}
                   <button
                     onClick={handleBack}
-                    className="btn btn-in-list mt-3 mr-3"
+                    className="btn hisu-cancel mt-3 mr-3"
                     type="button"
                   >
                     Hủy thêm mới
                   </button>
                   {/* </a> */}
-                  <button type="submit" className="btn btn-in-list mt-3 mr-3">
+                  <button type="submit" className="btn hisu-confirm mt-3 mr-3">
                     Thêm mới
                   </button>
                   {/* <button type="submit" className="btn btn-in-list mt-5 mr-3">
