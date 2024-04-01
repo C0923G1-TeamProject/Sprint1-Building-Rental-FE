@@ -58,7 +58,7 @@ function Example(props) {
                 navigation("/logout");
               })
               .catch((error) => {
-                if (error.response.data == "Mật khẩu không chính xác!") {
+                if (error.response.data === "Mật khẩu không chính xác!") {
                   Swal.fire({
                     position: "center",
                     icon: "error",
@@ -68,8 +68,8 @@ function Example(props) {
                   });
                 }
                 if (
-                  error.response.data ==
-                  "Mật khẩu mới không trùng khớp với xác nhận mật khẩu! "
+                  error.response.data ===
+                  "Mật khẩu mới không trùng khớp với xác nhận mật khẩu!"
                 )
                   Swal.fire({
                     position: "center",
@@ -80,13 +80,14 @@ function Example(props) {
                     timer: 2500,
                   });
                 if (
-                  error.response.data ==
+                  error.response.data ===
                   "Mật khẩu mới không được trùng với mật khẩu cũ!"
                 )
                   Swal.fire({
                     position: "center",
                     icon: "error",
-                    title: "Mật khẩu mới không được trùng với mật khẩu cũ! Vui lòng nhập lại",
+                    title:
+                      "Mật khẩu mới không được trùng với mật khẩu cũ! Vui lòng nhập lại",
                     showConfirmButton: false,
                     timer: 2500,
                   });
@@ -99,20 +100,17 @@ function Example(props) {
             newPassword: Yup.string()
               .min(6, "Mật khẩu phải ít nhất chứa hơn 6 kí tự")
               .max(24, "Mật khẩu không chứa quá 24 kí tự!")
-              // .matches(
-              //   "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]$",
-              //   "Mật khẩu ít nhất chứa 1 chữ cái thường, 1 chữ cái hoa, 1 số 0-9 và 1 kí tự đặc biệt như(@$!%*?&)"
-              // )
               .required("Mật khẩu không được bỏ trống"),
-            confirmNewPassword: Yup.string().required(
-              "Mật khẩu không được bỏ trống"
-            ),
+            confirmNewPassword: Yup.string()
+              .min(6, "Mật khẩu phải ít nhất chứa hơn 6 kí tự")
+              .max(24, "Mật khẩu không chứa quá 24 kí tự!")
+              .required("Mật khẩu không được bỏ trống"),
           })}
         >
           <Form>
             <Modal.Header closeButton>
               <Modal.Title>
-                <h3 style={{color: "black"}}>Thông báo đổi mật khẩu</h3>
+                <h3 style={{ color: "black" }}>Thông báo đổi mật khẩu</h3>
                 <h6>
                   Lưu ý:{" "}
                   <span style={{ color: "red" }}>
@@ -126,7 +124,7 @@ function Example(props) {
               <table className="table table-vvi">
                 <thead>
                   <tr>
-                    <td style={{width: "200px"}}>
+                    <td style={{ width: "200px" }}>
                       Nhập mật khẩu hiện tại{" "}
                       {
                         <span style={{ color: "red", fontWeight: "bold" }}>
@@ -208,10 +206,10 @@ function Example(props) {
                   </tr>
                   <tr>
                     <td>
-                      Nhập lại mật khẩu mới {" "}
+                      Nhập lại mật khẩu mới{" "}
                       {
                         <span style={{ color: "red", fontWeight: "bold" }}>
-                           *
+                          *
                         </span>
                       }
                     </td>

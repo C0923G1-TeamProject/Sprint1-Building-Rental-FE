@@ -1,6 +1,5 @@
 import { axiosCof } from "../../components/Config/axios-config";
 export const getInfoUser = async () => {
-  debugger;
   const res = await axiosCof.get(
     "http://localhost:8080/information/getInformationUser"
   );
@@ -9,7 +8,6 @@ export const getInfoUser = async () => {
 };
 
 export const updateInfo = async (user) => {
-  debugger
   const obj = { ...user, gender: user.gender === "1" ? true : false };
   const res = await axiosCof.post(
     "http://localhost:8080/information/updateInformation",
