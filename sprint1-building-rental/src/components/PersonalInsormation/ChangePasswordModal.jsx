@@ -48,7 +48,8 @@ function Example(props) {
                 Swal.fire({
                   position: "center",
                   icon: "success",
-                  title: "Đổi mật khẩu thành công! Vui lòng đăng nhập lại bằng mật khẩu mới",
+                  title:
+                    "Đổi mật khẩu thành công! Vui lòng đăng nhập lại bằng mật khẩu mới",
                   showConfirmButton: false,
                   timer: 2500,
                 });
@@ -63,20 +64,31 @@ function Example(props) {
                     icon: "error",
                     title: "Mật khẩu không chính xác!",
                     showConfirmButton: false,
-                    timer: 1500,
+                    timer: 2500,
                   });
                 }
                 if (
                   error.response.data ==
-                  "Mật khẩu mới không trùng khớp với xác nhận mật khẩu!"
+                  "Mật khẩu mới không trùng khớp với xác nhận mật khẩu! "
                 )
                   Swal.fire({
                     position: "center",
                     icon: "error",
                     title:
-                      "Mật khẩu mới không trùng khớp với xác nhận mật khẩu!",
+                      "Mật khẩu mới không trùng khớp với xác nhận mật khẩu! Vui lòng nhập lại",
                     showConfirmButton: false,
-                    timer: 1500,
+                    timer: 2500,
+                  });
+                if (
+                  error.response.data ==
+                  "Mật khẩu mới không được trùng với mật khẩu cũ!"
+                )
+                  Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Mật khẩu mới không được trùng với mật khẩu cũ! Vui lòng nhập lại",
+                    showConfirmButton: false,
+                    timer: 2500,
                   });
               });
           }}
@@ -99,22 +111,28 @@ function Example(props) {
         >
           <Form>
             <Modal.Header closeButton>
-              <Modal.Title>Thông báo Đổi mật khẩu</Modal.Title>
+              <Modal.Title>
+                <h3 style={{color: "black"}}>Thông báo đổi mật khẩu</h3>
+                <h6>
+                  Lưu ý:{" "}
+                  <span style={{ color: "red" }}>
+                    Hành động này có thể dẫn đến{" "}
+                    <strong style={{ color: "red" }}>đăng nhập lại</strong>
+                  </span>
+                </h6>
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <table className="table table-vvi">
                 <thead>
                   <tr>
-                    <td>
-                      Nhập mật khẩu hiện tại
+                    <td style={{width: "200px"}}>
+                      Nhập mật khẩu hiện tại{" "}
                       {
                         <span style={{ color: "red", fontWeight: "bold" }}>
                           *
                         </span>
                       }
-                      <span className="material-symbols-outlined lock-b-vi lock-lock">
-                        lock
-                      </span>
                     </td>
                     <td>
                       <Field
@@ -149,15 +167,12 @@ function Example(props) {
                   </tr>
                   <tr>
                     <td>
-                      Nhập mật khẩu mới
+                      Nhập mật khẩu mới{" "}
                       {
                         <span style={{ color: "red", fontWeight: "bold" }}>
                           *
                         </span>
                       }
-                      <span className="material-symbols-outlined lock-b-vi lock-lock">
-                        lock
-                      </span>{" "}
                     </td>
                     <td>
                       <Field
@@ -193,15 +208,12 @@ function Example(props) {
                   </tr>
                   <tr>
                     <td>
-                      Nhập lại mật khẩu mới
+                      Nhập lại mật khẩu mới {" "}
                       {
                         <span style={{ color: "red", fontWeight: "bold" }}>
-                          *
+                           *
                         </span>
                       }
-                      <span className="material-symbols-outlined lock-b-vi lock-lock">
-                        lock
-                      </span>{" "}
                     </td>
                     <td>
                       <Field
