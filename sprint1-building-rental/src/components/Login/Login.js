@@ -152,7 +152,7 @@ export function Login() {
 										account_circle
 									</span></i>
 
-                                            <Field name="username" type="text" className="login__input"
+                                            <Field name="username" type="text" className="login__input k-style-input"
                                                    placeholder="Tài khoản"/>
                                             <ErrorMessage name="username" component="span"
                                                           className={"k-required-name"}></ErrorMessage>
@@ -165,7 +165,7 @@ export function Login() {
 									</span></i>
                                             <Field name="password"
                                                    type={showPassword ? "text" : "password"}
-                                                   className="login__input"
+                                                   className="login__input k-style-input"
                                                    placeholder="Mật khẩu"/>
                                             <img src={showPassword ? view : hide}
                                                  alt={showPassword ? "show" : "hide"}
