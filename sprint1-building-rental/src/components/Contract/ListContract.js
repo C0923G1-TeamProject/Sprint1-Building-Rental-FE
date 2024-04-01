@@ -75,7 +75,7 @@ function LisContract() {
 
   useEffect(() => {
     getAllContract(pageContract);
-  }, [pageContract]);
+  }, []);
 
   //lấy hợp đồng theo idUser
   useEffect(() => {
@@ -139,7 +139,7 @@ function LisContract() {
           <div className="row">
             <div className="col-1"></div>
             <div className="col-10">
-              <div className="input-group">
+              <div className="input-group mb-4">
                 <div className="me-4">
                   <Link className="btn btn-in-list" to="/contract/create">
                     Tạo mới hợp đồng
@@ -508,98 +508,16 @@ function LisContract() {
               <div className="col-1"></div>
             </div>
 
-            <div id="tbl-custom" className="row my-3 table-responsive">
-              <div className="col-1"></div>
-              <div className="col-10">
-                <table className="table table-striped ">
-                  <thead>
-                    <tr className="table-header-list-contract">
-                      <th
-                        scope="col"
-                        style={{ color: `white`, backgroundColor: `#747264` }}
-                      >
-                        #
-                      </th>
-                      <th
-                        scope="col"
-                        style={{ color: `white`, backgroundColor: `#747264` }}
-                      >
-                        Mã hợp đồng
-                      </th>
-                      <th
-                        scope="col"
-                        style={{ color: `white`, backgroundColor: `#747264` }}
-                      >
-                        Mã mặt bằng
-                      </th>
-                      <th
-                        scope="col"
-                        style={{ color: `white`, backgroundColor: `#747264` }}
-                      >
-                        Khách hàng
-                      </th>
-                      <th
-                        scope="col"
-                        style={{ color: `white`, backgroundColor: `#747264` }}
-                      >
-                        Nhân viên tạo hợp đồng
-                      </th>
-
-                      <th
-                        scope="col"
-                        style={{ color: `white`, backgroundColor: `#747264` }}
-                      >
-                        Trạng thái
-                      </th>
-                      <th
-                        scope="col"
-                        style={{ color: `white`, backgroundColor: `#747264` }}
-                      >
-                        Ngày bắt đầu
-                      </th>
-                      <th
-                        scope="col"
-                        style={{ color: `white`, backgroundColor: `#747264` }}
-                      >
-                        Ngày kết thúc
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {contractsUser ? (
-                      contractsUser.map((item, index) => {
-                        return (
-                          <tr key={item.id}>
-                            <td>{index + 1}</td>
-                            <td>{item.code}</td>
-                            <td>
-                              Mã: {item.premises.code} - Tầng:{" "}
-                              {item.premises.floor}
-                            </td>
-                            <td>{item.customer.name}</td>
-                            <td>{item.nameEmployee}</td>
-                            <td>{item.contractStatus.name}</td>
-                            <td>{formatDate(item.startDate)}</td>
-                            <td>{formatDate(item.endDate)}</td>
-                          </tr>
-                        );
-                      })
-                    ) : (
-                      <tr>
-                        <td colSpan="6">Không tìm thấy nội dung này</td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-              <div className="col-1"></div>
-            </div>
+ 
           </div>
         </div>
 
         <Footer></Footer>
       </>
     );
+  }
+  if(localStorage.getItem("role") == "ROLE_EMPLOYEE"){
+
   }
 }
 export default LisContract;
