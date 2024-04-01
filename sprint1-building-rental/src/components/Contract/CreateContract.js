@@ -196,7 +196,7 @@ function CreateContract() {
   // }, [chooseIdPremises]);
 
   const handleRenderPrice = (chooseIdPremises, setFieldValue) => {
-    premisesService.getPrimeseById(chooseIdPremises).then((res) => {
+    premisesService.findPremises(chooseIdPremises).then((res) => {
       setPremiseSelected(res);
       const price = res.price;
       setPrice(price);
