@@ -7,10 +7,11 @@ export const getInfoUser = async () => {
 };
 
 export const updateInfo = async (user) => {
-  const obj = {...user, gender: user.gender === '1' ? true : false}
+  const obj = { ...user, gender: user.gender === "1" ? true : false };
   const res = await axiosCof.post(
     "http://localhost:8080/information/updateInformation",
-    obj  );
+    obj
+  );
   return res.data;
 };
 export const updateInfoUser = async (imageDto) => {
@@ -22,9 +23,8 @@ export const updateInfoUser = async (imageDto) => {
 };
 
 export const changePassword = async (user) => {
-  const res = await axiosCof.post(
-    "http://localhost:8080/information/changed-password",
-    user
-  );
+    const res = await axiosCof
+    .post("http://localhost:8080/information/changed-password", user)
   return res.data;
+ 
 };

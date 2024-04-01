@@ -54,14 +54,14 @@ function Example(props) {
                 handleClose();
               } else if (req.data == "Mật khẩu không chính xác!" || req.status === 400) {
                 console.log("sai nk");
-                // Swal.fire({
-                //   position: "center",
-                //   icon: "error",
-                //   title: "Mật khẩu không chính xác!",
-                //   showConfirmButton: false,
-                //   timer: 1500,
-                // });
-              } else if (
+                Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: "Mật khẩu không chính xác!",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              }  else if (
                 req.data ==
                 "Mật khẩu mới không trùng khớp với xác nhận mật khẩu!"
               ) {
