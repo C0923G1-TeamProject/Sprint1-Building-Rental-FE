@@ -327,59 +327,59 @@ function LisContract() {
             <div className="row">
               <div className="col-1"></div>
               <div className="col-10">
-                <div className="input-group">
-                  <div className="me-4">
-                    <Link className="btn btn-in-list" to="/contract/create">
-                      Tạo mới hợp đồng
-                    </Link>
-                  </div>
-                  <div>
-                    <input
-                        type="text"
-                        className="form-control rounded-1 me-2"
-                        placeholder="Tìm kiếm tên khách hàng"
-                        name="nameCustomer"
-                        onChange={handelSearchChange}
-                    />
-                  </div>
-                  <div>
-                    <input
-                        type="text"
-                        className="form-control rounded-1 me-2"
-                        placeholder="Tìm kiếm tên nhân viên"
-                        name="nameEmployee"
-                        onChange={handelSearchChange}
-                    />
-                  </div>
-                  {status && (
-                      <div className="me-4">
-                        <select
-                            className="form-select"
-                            name="idContractStatus"
-                            onChange={handelSearchChange}
-                        >
-                          <option selected value="">
-                            Tìm kiếm trạng thái
-                          </option>
-                          {status.map((item) => (
-                              <option value={item.id} key={item.id}>
-                                {item.name}
-                              </option>
-                          ))}
-                        </select>
-                      </div>
-                  )}
+                {/*<div className="input-group">*/}
+                {/*  <div className="me-4">*/}
+                {/*    <Link className="btn btn-in-list" to="/contract/create">*/}
+                {/*      Tạo mới hợp đồng*/}
+                {/*    </Link>*/}
+                {/*  </div>*/}
+                {/*  <div>*/}
+                {/*    <input*/}
+                {/*        type="text"*/}
+                {/*        className="form-control rounded-1 me-2"*/}
+                {/*        placeholder="Tìm kiếm tên khách hàng"*/}
+                {/*        name="nameCustomer"*/}
+                {/*        onChange={handelSearchChange}*/}
+                {/*    />*/}
+                {/*  </div>*/}
+                {/*  <div>*/}
+                {/*    <input*/}
+                {/*        type="text"*/}
+                {/*        className="form-control rounded-1 me-2"*/}
+                {/*        placeholder="Tìm kiếm tên nhân viên"*/}
+                {/*        name="nameEmployee"*/}
+                {/*        onChange={handelSearchChange}*/}
+                {/*    />*/}
+                {/*  </div>*/}
+                {/*  {status && (*/}
+                {/*      <div className="me-4">*/}
+                {/*        <select*/}
+                {/*            className="form-select"*/}
+                {/*            name="idContractStatus"*/}
+                {/*            onChange={handelSearchChange}*/}
+                {/*        >*/}
+                {/*          <option selected value="">*/}
+                {/*            Tìm kiếm trạng thái*/}
+                {/*          </option>*/}
+                {/*          {status.map((item) => (*/}
+                {/*              <option value={item.id} key={item.id}>*/}
+                {/*                {item.name}*/}
+                {/*              </option>*/}
+                {/*          ))}*/}
+                {/*        </select>*/}
+                {/*      </div>*/}
+                {/*  )}*/}
 
-                  <div>
-                    <button
-                        type="submit"
-                        className="btn btn-in-list"
-                        onClick={handleSearch}
-                    >
-                      Tìm kiếm
-                    </button>
-                  </div>
-                </div>
+                {/*  <div>*/}
+                {/*    <button*/}
+                {/*        type="submit"*/}
+                {/*        className="btn btn-in-list"*/}
+                {/*        onClick={handleSearch}*/}
+                {/*    >*/}
+                {/*      Tìm kiếm*/}
+                {/*    </button>*/}
+                {/*  </div>*/}
+                {/*</div>*/}
               </div>
               <div className="col-1">
               </div>
