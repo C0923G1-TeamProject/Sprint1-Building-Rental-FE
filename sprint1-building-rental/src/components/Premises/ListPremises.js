@@ -22,6 +22,14 @@ export default function ListPremises() {
 
 
     useEffect(() => {
+        const timeout = setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 100);
+
+        return () => clearTimeout(timeout);
+    }, []);
+
+    useEffect(() => {
         const fetchApi = async () => {
             try {
                 const result = await service.getAllPremises(floor, code, area, premisesName, 0);
@@ -185,7 +193,7 @@ export default function ListPremises() {
                 <div id="tbl-custom" className="row my-3 table-responsive">
                     <div className="col-1"></div>
                     <div className="col-10">
-                        <table className="table table-striped">
+                        <table className="table table-striped mb-0">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -194,7 +202,7 @@ export default function ListPremises() {
                                 <th>Diện tích (m²)</th>
                                 <th>Tầng</th>
                                 <th>Trạng thái</th>
-                                <th>Giá bán (VND)</th>
+                                <th>Giá thuê/tháng (VND)</th>
                                 <th>Phí quản lý (VND)</th>
                                 <th className="text-center">Tuỳ chọn</th>
 
