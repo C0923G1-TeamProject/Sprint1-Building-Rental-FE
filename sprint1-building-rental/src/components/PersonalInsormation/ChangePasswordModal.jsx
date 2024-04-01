@@ -8,6 +8,7 @@ import { changePassword } from "../../service/PersonalInformationService/informa
 import * as Yup from "yup";
 import "../Css/InfoCss/Info.css";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 function Example(props) {
   const { show, setShow } = props;
   const [showPassword, setShowPassword] = useState({
@@ -15,6 +16,7 @@ function Example(props) {
     mat2: false,
     mat3: false,
   });
+  const navigation = useNavigate();
 
   const togglePasswordVisibility = (input) => {
     setShowPassword({
@@ -43,47 +45,39 @@ function Example(props) {
           onSubmit={(values, { setSubmitting }) => {
             changePassword(values)
               .then((req) => {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Đổi mật khẩu thành công! Vui lòng đăng nhập lại bằng mật khẩu mới",
+                  showConfirmButton: false,
+                  timer: 2500,
+                });
                 setSubmitting(false);
-                if (req.status === 200) {
+                handleClose();
+                navigation("/logout");
+              })
+              .catch((error) => {
+                if (error.response.data == "Mật khẩu không chính xác!") {
                   Swal.fire({
                     position: "center",
-                    icon: "success",
-                    title: "Password changed successfully!",
+                    icon: "error",
+                    title: "Mật khẩu không chính xác!",
                     showConfirmButton: false,
                     timer: 1500,
                   });
-                  handleClose();
-                } else if (req.status === 400) {
-                  if (req.data === "Mật khẩu không chính xác!") {
-                    console.log("Incorrect password!");
-                    Swal.fire({
-                      position: "center",
-                      icon: "error",
-                      title: "Incorrect password!",
-                      showConfirmButton: false,
-                      timer: 1500,
-                    });
-                  } else if (
-                    req.data ===
-                    "Mật khẩu mới không trùng khớp với xác nhận mật khẩu!"
-                  ) {
-                    console.log(
-                      "New password does not match the confirmation password!"
-                    );
-                    Swal.fire({
-                      position: "center",
-                      icon: "error",
-                      title:
-                        "New password does not match the confirmation password!",
-                      showConfirmButton: false,
-                      timer: 1500,
-                    });
-                  }
                 }
-              })
-              .catch((error) => {
-                console.log(error.response.data);
-                // console.error("Error occurred while changing password:", error);
+                if (
+                  error.response.data ==
+                  "Mật khẩu mới không trùng khớp với xác nhận mật khẩu!"
+                )
+                  Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title:
+                      "Mật khẩu mới không trùng khớp với xác nhận mật khẩu!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
               });
           }}
           validationSchema={Yup.object({
