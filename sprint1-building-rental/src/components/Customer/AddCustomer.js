@@ -10,6 +10,7 @@ import Footer from "../Footer/Footer";
 import React, {useState} from "react";
 import storage from "../PersonalInsormation/firebase/firebaseConfig";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
+import Swallow from "sweetalert2";
 
 function AddCustomer() {
     const navigation = useNavigate();
@@ -18,8 +19,7 @@ function AddCustomer() {
     const [errorMessagePhone, setErrorMessagePhone] = useState("");
     const [preview, setPreview] = useState();
     const [file, setFile] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
-    const [percent, setPercent] = useState(0);
+
     const validation = {
         name: Yup.string().matches(/^[a-zA-ZÀ-ỹ\s]*$/, "Tên không đúng định dạng VD: Nguyễn Văn An").required("Vui lòng nhập tên"),
         card: Yup.string().matches(/^\d{12}$/, "Số căn cước cần chính xác 12 ký tự số").required("Vui lòng nhập căn cước công dân"),
@@ -40,10 +40,10 @@ function AddCustomer() {
         url: Yup.string().url("Website không hợp lệ").required("Vui lòng nhập website"),
         company: Yup.string().trim().required("Vui lòng nhập trên công ty khách hàng"),
     }
+
     const handleSubmit = async (values) => {
         try {
-            // Gán giá trị URL của ảnh từ Firebase vào trường img của values
-            handleUpload()
+            const imageUrl = await handleUpload();
             values.img = imageUrl;
             let rs = await CustomerService.createCustomer(values);
             switch (rs) {
@@ -67,7 +67,9 @@ function AddCustomer() {
                     break;
             }
             if (rs === "ok") {
-                navigation("/customer");
+                Swallow.fire("Thêm mới thành công!", "", "success").then(() => {
+                    navigation('/customer');
+                });
                 toast.success("Thêm mới thành công");
             }
         } catch (e) {
@@ -81,40 +83,38 @@ function AddCustomer() {
     }
 
     const handleUpload = () => {
-        if (!file) {
-            alert("Vui lòng tải ảnh lên trước!");
-        }
-
-        const storageRef = ref(storage, `/files/${file.name}`);
-
-        // progress can be paused and resumed. It also exposes progress updates.
-        // Receives the storage reference and the file to upload.
-        const uploadTask = uploadBytesResumable(storageRef, file);
-
-        uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-                const percent = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                );
-
-                // update progress
-                setPercent(percent);
-            },
-            (err) => console.log(err),
-            () => {
-                // download url
-                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-
-                    setImageUrl(url);
-                });
+        return new Promise((resolve, reject) => {
+            if (!file) {
+                resolve('');
             }
-        );
+            const storageRef = ref(storage, `/files/${file.name}`);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadTask.on(
+                'state_changed',
+                (snapshot) => {
+                    const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                },
+                (err) => {
+                    console.log(err);
+                    reject(err);
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                        resolve(url);
+                    }).catch((error) => {
+                        console.log(error);
+                        reject(error);
+                    });
+                }
+            );
+        });
     };
+
     const renderImage = () => {
         if (preview) return URL.createObjectURL(preview);
         return "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg";
     };
+
     return (
         <>
             <Helmet>
@@ -171,14 +171,6 @@ function AddCustomer() {
                                                           className="k-span"></ErrorMessage>
                                         </div>
                                         <div className="form-group cus-group">
-                                            <label htmlFor="address" className="form-label cus-label">Địa chỉ<span
-                                                className="cus-col">*</span>:</label>
-                                            <Field name="address" type="text" className="form-control cus-input"
-                                                   id="address"/>
-                                            <ErrorMessage name="address" component="span"
-                                                          className="k-span"></ErrorMessage>
-                                        </div>
-                                        <div className="form-group cus-group">
                                             <label htmlFor="card" className="form-label cus-label">CCCD<span
                                                 className="cus-col">*</span>:</label>
                                             <Field name="card" type="text" className="form-control cus-input"
@@ -204,13 +196,21 @@ function AddCustomer() {
                                                 )}
                                             </div>
                                         </div>
+                                        <div className="form-group cus-group">
+                                            <label htmlFor="address" className="form-label cus-label">Địa chỉ<span
+                                                className="cus-col">*</span>:</label>
+                                            <Field name="address" type="text" className="form-control cus-input"
+                                                   id="address"/>
+                                            <ErrorMessage name="address" component="span"
+                                                          className="k-span"></ErrorMessage>
+                                        </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="form-group cus-group">
                                             <label className="form-label cus-label">Hình ảnh:</label>
                                             <input
                                                 type="file"
-                                                className="form-control cus-input" style={{marginBottom:"10px"}}
+                                                className="form-control cus-input" style={{marginBottom: "10px"}}
                                                 onChange={handleChange}
                                                 accept="image/*"
                                             />
