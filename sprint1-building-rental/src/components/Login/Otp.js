@@ -59,10 +59,18 @@ export function Otp() {
                 const role = response.authorities[0].authority;
                 const nameAccount = response.username;
 
-                localStorage.setItem("token", token);
-                localStorage.setItem("nameOfSigninUser", nameOfSigninUser);
-                localStorage.setItem("role", role);
-                localStorage.setItem("nameAccount", nameAccount);
+                if (userData.rememberMe){
+                    localStorage.setItem("token", token);
+                    localStorage.setItem("nameOfSigninUser", nameOfSigninUser);
+                    localStorage.setItem("role", role);
+                    localStorage.setItem("nameAccount", nameAccount);
+                    localStorage.setItem("rm", "1");
+                } else {
+                    sessionStorage.setItem("token", token);
+                    sessionStorage.setItem("nameOfSigninUser", nameOfSigninUser);
+                    sessionStorage.setItem("role", role);
+                    sessionStorage.setItem("nameAccount", nameAccount);
+                }
 
                 let localList = localStorage.getItem("isVisited");
                 if (localList == undefined) {

@@ -79,7 +79,7 @@ export function Login() {
             if (responseData) {
                 if (responseData.statusLogin == "redirect-to-otp") {
 
-                    const userData = {otp: responseData.otp, email: responseData.email, reUsername: value.username, rePassword: value.password};
+                    const userData = {otp: responseData.otp, email: responseData.email, reUsername: value.username, rePassword: value.password, rememberMe: value.rememberMe};
                     setUserData(userData);
 
 
@@ -90,10 +90,19 @@ export function Login() {
                     const nameOfSigninUser = responseData.name;
                     const role = responseData.authorities[0].authority;
                     const nameAccount = responseData.username;
-                    localStorage.setItem("token", token);
-                    localStorage.setItem("nameOfSigninUser", nameOfSigninUser);
-                    localStorage.setItem("role", role);
-                    localStorage.setItem("nameAccount", nameAccount);
+
+                    if(value.rememberMe) {
+                        localStorage.setItem("token", token);
+                        localStorage.setItem("nameOfSigninUser", nameOfSigninUser);
+                        localStorage.setItem("role", role);
+                        localStorage.setItem("nameAccount", nameAccount);
+                        localStorage.setItem("rm", "1");
+                    } else {
+                        sessionStorage.setItem("token", token);
+                        sessionStorage.setItem("nameOfSigninUser", nameOfSigninUser);
+                        sessionStorage.setItem("role", role);
+                        sessionStorage.setItem("nameAccount", nameAccount);
+                    }
                     setShowSpinner(false);
                     setShow(true);
                 } else {
@@ -192,7 +201,7 @@ export function Login() {
                                         <p className={"k-err-login"}>{errorMessage}</p>
 
                                         <div className="checkbox-wrapper-1 k-checkbox">
-                                            <Field name="remember-me" id="example-1" className="substituted"
+                                            <Field name="rememberMe" id="example-1" className="substituted"
                                                    type="checkbox"
                                                    aria-hidden="true"/>
                                             <label htmlFor="example-1">Ghi nhớ đăng nhập</label>

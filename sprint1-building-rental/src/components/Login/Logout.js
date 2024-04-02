@@ -20,11 +20,19 @@ export function Logout() {
 
     useEffect(() => {
         if (isClearLocal) {
-            localStorage.removeItem("role");
-            localStorage.removeItem("nameAccount");
-            localStorage.removeItem("nameOfSigninUser");
-            localStorage.removeItem("token");
-            navigation("/");
+            if (localStorage.getItem("rm")){
+                localStorage.removeItem("role");
+                localStorage.removeItem("nameAccount");
+                localStorage.removeItem("nameOfSigninUser");
+                localStorage.removeItem("token");
+                localStorage.removeItem("rm");
+            } else {
+                sessionStorage.removeItem("role");
+                sessionStorage.removeItem("nameAccount");
+                sessionStorage.removeItem("nameOfSigninUser");
+                sessionStorage.removeItem("token");
+            }
+
             toast.success('Đăng xuất thành công', {
                 position: "top-right",
                 autoClose: 1500,
@@ -44,6 +52,7 @@ export function Logout() {
             const resLogout = await LoginService.logout();
             if (resLogout) {
                 setIsClearLocal(true);
+                setIsBackHome(true);
             } else {
                 setIsBackHome(true);
             }
