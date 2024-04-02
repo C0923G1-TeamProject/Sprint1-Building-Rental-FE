@@ -37,7 +37,7 @@ function HeaderAdmin({ name, ...props }) {
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
 
-  const [accName, setAccName] = useState(localStorage.getItem("nameOfSigninUser"));
+  const [accName, setAccName] = useState(localStorage.getItem("rm")?localStorage.getItem("nameOfSigninUser"): sessionStorage.getItem("nameOfSigninUser"));
 
   const handleLogout = () => {
     setShowModal(true); // Hiển thị Modal khi người dùng nhấn vào nút "Đăng xuất"

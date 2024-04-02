@@ -47,6 +47,7 @@ function LisContract() {
   const [contractsUser, setContractsUser] = useState();
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [role1, setRole1] = useState(localStorage.getItem("rm")?localStorage.getItem("role"): sessionStorage.getItem("role"));
 
   useEffect(() => {
     document.title = "Danh sách hợp đồng";
@@ -173,7 +174,7 @@ function LisContract() {
     return <div>loading</div>;
   }
 
-  if (localStorage.getItem("role") == "ROLE_ADMIN") {
+  if (role1 == "ROLE_ADMIN") {
     return (
       <>
         <HeaderAdmin />
@@ -354,7 +355,7 @@ function LisContract() {
     );
   }
 
-  if (localStorage.getItem("role") == "ROLE_USER") {
+  if (role1 == "ROLE_USER") {
     return (
       <div>
         <HeaderAdmin />
