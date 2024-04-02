@@ -78,7 +78,6 @@ function AddCustomer() {
                 Swallow.fire("Thêm mới thành công!", "", "success").then(() => {
                     navigation('/customer');
                 });
-                toast.success("Thêm mới thành công");
             }
         } catch (e) {
             console.log(e);
@@ -122,6 +121,16 @@ function AddCustomer() {
         if (preview) return URL.createObjectURL(preview);
         return "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg";
     };
+
+    if (localStorage.getItem("rm")) {
+        if(!localStorage.getItem("token")){
+            navigation("/login");
+        }
+    } else {
+        if(!sessionStorage.getItem("token")){
+            navigation("/login");
+        }
+    }
 
     return (
         <>
@@ -245,7 +254,7 @@ function AddCustomer() {
                                     <div className="btn cus custom-btn-1">
                                         <Link to={"/customer"} className="cus-display-add">Huỷ thêm mới</Link>
                                     </div>
-                                    <button className="btn cus custom-btn" type="submit">Thêm khách hàng</button>
+                                    <button className="btn cus custom-btn" type="submit">Thêm mới khách hàng</button>
                                 </div>
 
                             </Form>

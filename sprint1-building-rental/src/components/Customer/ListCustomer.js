@@ -7,6 +7,9 @@ import './CustomerCss.css';
 import {Link, useNavigate} from "react-router-dom";
 import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Swallow from "sweetalert2";
 
 function ListCustomer() {
     const [delCustomer, setDelCustomer] = useState({});
@@ -49,6 +52,19 @@ function ListCustomer() {
         setShowModal(true)
     }
 
+    const confirmDelete = async () => {
+        try {
+            await CustomerService.deleteCustomer(delCustomer);
+            setShowModal(false);
+
+            Swallow.fire("Xoá thành công!", "", "success").then(() => {
+                getAll();
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     const handlePageClick = async (event) => {
         try {
             const pageNumber = event.selected;
@@ -73,10 +89,15 @@ function ListCustomer() {
         getAll(currentPage);
     }, [currentPage]);
 
-    // if (localStorage.getItem("token") == null) {
-    //     navigation("/login");
-    //
-    // }
+    if (localStorage.getItem("rm")) {
+        if(!localStorage.getItem("token")){
+            navigation("/login");
+        }
+    } else {
+        if(!sessionStorage.getItem("token")){
+            navigation("/login");
+        }
+    }
     return (
         <>
             <Helmet>
@@ -108,9 +129,9 @@ function ListCustomer() {
                                 }}>
                                     <Form className="form-inline" method="get">
                                         <div className="input-group">
-                                            <Field name="name" className="form-control me-2"
+                                            <Field name="name" className="form-control me-2 rounded-1"
                                                    placeholder="Nhập tên cần tìm"></Field>
-                                            <Field name="email" className="form-control me-2"
+                                            <Field name="email" className="form-control me-2 rounded-1"
                                                    placeholder="Nhập email cần tìm" size="30"></Field>
                                             <div>
                                                 <button type="submit" className="btn btn-in-list">Tìm kiếm</button>
@@ -167,6 +188,22 @@ function ListCustomer() {
                             </table>
                         </div>
                     </div>
+                    <Modal show={showModal} onHide={() => setShowModal(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Xác nhận xoá</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <p>Bạn có muốn xoá {delCustomer.name} không?</p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setShowModal(false)}>
+                                Huỷ
+                            </Button>
+                            <Button variant="danger" onClick={confirmDelete}>
+                                Xoá
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
                     <div className="row pagination">
                         {customers ? (
                             <div className="d-flex justify-content-center align-items-center">

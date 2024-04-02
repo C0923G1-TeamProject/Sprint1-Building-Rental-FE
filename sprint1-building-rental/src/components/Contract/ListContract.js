@@ -6,13 +6,14 @@ import * as contractStatusService from "../../service/ThamService/ContractStatus
 import * as contractService from "../../service/ThamService/ContractService";
 import Pagination from "react-bootstrap/Pagination";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
 function LisContract() {
   const [status, setStatus] = useState([]);
   const [info, setInfo] = useState();
   const [idAcc, setIdAcc] = useState();
+  const navigation = useNavigate();
   //search
   const initSearch = {
     nameCustomer: "",
@@ -21,7 +22,7 @@ function LisContract() {
   //paginate
   const initPage = {
     page: 0,
-    size: 6,
+    size: 2,
     // sortDirection: "ASC",
     // sortBy: "endDate",
     nameCustomer: "",
@@ -47,6 +48,7 @@ function LisContract() {
   const [contractsUser, setContractsUser] = useState();
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [role1, setRole1] = useState(localStorage.getItem("rm")?localStorage.getItem("role"): sessionStorage.getItem("role"));
 
   useEffect(() => {
     document.title = "Danh sách hợp đồng";
@@ -167,13 +169,21 @@ function LisContract() {
   // useEffect(() => {
   //   getAllContract(search);
   // }, [search]);
-
+  if (localStorage.getItem("rm")) {
+    if(!localStorage.getItem("token")){
+      navigation("/login");
+    }
+  } else {
+    if(!sessionStorage.getItem("token")){
+      navigation("/login");
+    }
+  }
 
   if (!contracts) {
     return <div>loading</div>;
   }
 
-  if (localStorage.getItem("role") == "ROLE_ADMIN") {
+  if (role1 == "ROLE_ADMIN") {
     return (
       <>
         <HeaderAdmin />
@@ -184,10 +194,10 @@ function LisContract() {
           <div className="row">
             <div className="col-1"></div>
             <div className="col-10">
-              <div className="input-group mb-4">
-                <div className="me-4">
+              <div className="input-group mb-3">
+                <div className="me-5">
                   <Link className="btn btn-in-list" to="/contract/create">
-                    Tạo mới hợp đồng
+                    Thêm mới
                   </Link>
                 </div>
                 <div>
@@ -237,54 +247,55 @@ function LisContract() {
                   </button>
                 </div>
               </div>
-              <table className="table table-striped ">
+              <div id="tbl-custom" className="table-responsive">
+              <table  className="table table-striped ">
                 <thead>
-                  <tr className="table-header-list-contract">
+                  <tr className="">
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       #
                     </th>
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Mã hợp đồng
                     </th>
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Mã mặt bằng
                     </th>
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Khách hàng
                     </th>
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Nhân viên tạo hợp đồng
                     </th>
 
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Trạng thái
                     </th>
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Ngày bắt đầu
                     </th>
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Ngày kết thúc
@@ -317,6 +328,7 @@ function LisContract() {
                   )}
                 </tbody>
               </table>
+              </div>
               <div>
                 {contracts ? (
                   // <div className="d-flex justify-content-center align-items-center">
@@ -352,7 +364,7 @@ function LisContract() {
     );
   }
 
-  if (localStorage.getItem("role") == "ROLE_USER") {
+  if (role1 == "ROLE_USER") {
     return (
       <div>
         <HeaderAdmin />
@@ -367,7 +379,7 @@ function LisContract() {
               <div className="input-group mb-4">
                 <div className="me-4">
                   <Link className="btn btn-in-list" to="/contract/create">
-                    Tạo mới hợp đồng
+                    Thêm mới
                   </Link>
                 </div>
                 <div>

@@ -114,13 +114,20 @@ function ShowInfoUser() {
         };
   };
 
-  if (localStorage.getItem("token") == null) {
-    navigation("/login");
+  if (localStorage.getItem("rm")) {
+    if(!localStorage.getItem("token")){
+      navigation("/loginPage");
+    }
+  } else {
+    if(!sessionStorage.getItem("token")){
+      navigation("/loginPage");
+    }
   }
   return (
     <>
       <HeaderAdmin />
       <div className="container p-5 fixed-grid has-auto-count">
+       
         <div className="columns">
           <div className="columns">
             {/* cột ảnh cá nhân */}
@@ -200,7 +207,7 @@ function ShowInfoUser() {
                   <Field type="hidden" name="id"></Field>
                   <div
                     className="column "
-                    // style={{ width: "103%" }}
+                    style={{ width: '99%' }}
                   >
                     <div
                       className="box col-lg-12 col-sm-12 col-xs-12"
@@ -223,7 +230,9 @@ function ShowInfoUser() {
                                     style={{
                                       fontWeight: "bold",
                                       width: "115px",
+                                      
                                     }}
+                                   
                                   >
                                     Họ và tên:
                                   </td>
@@ -302,7 +311,8 @@ function ShowInfoUser() {
                             >
                               <thead>
                                 <tr>
-                                  <td style={{ fontWeight: "bold" }}>
+                                  <td style={{ fontWeight: "bold"}}>
+                                  
                                     Tài khoản:
                                   </td>
                                   <td>{user.username}</td>

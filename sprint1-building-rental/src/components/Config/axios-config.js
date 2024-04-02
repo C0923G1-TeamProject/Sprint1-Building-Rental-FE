@@ -3,7 +3,12 @@ import axios from "axios";
 
     axiosCof.interceptors.request.use(
         function (config) {
-          const token = localStorage.getItem("token");
+            let token = "112";
+            if (localStorage.getItem("rm")){
+                token = localStorage.getItem("token");
+            } else {
+                token = sessionStorage.getItem("token");
+            }
           if (token) {
             config.headers.Authorization = `Bearer ${token}`;
           }
