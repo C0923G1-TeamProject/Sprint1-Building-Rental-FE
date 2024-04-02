@@ -124,9 +124,9 @@ function Test() {
     <>
       <HeaderAdmin />
       <div className="container p-5">
-        <h1 className="mt-3 text-center" style={{ color: "#ddb673" }}>
-          Thông tin cá nhân
-        </h1>
+        {/* <h1 className="mt-3 text-center" style={{ color: "#ddb673" }}>
+          THÔNG TIN CÁ NHÂN
+        </h1> */}
 
         <div className="row">
           <div
@@ -138,7 +138,7 @@ function Test() {
             }}
           >
             <div className="col-12">
-              <p className="p-3">
+              <p className="col-12 p-3 text-center">
                 <img
                   src={renderImage()}
                   alt="Ảnh đại diện"
@@ -151,7 +151,26 @@ function Test() {
               </p>
             </div>
             <div className="col-12">
-              <p>
+              <div className="input-group">
+                <span
+                  className="input-group-text"
+                  style={{
+                    border: "none",
+                    background: "white",
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                  }}
+                >
+                  Tài khoản:
+                </span>
+                <input
+                  className="form-control"
+                  value={user.username}
+                  readOnly
+                  style={{ border: "none", color: "black", fontSize: "20px" }}
+                />
+              </div>
+              <p className="mt-3">
                 <div>
                   <UploadImage
                     user={user.employee}
@@ -186,7 +205,7 @@ function Test() {
                   name: Yup.string()
                     .min(2, "Họ và tên phải trên 1 kí tự")
                     .max(50, "Họ và tên phải dưới 50 kí tự")
-                    // .matches("^\D$", "Vui lòng nhập Họ và tên hợp lệ")
+                    // .matches("^D$", "Vui lòng nhập Họ và tên hợp lệ")
                     .required("Họ và tên không được để trống"),
                   email: Yup.string()
                     .max(50, "Địa chỉ phải dưới 50 kí tự")
@@ -232,10 +251,16 @@ function Test() {
                         style={{ background: "white" }}
                         className="col-12 row"
                       >
-                        <div className="col-6 p-3">
+                        <h1
+                          className="mt-3 text-center"
+                          style={{ color: "#ddb673" }}
+                        >
+                          THÔNG TIN CÁ NHÂN
+                        </h1>
+                        <div className="col-6 p-3 me-auto">
                           <div className="input-group">
                             <span
-                              className="input-group-text"
+                              className="input-group-text me-auto"
                               style={{
                                 border: "none",
                                 background: "white",
@@ -266,7 +291,7 @@ function Test() {
                           </div>
                           <div className="input-group mt-5">
                             <span
-                              className="input-group-text"
+                              className="input-group-text me-4"
                               style={{
                                 border: "none",
                                 background: "white",
@@ -277,7 +302,7 @@ function Test() {
                             </span>
                             <>
                               <Field
-                                className="form-control"
+                                className="form-control ms-1"
                                 type="text"
                                 name="email"
                                 style={renderInputCSS(isEditing)}
@@ -295,7 +320,8 @@ function Test() {
                               />
                             </>
                           </div>
-                          <div className="input-group mt-5">
+
+                          {/* <div className="input-group mt-5">
                             <span
                               className="input-group-text"
                               style={{
@@ -326,28 +352,10 @@ function Test() {
                               />
                             </>
                           </div>
+                        </div> */}
                         </div>
-
                         <div className="col-6 p-3 ">
-                          <div className="input-group">
-                            <span
-                              className="input-group-text"
-                              style={{
-                                border: "none",
-                                background: "white",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Tài khoản:
-                            </span>
-                            <input
-                              className="form-control"
-                              value={user.username}
-                              readOnly
-                              style={{ border: "none", color: "black" }}
-                            />
-                          </div>
-                          <div className="input-group mt-5">
+                          <div className="input-group mt-auto">
                             <span
                               className="input-group-text"
                               style={{
@@ -399,7 +407,7 @@ function Test() {
                                     />
                                     <label
                                       className="htmlForm-check-label"
-                                      for="male"
+                                      htmlFor="male"
                                     >
                                       Nam
                                     </label>
@@ -428,7 +436,65 @@ function Test() {
                             </span>
                           </div>
                         </div>
-                        <div className="col-12 mt-5 text-center">
+                        <div className="col-12 mt-4">
+                          <div className="input-group">
+                            <span
+                              className="input-group-text mb-3"
+                              style={{
+                                border: "none",
+                                background: "white",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Địa chỉ:
+                            </span>
+                            <>
+                              <Field
+                                as="textarea"
+                                name="address"
+                                className="form-control ms-4 mt-2"
+                                style={renderInputAddress(isEditing)}
+                                disabled={!isEditing}
+                              ></Field>
+                              <ErrorMessage
+                                name="address"
+                                style={{
+                                  color: "red",
+                                  position: "absolute",
+                                  bottom: "-30px",
+                                  left: "89px",
+                                }}
+                                component={"span"}
+                              />
+                            </>
+                          </div>
+                          {/* <div className="mb-4 row p-3">
+                            <label
+                              htmlFor="address"
+                              className="col-sm-2 col-form-label "
+                              style={{ fontWeight: "bold" }}
+                            >
+                              Địa chỉ:
+                            </label>
+                            <div className="col-sm-10">
+                              <Field
+                                className="form-control"
+                                as="textarea"
+                                name="address"
+                                style={renderInputAddress(isEditing)}
+                                disabled={!isEditing}
+                              ></Field>
+                              <ErrorMessage
+                                name="address"
+                                style={{
+                                  color: "red",
+                                }}
+                                component={"span"}
+                              />
+                            </div>
+                          </div> */}
+                        </div>
+                        <div className="col-12 mt-4 mb-2 text-center">
                           {isEditing ? (
                             <button
                               className="button button-cancel me-3"
