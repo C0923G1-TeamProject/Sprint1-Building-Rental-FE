@@ -15,7 +15,8 @@ import {
 } from "../../service/PersonalInformationService/information-service";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-function ShowInfoUser() {
+
+function Test() {
   const [show, setShow] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [image, setImage] = useState();
@@ -80,11 +81,11 @@ function ShowInfoUser() {
     return isEdit
       ? {
           position: "relative",
-          top: "-5px",
+          //   top: "-5px",
         }
       : {
           position: "relative",
-          top: "-5px",
+          //   top: "-5px",
           border: "none",
           backgroundColor: "white",
           color: "black",
@@ -95,22 +96,18 @@ function ShowInfoUser() {
     return isEdit
       ? {
           position: "relative",
-          top: "-5px",
-          width: "100%",
           overflow: "hidden",
           resize: "none",
           outline: "none",
-          borderBottom: "solid 2px #ddc383",
         }
       : {
           position: "relative",
-          top: "-5px",
-          width: "100%",
           overflow: "hidden",
           resize: "none",
           outline: "none",
           backgroundColor: "white",
           color: "black",
+          border: "none",
         };
   };
 
@@ -120,40 +117,73 @@ function ShowInfoUser() {
   return (
     <>
       <HeaderAdmin />
-      <div className="container p-5 fixed-grid has-auto-count">
-       
-        <div className="columns">
-          <div className="columns">
-            {/* cột ảnh cá nhân */}
-            <div className="column is-3 col-xs-12 col-sm-12 col-md-12">
-              <div
-                className="box"
-                style={{ position: "relative", top: "12px", height: "95%" }}
-              >
-                <p className="column is-12 col-xs-12 col-sm-6">
-                  <img
-                    src={renderImage()}
-                    alt="Ảnh đại diện"
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      justifyContent: "center",
-                    }} // Let the image flow freely within its container
-                  />
-                </p>
-                <p className="subtitle column is-12">
-                  <div className="about" style={{ textAlign: "center" }}>
-                    <UploadImage
-                      user={user.employee}
-                      setImage={setImage}
-                      setPreview={setPreview}
-                    />
-                  </div>
-                </p>
-              </div>
-            </div>
+      <div className="container p-5">
+        {/* <h1 className="mt-3 text-center" style={{ color: "#ddb673" }}>
+          THÔNG TIN CÁ NHÂN
+        </h1> */}
 
-            <div className="column is-9">
+        <div className="row">
+          <div
+            className="col-md-12 col-lg-4 me-auto row"
+            style={{
+              borderRadius: "15px",
+              boxShadow:
+                "rgba(0, 0, 0, 0.1) 0px 0em 0.5em 0em, rgba(1, 10, 10, 0.02) 0px 0px 0px 1px",
+            }}
+          >
+            <div className="col-12">
+              <p className="col-12 p-3 text-center">
+                <img
+                  src={renderImage()}
+                  alt="Ảnh đại diện"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    justifyContent: "center",
+                  }} // Let the image flow freely within its container
+                />
+              </p>
+            </div>
+            <div className="col-12">
+              <div className="input-group">
+                <span
+                  className="input-group-text"
+                  style={{
+                    border: "none",
+                    background: "white",
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                  }}
+                >
+                  Tài khoản:
+                </span>
+                <input
+                  className="form-control"
+                  value={user.username}
+                  readOnly
+                  style={{ border: "none", color: "black", fontSize: "20px" }}
+                />
+              </div>
+              <p className="mt-3">
+                <div>
+                  <UploadImage
+                    user={user.employee}
+                    setImage={setImage}
+                    setPreview={setPreview}
+                  />
+                </div>
+              </p>
+            </div>
+          </div>
+          <div
+            className="col-md-12 col-lg-8 row"
+            style={{
+              boxShadow:
+                "rgba(0, 0, 0, 0.1) 0px 0em 0.5em 0em, rgba(1, 10, 10, 0.02) 0px 0px 0px 1px",
+              borderRadius: "15px",
+            }}
+          >
+            <div className="col-12 p-3">
               <Formik
                 initialValues={{
                   id: user.employee.id,
@@ -169,9 +199,10 @@ function ShowInfoUser() {
                   name: Yup.string()
                     .min(2, "Họ và tên phải trên 1 kí tự")
                     .max(50, "Họ và tên phải dưới 50 kí tự")
+                    // .matches("^D$", "Vui lòng nhập Họ và tên hợp lệ")
                     .required("Họ và tên không được để trống"),
-                  // .matches("/^[a-zA-Z\u00C0-\u1EF9\s]*$/", "Vui lòng nhập Họ và tên hợp lệ")
                   email: Yup.string()
+                    .max(50, "Địa chỉ phải dưới 50 kí tự")
                     .email("Vui lòng nhập email đúng định dạng")
                     .required("Email không được bỏ trống"),
                   address: Yup.string()
@@ -199,234 +230,259 @@ function ShowInfoUser() {
               >
                 <Form>
                   <Field type="hidden" name="id"></Field>
-                  <div
-                    className="column "
-                    style={{ width: '99%' }}
-                  >
-                    <div
-                      className="box col-lg-12 col-sm-12 col-xs-12"
-                      style={{
-                        boxShadow:
-                          "rgba(0, 0, 0, 0.1) 0px 0em 0.5em 0em, rgba(1, 10, 10, 0.02) 0px 0px 0px 1px",
-                      }}
-                    >
-                      <p className="is-12" style={{ color: "#ddb673" }}>
-                        <h4>Thông tin cá nhân</h4>
-                      </p>
-                      <p style={{ height: "351px" }}>
-                        <div className="columns">
-                          <div className="column is-6 table-responsive">
-                            <table className="table">
-                              <thead>
-                                <tr>
-                                  <td
-                                    className="col-xs-6 col-sm-3"
-                                    style={{
-                                      fontWeight: "bold",
-                                      width: "115px",
-                                      
-                                    }}
-                                   
-                                  >
-                                    Họ và tên:
-                                  </td>
-                                  <td className="col-xs-6 col-sm-9">
-                                    <>
-                                      <Field
-                                        type="text"
-                                        name="name"
-                                        style={renderInputCSS(isEditing)}
-                                        disabled={!isEditing}
-                                      ></Field>
-                                      <ErrorMessage
-                                        name="name"
-                                        style={{ color: "red", with: "100%" }}
-                                        component={"span"}
-                                      />
-                                    </>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td
-                                    style={{
-                                      width: "108px",
-                                      fontWeight: "bold",
-                                    }}
-                                  >
-                                    Email:
-                                  </td>
-                                  <td>
-                                    <>
-                                      <Field
-                                        type="text"
-                                        name="email"
-                                        style={renderInputCSS(isEditing)}
-                                        disabled={!isEditing}
-                                      ></Field>
-                                      <ErrorMessage
-                                        name="email"
-                                        style={{ color: "red" }}
-                                        component={"span"}
-                                      />
-                                    </>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td style={{ fontWeight: "bold" }}>
-                                    Địa chỉ:
-                                  </td>
-                                  <td>
-                                    <>
-                                      <Field
-                                        as="textarea"
-                                        name="address"
-                                        style={renderInputAddress(isEditing)}
-                                        disabled={!isEditing}
-                                      ></Field>
-                                      <ErrorMessage
-                                        name="address"
-                                        style={{ color: "red" }}
-                                        component={"span"}
-                                      />
-                                    </>
-                                  </td>
-                                </tr>
-                              </thead>
-                            </table>
+                  <div>
+                    <p>
+                      <div
+                        style={{ background: "white" }}
+                        className="col-12 row"
+                      >
+                        <h1
+                          className="mt-3 text-center"
+                          style={{ color: "#ddb673" }}
+                        >
+                          THÔNG TIN CÁ NHÂN
+                        </h1>
+                        <div className="col-6 p-3 me-auto">
+                          <div className="input-group">
+                            <span
+                              className="input-group-text me-auto"
+                              style={{
+                                border: "none",
+                                background: "white",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Họ và tên:
+                            </span>
+                            <>
+                              <Field
+                                className="form-control"
+                                type="text"
+                                name="name"
+                                style={renderInputCSS(isEditing)}
+                                disabled={!isEditing}
+                              ></Field>
+                              <ErrorMessage
+                                name="name"
+                                style={{
+                                  color: "red",
+                                  position: "absolute",
+                                  bottom: "-29px",
+                                  left: "115px",
+                                }}
+                                component={"div"}
+                              />
+                            </>
+                          </div>
+                          <div className="input-group mt-5">
+                            <span
+                              className="input-group-text me-4"
+                              style={{
+                                border: "none",
+                                background: "white",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Email:
+                            </span>
+                            <>
+                              <Field
+                                className="form-control ms-1"
+                                type="text"
+                                name="email"
+                                style={renderInputCSS(isEditing)}
+                                disabled={!isEditing}
+                              ></Field>
+                              <ErrorMessage
+                                name="email"
+                                style={{
+                                  color: "red",
+                                  position: "absolute",
+                                  bottom: "-30px",
+                                  left: "89px",
+                                }}
+                                component={"span"}
+                              />
+                            </>
                           </div>
 
-                          <div
-                            className="column is-6 table-responsive"
-                            style={{ overflow: "hidden" ,marginLeft: "20px"}}
-                          >
-                            <table
-                              className="table"
-                              style={{ borderBottom: "none" }}
+                          {/* <div className="input-group mt-5">
+                            <span
+                              className="input-group-text"
+                              style={{
+                                border: "none",
+                                background: "white",
+                                fontWeight: "bold",
+                              }}
                             >
-                              <thead>
-                                <tr>
-                                  <td style={{ fontWeight: "bold"}}>
-                                  
-                                    Tài khoản:
-                                  </td>
-                                  <td>{user.username}</td>
-                                </tr>
-                                <tr>
-                                  <td
-                                    className="column is-12 col-xs-6 col-sm-3"
-                                    style={{ fontWeight: "bold" }}
-                                  >
-                                    Ngày sinh:
-                                  </td>
-                                  <td
-                                    className="col-xs-6 col-sm-9"
-                                    // style={{
-                                    //   position: "relative",
-                                    //   left: "110px",
-                                    // }}
-                                  >
-                                    <>
-                                      <Field
-                                        type="date"
-                                        name="date"
-                                        style={renderInputCSS(isEditing)}
-                                        disabled={!isEditing}
-                                      ></Field>
-                                      <ErrorMessage
-                                        name="date"
-                                        style={{ color: "red" }}
-                                        component={"span"}
-                                      />
-                                    </>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td
-                                    className="col-xs-6 col-sm-3"
-                                    style={{ fontWeight: "bold" }}
-                                  >
-                                    Giới tính:
-                                  </td>
-                                  <td className="col-xs-6 col-sm-9">
-                                    {isEditing ? (
-                                      <div className="columns">
-                                        <div className="column is-6">
-                                          <div className="columns">
-                                            <div className="column is-6">
-                                              <Field
-                                                type="radio"
-                                                id="male"
-                                                name="gender"
-                                                value="1"
-                                                style={{
-                                                  position: "relative",
-                                                  top: "7px",
-                                                }}
-                                              ></Field>
-                                            </div>
-                                            <div className="column is-6">
-                                              <label
-                                                htmlFor="male"
-                                                style={{
-                                                  display: "flex",
-                                                  position: "relative",
-                                                  top: "-1px",
-                                                  width: "50px",
-                                                  right: "40px",
-                                                }}
-                                              >
-                                                Nam
-                                              </label>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <div className="column is-6">
-                                          <div className="columns">
-                                            <div className="column is-6">
-                                              {" "}
-                                              <Field
-                                                type="radio"
-                                                id="female"
-                                                name="gender"
-                                                value="0"
-                                                style={{
-                                                  position: "relative",
-                                                  top: "7px",
-                                                }}
-                                              ></Field>
-                                            </div>
-                                            <div className="column is-6">
-                                              <label
-                                                htmlFor="female"
-                                                style={{
-                                                  display: "flex",
-                                                  position: "relative",
-                                                  top: "-1px",
-                                                  width: "50px",
-                                                  right: "40px",
-                                                }}
-                                              >
-                                                Nữ
-                                              </label>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    ) : user.employee.gender ? (
-                                      "Nam"
-                                    ) : (
-                                      "Nữ"
-                                    )}
-                                  </td>
-                                </tr>
-                              </thead>
-                            </table>
+                              Địa chỉ:
+                            </span>
+                            <>
+                              <Field
+                                as="textarea"
+                                name="address"
+                                className="form-control"
+                                style={renderInputAddress(isEditing)}
+                                disabled={!isEditing}
+                              ></Field>
+                              <ErrorMessage
+                                name="address"
+                                style={{
+                                  color: "red",
+                                  position: "absolute",
+                                  bottom: "-30px",
+                                  left: "89px",
+                                }}
+                                component={"span"}
+                              />
+                            </>
+                          </div>
+                        </div> */}
+                        </div>
+                        <div className="col-6 p-3 ">
+                          <div className="input-group mt-auto">
+                            <span
+                              className="input-group-text"
+                              style={{
+                                border: "none",
+                                background: "white",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Ngày sinh:
+                            </span>
+                            <>
+                              <Field
+                                className="form-control"
+                                type="date"
+                                name="date"
+                                style={renderInputCSS(isEditing)}
+                                disabled={!isEditing}
+                              ></Field>
+                              <ErrorMessage
+                                name="date"
+                                style={{
+                                  color: "red",
+                                  position: "absolute",
+                                  bottom: "-29px",
+                                  left: "115px",
+                                }}
+                                component={"span"}
+                              />
+                            </>
+                          </div>
+                          <div className="mt-5 col-12">
+                            <span
+                              className="input-group-text"
+                              style={{
+                                border: "none",
+                                background: "white",
+                              }}
+                            >
+                              <strong className="me-3"> Giới tính:</strong>{" "}
+                              {isEditing ? (
+                                <div>
+                                  <div className="form-check form-check-inline">
+                                    <Field
+                                      className="form-check-input"
+                                      type="radio"
+                                      name="gender"
+                                      id="male"
+                                      value="1"
+                                    />
+                                    <label
+                                      className="htmlForm-check-label"
+                                      htmlFor="male"
+                                    >
+                                      Nam
+                                    </label>
+                                  </div>
+                                  <div className="form-check form-check-inline">
+                                    <Field
+                                      className="form-check-input"
+                                      type="radio"
+                                      name="gender"
+                                      id="female"
+                                      value="0"
+                                    />
+                                    <label
+                                      className="form-check-label"
+                                      htmlFor="female"
+                                    >
+                                      Nữ
+                                    </label>
+                                  </div>
+                                </div>
+                              ) : user.employee.gender ? (
+                                "Nam"
+                              ) : (
+                                "Nữ"
+                              )}
+                            </span>
                           </div>
                         </div>
-                        <div className="buttons is-12">
+                        <div className="col-12 mt-4">
+                          <div className="input-group">
+                            <span
+                              className="input-group-text mb-3"
+                              style={{
+                                border: "none",
+                                background: "white",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Địa chỉ:
+                            </span>
+                            <>
+                              <Field
+                                as="textarea"
+                                name="address"
+                                className="form-control ms-4 mt-2"
+                                style={renderInputAddress(isEditing)}
+                                disabled={!isEditing}
+                              ></Field>
+                              <ErrorMessage
+                                name="address"
+                                style={{
+                                  color: "red",
+                                  position: "absolute",
+                                  bottom: "-30px",
+                                  left: "89px",
+                                }}
+                                component={"span"}
+                              />
+                            </>
+                          </div>
+                          {/* <div className="mb-4 row p-3">
+                            <label
+                              htmlFor="address"
+                              className="col-sm-2 col-form-label "
+                              style={{ fontWeight: "bold" }}
+                            >
+                              Địa chỉ:
+                            </label>
+                            <div className="col-sm-10">
+                              <Field
+                                className="form-control"
+                                as="textarea"
+                                name="address"
+                                style={renderInputAddress(isEditing)}
+                                disabled={!isEditing}
+                              ></Field>
+                              <ErrorMessage
+                                name="address"
+                                style={{
+                                  color: "red",
+                                }}
+                                component={"span"}
+                              />
+                            </div>
+                          </div> */}
+                        </div>
+                        <div className="col-12 mt-4 mb-2 text-center">
                           {isEditing ? (
                             <button
-                              className="button button-cancel"
+                              className="button button-cancel me-3"
                               type="button"
                               onClick={handleEdit}
                               style={{ color: "white" }}
@@ -436,35 +492,37 @@ function ShowInfoUser() {
                           ) : (
                             <button
                               type="button"
-                              className="button button-update-info"
+                              className="button button-update-info me-3"
                               onClick={() => setIsEditing(true)}
                             >
                               Cập nhật thông tin
                             </button>
                           )}
-                          <Button
-                            className="button button-change-password"
-                            onClick={() => showModal()}
-                            style={{ display: isEditing ? "none" : "block" }}
-                          >
-                            Đổi mật khẩu
-                          </Button>
-                          <Button
-                            className="button button-viiii"
-                            type="submit"
-                            style={{
-                              display: isEditing ? "block" : "none",
-                              background: " rgb(255, 237, 194)",
-                              border: "none",
-                              color: "black",
-                            }}
-                          >
-                            Đồng ý
-                          </Button>
+                          {!isEditing && (
+                            <Button
+                              className="button button-change-password"
+                              onClick={() => showModal()}
+                            >
+                              Đổi mật khẩu
+                            </Button>
+                          )}
+                          {isEditing && (
+                            <Button
+                              className="button button-viiii"
+                              type="submit"
+                              style={{
+                                background: " rgb(255, 237, 194)",
+                                border: "none",
+                                color: "black",
+                              }}
+                            >
+                              Đồng ý
+                            </Button>
+                          )}
                         </div>
-                      </p>
-                      <ChangePasswordModal show={show} setShow={setShow} />
-                    </div>
+                      </div>
+                    </p>
+                    <ChangePasswordModal show={show} setShow={setShow} />
                   </div>
                 </Form>
               </Formik>
@@ -472,9 +530,8 @@ function ShowInfoUser() {
           </div>
         </div>
       </div>
-
       <Footer />
     </>
   );
 }
-export default ShowInfoUser;
+export default Test;
