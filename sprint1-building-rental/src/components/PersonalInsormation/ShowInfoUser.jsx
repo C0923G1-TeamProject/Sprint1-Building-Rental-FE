@@ -121,6 +121,7 @@ function ShowInfoUser() {
     <>
       <HeaderAdmin />
       <div className="container p-5 fixed-grid has-auto-count">
+       
         <div className="columns">
           <div className="columns">
             {/* cột ảnh cá nhân */}

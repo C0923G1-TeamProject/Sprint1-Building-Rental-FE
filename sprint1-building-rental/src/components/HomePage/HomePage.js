@@ -193,7 +193,7 @@ function HomePage() {
                   <div className="display">
                     <div className="col-lg-2">
                       <select
-                        className=" select-floor-homePage"
+                        className="select-floor-homePage"
                         onChange={(event) => handleFloor(event.target.value)}
                       >
                         <option value="">Tầng: Tất cả</option>
@@ -575,6 +575,7 @@ function HomePage() {
               </div>
             </div>
           </div>
+
           {/* <!-- Team C0923G1 End--> */}
 
           {/* <!-- Body End --> */}
