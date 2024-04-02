@@ -46,7 +46,7 @@ export default function UpdatePremises() {
 
     useEffect(() => {
         findAllFloor();
-    });
+    }, []);
 
 
     const findAllType = async () => {
@@ -60,7 +60,7 @@ export default function UpdatePremises() {
 
     useEffect(() => {
         findAllType();
-    });
+    }, []);
 
     const findAllStatus = async () => {
         try {
@@ -72,7 +72,7 @@ export default function UpdatePremises() {
     }
     useEffect(() => {
         findAllStatus();
-    })
+    }, [])
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -87,9 +87,9 @@ export default function UpdatePremises() {
             const updatedPremises = {
                 ...values,
                 floor: values.floor,
-                typePremises: values.typePremises,
+                typePremises: JSON.parse(values.typePremises),
                 code: values.code,
-                premisesStatus: values.premisesStatus,
+                premisesStatus: JSON.parse(values.premisesStatus),
                 area: values.area,
                 description: values.description,
                 price: values.price,
@@ -131,6 +131,8 @@ export default function UpdatePremises() {
         cost: Yup.number().min(1000, "Phí quản lý quá nhỏ").max(99999999999, "Phí quản lý quá lớn")
     }
 
+
+
     if (premises == null) {
         return <div>
             Loading
@@ -167,37 +169,44 @@ export default function UpdatePremises() {
                                             <span className="px-0">Chọn tầng: <span
                                                 style={{color: 'red'}}>*</span></span>
                                         </div>
-                                        <div className="row">
-                                            {/*<Field name="id" value={id} hidden></Field>*/}
-                                            <Field as="select" id="floor" name="floor"
-                                                   className="form-control rounded-1">
-                                                {
-                                                    listFloor.map((item) => (
-                                                        <option key={item.index} value={item}>{item}</option>
-                                                    ))
-                                                }
-                                            </Field>
-                                            <ErrorMessage name="floor" component="span" className="text-danger"/>
-                                        </div>
+                                        {listFloor && (
+                                            <div className="row">
+                                                {/*<Field name="id" value={id} hidden></Field>*/}
+                                                <Field as="select" id="floor" name="floor"
+                                                       className="form-control rounded-1">
+                                                    {
+                                                        listFloor.map((item) => (
+                                                            <option key={item.index} value={item}>{item}</option>
+                                                        ))
+                                                    }
+                                                </Field>
+                                                <ErrorMessage name="floor" component="span" className="text-danger"/>
+                                            </div>
+                                        )}
+
 
 
                                         <div className="row my-1">
                                                 <span className="px-0">Loại mặt bằng: <span
                                                     style={{color: 'red'}}>*</span></span>
                                         </div>
-                                        <div className="row">
-                                            <Field as="select" id="typePremises" name="typePremises"
-                                                   className="form-control rounded-1">
-                                                {
-                                                    listType.map((item) => (
-                                                        <option key={item.id}
-                                                                value={JSON.stringify(item)}>{item.name}</option>
-                                                    ))
-                                                }
-                                            </Field>
-                                            <ErrorMessage name="typePremises" component="span"
-                                                          className="text-danger"/>
-                                        </div>
+                                        {
+                                            listType && (
+                                                <div className="row">
+                                                    <Field as="select" id="typePremises" name="typePremises"
+                                                           className="form-control rounded-1">
+                                                        {
+                                                            listType.map((item) => (
+                                                                <option key={item.id}
+                                                                        value={JSON.stringify(item)}>{item.name}</option>
+                                                            ))
+                                                        }
+                                                    </Field>
+                                                    <ErrorMessage name="typePremises" component="span"
+                                                                  className="text-danger"/>
+                                                </div>
+                                            )
+                                        }
 
 
                                         <div className="row my-1">
