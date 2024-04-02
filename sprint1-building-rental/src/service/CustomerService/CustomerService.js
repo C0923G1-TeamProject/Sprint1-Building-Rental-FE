@@ -17,3 +17,11 @@ export const createCustomer = async (customer) => {
         console.log(e);
     }
 }
+
+export const deleteCustomer = async (customer) => {
+    try {
+        const res = await axios.delete(`http://localhost:8080/customer/delete/${customer}`)
+    } catch (e) {
+        console.log(e);
+    }
+}
