@@ -111,9 +111,15 @@ function Test() {
         };
   };
 
-  if (localStorage.getItem("token") == null) {
-    navigation("/login");
-  }
+    if (localStorage.getItem("rm")) {
+        if(!localStorage.getItem("token")){
+            navigation("/login");
+        }
+    } else {
+        if(!sessionStorage.getItem("token")){
+            navigation("/login");
+        }
+    }
   return (
     <>
       <HeaderAdmin />
@@ -224,6 +230,15 @@ function Test() {
                     });
                     setIsEditing(false);
                     setSubmitting(false);
+                      if (localStorage.getItem("rm")) {
+                          if(localStorage.getItem("token")){
+                              localStorage.setItem("nameOfSigninUser", values.name);
+                          }
+                      } else {
+                          if(sessionStorage.getItem("token")){
+                              sessionStorage.setItem("nameOfSigninUser", values.name);
+                          }
+                      }
                     getInfo();
                   });
                 }}

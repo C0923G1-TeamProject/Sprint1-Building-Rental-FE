@@ -122,6 +122,16 @@ function AddCustomer() {
         return "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg";
     };
 
+    if (localStorage.getItem("rm")) {
+        if(!localStorage.getItem("token")){
+            navigation("/login");
+        }
+    } else {
+        if(!sessionStorage.getItem("token")){
+            navigation("/login");
+        }
+    }
+
     return (
         <>
             <Helmet>

@@ -8,8 +8,7 @@
 }
 .picture-detail {
   border-radius: 3px;
-  border: solid;
-  1px:
+  border: solid 1px;
 }
 .flexx {
   flex-wrap: wrap;

@@ -143,8 +143,14 @@ function LoginPage() {
     }
   };
 
-  if (!localStorage.getItem("token")) {
-    navigation("/");
+  if (localStorage.getItem("rm")) {
+    if(!localStorage.getItem("token")){
+      navigation("/");
+    }
+  } else {
+    if(!sessionStorage.getItem("token")){
+      navigation("/");
+    }
   }
   return (
     <>
