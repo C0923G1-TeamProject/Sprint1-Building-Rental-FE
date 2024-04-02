@@ -96,7 +96,7 @@ export default function UpdatePremises() {
                 cost: values.cost
             };
 
-            const res = await service.updatePremises(id, updatedPremises);
+            await service.updatePremises(id, updatedPremises);
             Swal.fire("Chỉnh sửa thành công!", "", "success").then(() => {
                 navigate('/premises');
             });
@@ -233,6 +233,21 @@ export default function UpdatePremises() {
                                             <ErrorMessage name="area" component="span" className="text-danger"/>
 
                                         </div>
+                                        <div className="row my-2">
+                                            <div className="col-4 px-0">
+                                                <Link to={`/premises`} className="px-0">
+                                                    <button type="button" className="btn hisu-cancel">
+                                                        Huỷ chỉnh sửa
+                                                    </button>
+                                                </Link>
+                                            </div>
+                                            <div className="col-8 px-0">
+                                                <button onSubmit={handleSubmit} type="submit"
+                                                        className="btn hisu-confirm">
+                                                    Chỉnh sửa mặt bằng
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div className="col-5">
@@ -269,21 +284,7 @@ export default function UpdatePremises() {
                                                           className="text-danger"/>
 
                                         </div>
-                                        <div className="row my-2">
-                                            <div className="col-6 px-0">
-                                                <Link to={`/premises`} className="px-0">
-                                                    <button type="button" className="btn hisu-cancel">
-                                                        Huỷ chỉnh sửa
-                                                    </button>
-                                                </Link>
-                                            </div>
-                                            <div className="col-6 px-0">
-                                                <button onClick={handleSubmit} type="submit"
-                                                        className="btn hisu-confirm">
-                                                    Xác nhận chỉnh sửa
-                                                </button>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                             </Form>
