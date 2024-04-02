@@ -89,10 +89,15 @@ function ListCustomer() {
         getAll(currentPage);
     }, [currentPage]);
 
-    // if (localStorage.getItem("token") == null) {
-    //     navigation("/login");
-    //
-    // }
+    if (localStorage.getItem("rm")) {
+        if(!localStorage.getItem("token")){
+            navigation("/login");
+        }
+    } else {
+        if(!sessionStorage.getItem("token")){
+            navigation("/login");
+        }
+    }
     return (
         <>
             <Helmet>

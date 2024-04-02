@@ -149,9 +149,16 @@ function HomePage() {
     }
   };
 
-  if (localStorage.getItem("token")) {
-    navigate("/loginPage");
+  if (localStorage.getItem("rm")) {
+    if(localStorage.getItem("token")){
+      navigate("/loginPage");
+    }
+  } else {
+    if(sessionStorage.getItem("token")){
+      navigate("/loginPage");
+    }
   }
+
 
   return (
     <>

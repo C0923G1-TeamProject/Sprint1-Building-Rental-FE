@@ -114,8 +114,14 @@ function ShowInfoUser() {
         };
   };
 
-  if (localStorage.getItem("token") == null) {
-    navigation("/login");
+  if (localStorage.getItem("rm")) {
+    if(!localStorage.getItem("token")){
+      navigation("/loginPage");
+    }
+  } else {
+    if(!sessionStorage.getItem("token")){
+      navigation("/loginPage");
+    }
   }
   return (
     <>
