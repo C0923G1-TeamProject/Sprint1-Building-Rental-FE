@@ -40,7 +40,7 @@ export const checkAuth = async () => {
 
 export const logout = async () => {
     try {
-        debugger;
+
         const res = await axiosCof.post("http://localhost:8080/api/auth/logout");
         console.log(res.data);
         return res.data;

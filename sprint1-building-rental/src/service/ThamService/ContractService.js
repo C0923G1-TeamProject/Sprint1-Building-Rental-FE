@@ -65,14 +65,15 @@ export const getInfo = async () => {
     console.log(e);
   }
 };
-export const getAllContractByUser = async (idAccount) => {
+export const getAllContractByUser = async (pageContractByEmployee) => {
   try {
     const res = await axiosCof.post(
-      "http://localhost:8080/contract/employee",
-      idAccount
+      "http://localhost:8080/contract/accountEmployee",
+      pageContractByEmployee
     );
     return res.data;
   } catch (e) {
     console.log(e);
   }
 };
+

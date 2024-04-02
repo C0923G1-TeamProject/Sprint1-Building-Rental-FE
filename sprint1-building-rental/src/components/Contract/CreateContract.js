@@ -171,8 +171,6 @@ function CreateContract() {
     }
   }, [premiseSelected, numberOfMonths]);
 
-  
-
   const getTotal = (price, numberOfMonths) => {
     const totalPrice = parseInt(price * numberOfMonths);
     setTotalPay(totalPrice);
@@ -184,10 +182,12 @@ function CreateContract() {
 
   const handelGetIdPremises = (e, setFieldValue) => {
     const { name, value } = e.target;
+    console.log(name, value);
     setFieldValue(name, value);
     const newValue = parseInt(e.target.value);
     setChooseIdPremises(newValue);
     handleRenderPrice(newValue, setFieldValue);
+
     // console.log(newValue);
   };
 
@@ -196,13 +196,19 @@ function CreateContract() {
   // }, [chooseIdPremises]);
 
   const handleRenderPrice = (chooseIdPremises, setFieldValue) => {
-    premisesService.findPremises(chooseIdPremises).then((res) => {
-      setPremiseSelected(res);
-      const price = res.price;
-      setPrice(price);
-      setFieldValue("paymentTerm", price);
-      setFieldValue("deposit", price);
-    });
+    if (chooseIdPremises) {
+      premisesService.findPremises(chooseIdPremises).then((res) => {
+        console.log(res);
+        setPremiseSelected(res);
+        const price = res.price;
+        setPrice(price);
+        setFieldValue("paymentTerm", price);
+        setFieldValue("deposit", price);
+      });
+    } else {
+      setFieldValue("paymentTerm", 0);
+      setFieldValue("deposit", 0);
+    }
   };
   //lấy thông tin nhân viên
 
@@ -210,7 +216,6 @@ function CreateContract() {
 
   useEffect(() => {
     getInfo();
-
   }, []);
 
   const getInfo = async () => {
@@ -223,7 +228,15 @@ function CreateContract() {
       console.log(e);
     }
   };
-
+//format hiển thị tiền
+  const formatCurrency = (amount) => {
+    // Thực hiện các bước cần thiết để định dạng giá tiền theo định dạng VND
+    const formattedAmount = amount.toLocaleString('vi-VN', {
+      style: 'currency',
+      currency: 'VND'
+    });
+    return formattedAmount;
+  };
   if (!info) {
     return <div>loading</div>;
   }
@@ -236,24 +249,26 @@ function CreateContract() {
           <h1 className="text-center">THÊM MỚI HỢP ĐỒNG</h1>
 
           <Formik
-            initialValues={{ code: "",
-            startDate: "",
-            endDate: "",
-            deposit:
-              premiseSelected && premiseSelected.price
-                ? parseInt(premiseSelected.price)
-                : "",
-            content: "",
-            paymentTerm: totalPay ? totalPay : "",
-            idPremises: chooseIdPremises ? chooseIdPremises.id : "",
-            idCustomer: "",
-            idAccount: idAcc,}}
+            initialValues={{
+              code: "",
+              startDate: "",
+              endDate: "",
+              deposit:
+                premiseSelected && premiseSelected.price
+                  ? parseInt(premiseSelected.price)
+                  : "",
+              content: "",
+              paymentTerm: totalPay ? totalPay : "",
+              idPremises: chooseIdPremises ? chooseIdPremises.id : "",
+              idCustomer: "",
+              idAccount: idAcc,
+            }}
             validationSchema={validation}
             validateOnChange={false}
             onSubmit={handleSubmitAdd}
             render={({ setFieldValue }) => (
               <Form className="row g-3 mt-3">
-                {premisese && premisese.length > 0 ? (
+                {premisese.length > 0 ? (
                   <div className="col-md-4">
                     <label
                       for="inputState"
@@ -269,7 +284,7 @@ function CreateContract() {
                       value={chooseIdPremises}
                       onChange={(e) => handelGetIdPremises(e, setFieldValue)}
                     >
-                      <option>Chọn mặt bằng</option>
+                      <option value="">Chọn mặt bằng</option>
 
                       {premisese.map((item) => (
                         <option key={item.id} value={item.id}>
@@ -334,7 +349,7 @@ function CreateContract() {
                     style={{ color: "red" }}
                     component={"span"}
                   />
-                    
+
                   <Field name="idAccount" value={info.idAccount} hidden></Field>
                 </div>
                 <div className="col-md-4">
@@ -407,12 +422,6 @@ function CreateContract() {
                     className="form-control"
                     id="inputAddress"
                     name="paymentTerm"
-
-                    // value={
-                    //   premiseSelected && premiseSelected.price
-                    //     ? premiseSelected.price
-                    //     : ""
-                    // }
                   />
                   <ErrorMessage
                     name="paymentTerm"
@@ -432,11 +441,6 @@ function CreateContract() {
                     className="form-control"
                     id="inputAddress"
                     name="deposit"
-                    // value={
-                    //   premiseSelected && premiseSelected.price
-                    //     ? premiseSelected.price
-                    //     : ""
-                    // }
                   />
                   <ErrorMessage
                     name="deposit"
@@ -496,13 +500,13 @@ function CreateContract() {
                 > */}
                   <button
                     onClick={handleBack}
-                    className="btn hisu-cancel mt-3 mr-3"
+                    className="btn btn-in-list mt-3 mr-3"
                     type="button"
                   >
                     Hủy thêm mới
                   </button>
                   {/* </a> */}
-                  <button type="submit" className="btn hisu-confirm mt-3 mr-3">
+                  <button type="submit" className="btn btn-in-list mt-3 mr-3">
                     Thêm mới
                   </button>
                   {/* <button type="submit" className="btn btn-in-list mt-5 mr-3">
