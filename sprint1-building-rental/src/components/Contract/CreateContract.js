@@ -244,6 +244,15 @@ function CreateContract() {
     return formattedAmount;
   };
 
+  if (localStorage.getItem("rm")) {
+    if(!localStorage.getItem("token")){
+      navigate("/login");
+    }
+  } else {
+    if(!sessionStorage.getItem("token")){
+      navigate("/login");
+    }
+  }
 
 
   if (!info) {

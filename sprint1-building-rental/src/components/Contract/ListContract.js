@@ -6,13 +6,14 @@ import * as contractStatusService from "../../service/ThamService/ContractStatus
 import * as contractService from "../../service/ThamService/ContractService";
 import Pagination from "react-bootstrap/Pagination";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
 function LisContract() {
   const [status, setStatus] = useState([]);
   const [info, setInfo] = useState();
   const [idAcc, setIdAcc] = useState();
+  const navigation = useNavigate();
   //search
   const initSearch = {
     nameCustomer: "",
@@ -21,7 +22,7 @@ function LisContract() {
   //paginate
   const initPage = {
     page: 0,
-    size: 6,
+    size: 2,
     // sortDirection: "ASC",
     // sortBy: "endDate",
     nameCustomer: "",
@@ -168,7 +169,15 @@ function LisContract() {
   // useEffect(() => {
   //   getAllContract(search);
   // }, [search]);
-
+  if (localStorage.getItem("rm")) {
+    if(!localStorage.getItem("token")){
+      navigation("/login");
+    }
+  } else {
+    if(!sessionStorage.getItem("token")){
+      navigation("/login");
+    }
+  }
 
   if (!contracts) {
     return <div>loading</div>;

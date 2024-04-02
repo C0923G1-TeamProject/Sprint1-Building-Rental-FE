@@ -186,7 +186,7 @@ function Test() {
                   name: Yup.string()
                     .min(2, "Họ và tên phải trên 1 kí tự")
                     .max(50, "Họ và tên phải dưới 50 kí tự")
-                    .matches("^D$", "Vui lòng nhập Họ và tên hợp lệ")
+                    // .matches("^\D$", "Vui lòng nhập Họ và tên hợp lệ")
                     .required("Họ và tên không được để trống"),
                   email: Yup.string()
                     .max(50, "Địa chỉ phải dưới 50 kí tự")
@@ -211,6 +211,15 @@ function Test() {
                     });
                     setIsEditing(false);
                     setSubmitting(false);
+                      if (localStorage.getItem("rm")) {
+                          if(localStorage.getItem("token")){
+                              localStorage.setItem("nameOfSigninUser", values.name);
+                          }
+                      } else {
+                          if(sessionStorage.getItem("token")){
+                              sessionStorage.setItem("nameOfSigninUser", values.name);
+                          }
+                      }
                     getInfo();
                   });
                 }}

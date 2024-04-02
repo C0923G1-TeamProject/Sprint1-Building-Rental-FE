@@ -137,8 +137,14 @@ export default function UpdatePremises() {
         </div>
     }
 
-    if (localStorage.getItem("token") == null) {
-        navigate("/login");
+    if (localStorage.getItem("rm")) {
+        if(!localStorage.getItem("token")){
+            navigate("/login");
+        }
+    } else {
+        if(!sessionStorage.getItem("token")){
+            navigate("/login");
+        }
     }
 
     return (<>
