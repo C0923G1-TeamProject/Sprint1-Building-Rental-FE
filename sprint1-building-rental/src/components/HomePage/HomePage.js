@@ -32,7 +32,7 @@ function HomePage() {
     setPremises(result.content);
     if (result) {
       let premisesFiltered = result.content.filter(
-        (premise) => premise.premisesStatus.id === 1
+        (premise) => premise.typePremises.id === 1
       );
       setPremises(premisesFiltered);
     }
@@ -243,7 +243,7 @@ function HomePage() {
                   ) : (
                     <div className="row g-4">
                       {premises
-                        .filter((premise) => premise.premisesStatus.id === 1)
+                        .filter((premise) => premise.typePremises.id === 1)
                         .map((premise, index) => (
                           <div
                             class="col-lg-4 col-md-6 wow fadeInUp"

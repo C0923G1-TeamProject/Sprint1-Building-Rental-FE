@@ -28,6 +28,8 @@ import UpdatePremises from "./components/Premises/UpdatePremises";
 import { log } from "handlebars";
 import { Logout } from "./components/Login/Logout";
 import { UserDataProvider } from "./components/Context/useUserData";
+import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -64,6 +66,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </UserDataProvider>
+      <ToastContainer/>
     </>
   );
 }
