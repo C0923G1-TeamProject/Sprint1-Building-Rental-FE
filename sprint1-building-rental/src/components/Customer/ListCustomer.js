@@ -108,9 +108,9 @@ function ListCustomer() {
                                 }}>
                                     <Form className="form-inline" method="get">
                                         <div className="input-group">
-                                            <Field name="name" className="form-control me-2"
+                                            <Field name="name" className="form-control me-2 rounded-1"
                                                    placeholder="Nhập tên cần tìm"></Field>
-                                            <Field name="email" className="form-control me-2"
+                                            <Field name="email" className="form-control me-2 rounded-1"
                                                    placeholder="Nhập email cần tìm" size="30"></Field>
                                             <div>
                                                 <button type="submit" className="btn btn-in-list">Tìm kiếm</button>
