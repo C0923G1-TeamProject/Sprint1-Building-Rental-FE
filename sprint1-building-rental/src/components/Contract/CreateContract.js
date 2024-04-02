@@ -228,7 +228,15 @@ function CreateContract() {
       console.log(e);
     }
   };
-
+//format hiển thị tiền
+  const formatCurrency = (amount) => {
+    // Thực hiện các bước cần thiết để định dạng giá tiền theo định dạng VND
+    const formattedAmount = amount.toLocaleString('vi-VN', {
+      style: 'currency',
+      currency: 'VND'
+    });
+    return formattedAmount;
+  };
   if (!info) {
     return <div>loading</div>;
   }
@@ -414,12 +422,6 @@ function CreateContract() {
                     className="form-control"
                     id="inputAddress"
                     name="paymentTerm"
-
-                    // value={
-                    //   premiseSelected && premiseSelected.price
-                    //     ? premiseSelected.price
-                    //     : ""
-                    // }
                   />
                   <ErrorMessage
                     name="paymentTerm"
@@ -439,11 +441,6 @@ function CreateContract() {
                     className="form-control"
                     id="inputAddress"
                     name="deposit"
-                    // value={
-                    //   premiseSelected && premiseSelected.price
-                    //     ? premiseSelected.price
-                    //     : ""
-                    // }
                   />
                   <ErrorMessage
                     name="deposit"
