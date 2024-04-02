@@ -16,7 +16,6 @@ import {
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 function ShowInfoUser() {
-  debugger;
   const [show, setShow] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [image, setImage] = useState();
@@ -69,6 +68,7 @@ function ShowInfoUser() {
     const { name, value } = e.target;
     console.log(name, value);
   };
+
   const today = new Date();
   const minAgeDate = new Date(
     today.getFullYear() - 16,
@@ -81,7 +81,6 @@ function ShowInfoUser() {
       ? {
           position: "relative",
           top: "-5px",
-          width: "100%",
         }
       : {
           position: "relative",
@@ -89,7 +88,6 @@ function ShowInfoUser() {
           border: "none",
           backgroundColor: "white",
           color: "black",
-          width: "100%",
         };
   };
 
@@ -122,63 +120,28 @@ function ShowInfoUser() {
   return (
     <>
       <HeaderAdmin />
-      <div
-        className="container p-5 fixed-grid has-auto-count is-three-quarters-mobile
-      is-two-thirds-tablet
-      is-half-desktop
-      is-one-third-widescreen
-      is-one-quarter-fullhd"
-      >
+      <div className="container p-5 fixed-grid has-auto-count">
+       
         <div className="columns">
-          <div className="columns is-three-quarters-mobile">
+          <div className="columns">
             {/* cột ảnh cá nhân */}
-            <div
-              className="column is-3
-                col-sm-12
-                col-lg-3
-                col-md-12
-                "
-            >
+            <div className="column is-3 col-xs-12 col-sm-12 col-md-12">
               <div
-                className="box is-three-quarters-mobile
-                  is-two-thirds-tablet
-                  is-half-desktop
-                  is-one-third-widescreen
-                  is-one-quarter-fullhd"
-                style={{
-                  boxShadow:
-                    "rgba(0, 0, 0, 0.1) 0px 0em 0.5em 0em, rgba(1, 10, 10, 0.02) 0px 0px 0px 1px",
-                  height: "437px",
-                  position: "relative",
-                  bottom: "-13px",
-                }}
+                className="box"
+                style={{ position: "relative", top: "12px", height: "95%" }}
               >
-                <p
-                  className="is-5 is-three-quarters-mobile
-                                is-two-thirds-tablet
-                                is-half-desktop
-                                is-one-third-widescreen
-                                is-one-quarter-fullhd"
-                >
-                  <div className="account-settings">
-                    <div className="user-profile">
-                      <div className="user-avatar">
-                        <img
-                          style={{ width: "100%", height: "100%" }}
-                          src={renderImage()}
-                          alt="Ảnh đại diện"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                <p className="column is-12 col-xs-12 col-sm-6">
+                  <img
+                    src={renderImage()}
+                    alt="Ảnh đại diện"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      justifyContent: "center",
+                    }} // Let the image flow freely within its container
+                  />
                 </p>
-                <p
-                  className="subtitle is-three-quarters-mobile
-                                is-two-thirds-tablet
-                                is-half-desktop
-                                is-one-third-widescreen
-                                is-one-quarter-fullhd"
-                >
+                <p className="subtitle column is-12">
                   <div className="about" style={{ textAlign: "center" }}>
                     <UploadImage
                       user={user.employee}
@@ -190,7 +153,7 @@ function ShowInfoUser() {
               </div>
             </div>
 
-            <div className="column is-9 col-sm-12">
+            <div className="column is-9">
               <Formik
                 initialValues={{
                   id: user.employee.id,
@@ -236,31 +199,36 @@ function ShowInfoUser() {
               >
                 <Form>
                   <Field type="hidden" name="id"></Field>
-                  <div className="column" style={{ width: "103%" }}>
+                  <div
+                    className="column "
+                    // style={{ width: "103%" }}
+                  >
                     <div
-                      className="box col-lg-12 col-md-12"
+                      className="box col-lg-12 col-sm-12 col-xs-12"
                       style={{
                         boxShadow:
                           "rgba(0, 0, 0, 0.1) 0px 0em 0.5em 0em, rgba(1, 10, 10, 0.02) 0px 0px 0px 1px",
                       }}
                     >
-                      <p className="is-5" style={{ color: "#ddb673" }}>
+                      <p className="is-12" style={{ color: "#ddb673" }}>
                         <h4>Thông tin cá nhân</h4>
                       </p>
-                      <p className="subtitle" style={{ height: "351px" }}>
-                        <div
-                          className="columns is-three-quarters-mobile
-                                    is-two-thirds-tablet
-                                    is-half-desktop
-                                    is-one-third-widescreen
-                                    is-one-quarter-fullhd"
-                        >
-                          <div className="column is-7">
+                      <p style={{ height: "351px" }}>
+                        <div className="columns">
+                          <div className="column is-6 table-responsive">
                             <table className="table">
                               <thead>
                                 <tr>
-                                  <td style={{fontWeight: "bold",width: "115px"}}>Họ và tên:</td>
-                                  <td>
+                                  <td
+                                    className="col-xs-6 col-sm-3"
+                                    style={{
+                                      fontWeight: "bold",
+                                      width: "115px",
+                                    }}
+                                  >
+                                    Họ và tên:
+                                  </td>
+                                  <td className="col-xs-6 col-sm-9">
                                     <>
                                       <Field
                                         type="text"
@@ -277,7 +245,14 @@ function ShowInfoUser() {
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td style={{ width: "108px",fontWeight: "bold" }}>Email:</td>
+                                  <td
+                                    style={{
+                                      width: "108px",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    Email:
+                                  </td>
                                   <td>
                                     <>
                                       <Field
@@ -295,7 +270,9 @@ function ShowInfoUser() {
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td style={{fontWeight: "bold"}}>Địa chỉ:</td>
+                                  <td style={{ fontWeight: "bold" }}>
+                                    Địa chỉ:
+                                  </td>
                                   <td>
                                     <>
                                       <Field
@@ -316,19 +293,35 @@ function ShowInfoUser() {
                             </table>
                           </div>
 
-                          <div className="column is-5 w-vi">
+                          <div
+                            className="column is-6 table-responsive"
+                            style={{ overflow: "hidden" ,marginLeft: "20px"}}
+                          >
                             <table
                               className="table"
                               style={{ borderBottom: "none" }}
                             >
                               <thead>
                                 <tr>
-                                  <td style={{fontWeight: "bold"}}>Tài khoản:</td>
+                                  <td style={{ fontWeight: "bold" }}>
+                                    Tài khoản:
+                                  </td>
                                   <td>{user.username}</td>
                                 </tr>
                                 <tr>
-                                  <td style={{ width: "200px" , fontWeight: "bold"}}>Ngày sinh:</td>
-                                  <td>
+                                  <td
+                                    className="column is-12 col-xs-6 col-sm-3"
+                                    style={{ fontWeight: "bold" }}
+                                  >
+                                    Ngày sinh:
+                                  </td>
+                                  <td
+                                    className="col-xs-6 col-sm-9"
+                                    // style={{
+                                    //   position: "relative",
+                                    //   left: "110px",
+                                    // }}
+                                  >
                                     <>
                                       <Field
                                         type="date"
@@ -345,16 +338,15 @@ function ShowInfoUser() {
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td style={{fontWeight: "bold"}}>Giới tính:</td>
-                                  <td>
+                                  <td
+                                    className="col-xs-6 col-sm-3"
+                                    style={{ fontWeight: "bold" }}
+                                  >
+                                    Giới tính:
+                                  </td>
+                                  <td className="col-xs-6 col-sm-9">
                                     {isEditing ? (
-                                      <div
-                                        className="columns is-three-quarters-mobile
-                                  is-two-thirds-tablet
-                                  is-half-desktop
-                                  is-one-third-widescreen
-                                  is-one-quarter-fullhd"
-                                      >
+                                      <div className="columns">
                                         <div className="column is-6">
                                           <div className="columns">
                                             <div className="column is-6">
@@ -377,6 +369,7 @@ function ShowInfoUser() {
                                                   position: "relative",
                                                   top: "-1px",
                                                   width: "50px",
+                                                  right: "40px",
                                                 }}
                                               >
                                                 Nam
@@ -407,6 +400,7 @@ function ShowInfoUser() {
                                                   position: "relative",
                                                   top: "-1px",
                                                   width: "50px",
+                                                  right: "40px",
                                                 }}
                                               >
                                                 Nữ
@@ -426,7 +420,7 @@ function ShowInfoUser() {
                             </table>
                           </div>
                         </div>
-                        <div className="buttons">
+                        <div className="buttons is-12">
                           {isEditing ? (
                             <button
                               className="button button-cancel"

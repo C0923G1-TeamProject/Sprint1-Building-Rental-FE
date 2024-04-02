@@ -30,6 +30,7 @@ import { Logout } from "./components/Login/Logout";
 import { UserDataProvider } from "./components/Context/useUserData";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Test from "./components/PersonalInsormation/test-layout";
 
 function App() {
   return (
@@ -40,7 +41,7 @@ function App() {
             <Route path="/" element={<HomePage />}></Route>
             <Route path="/contactPage" element={<ContactPage />}></Route>
             <Route path="/loginPage" element={<LoginPage />}></Route>
-            <Route path="/information" element={<ShowInfoUser />}></Route>
+            <Route path="/information" element={<Test />}></Route>
             <Route
               path="/introductionPage"
               element={<IntroductionPage />}
@@ -63,6 +64,7 @@ function App() {
             ></Route>
             <Route path={"/logout"} element={<Logout />}></Route>
             <Route path="/contract/create" element={<CreateContract />}></Route>
+            {/* <Route path="/test" element={<Test />}></Route> */}
           </Routes>
         </BrowserRouter>
       </UserDataProvider>

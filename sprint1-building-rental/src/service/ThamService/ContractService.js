@@ -35,7 +35,7 @@ export const getAllPremises = async () => {
 };
 export const getAllCustomer = async () => {
   try {
-    const res = await axiosCof.get("http://localhost:8080/customer/show");
+    const res = await axiosCof.get("http://localhost:8080/customer/getCustomers");
     return res.data;
   } catch (e) {
     console.log(e);
@@ -65,14 +65,16 @@ export const getInfo = async () => {
     console.log(e);
   }
 };
-export const getAllContractByUser = async (idAccount) => {
+export const getAllContractByUser = async (pageContractByEmployee) => {
   try {
     const res = await axiosCof.post(
-      "http://localhost:8080/contract/employee",
-      idAccount
+      "http://localhost:8080/contract/accountEmployee",
+      pageContractByEmployee
     );
     return res.data;
   } catch (e) {
     console.log(e);
   }
 };
+
+

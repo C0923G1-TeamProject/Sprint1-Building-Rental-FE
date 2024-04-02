@@ -79,3 +79,12 @@
   color: white !important;
   border-color: #c77a29 !important;
 }
+
+#tbl-custom table{
+  border: 1px solid #000;
+}
+
+#tbl-custom .table>thead>tr>th{
+  background-color: #747264 !important;
+  color: #fff !important;
+}

@@ -88,7 +88,7 @@
     }
 }
 
-
+/* 
 @media (max-width: 576px) {
     .modal-dialog {
         max-width: 90%;
@@ -112,7 +112,7 @@
         position: relative !important;
     left: 113px !important;
     }
-}
+} */
 
 .button-update-info{
     background-color: rgb(255, 237, 194);
@@ -211,9 +211,6 @@
     margin-top: 5px;
 }
 
-.w-vi{
-    /* width: calc(43.66667% - var(--bulma-column-gap) / 2) !important; */
-}
 *{
     font-family: "Open Sans", sans-serif;
 }

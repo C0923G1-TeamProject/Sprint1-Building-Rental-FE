@@ -12,6 +12,7 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as premisesService from "../../service/PremisesService";
+import Swal from "sweetalert2";
 
 function CreateContract() {
   const [status, setStatus] = useState([]);
@@ -45,12 +46,14 @@ function CreateContract() {
   //   idCustomer: "",
   //   idAccount: idAcc,
   // };
+  const today = new Date();
+  today.setHours(0, 0, 0, 0)
   const validation = Yup.object({
     startDate: Yup.date()
       .nullable()
       .required("Ngày bắt đầu hợp đồng không được để trống")
       .min(
-        new Date(),
+        today,
         "Ngày bắt đầu hợp đồng không được nhỏ hơn ngày hiện tại"
       ),
     endDate: Yup.date()
@@ -113,6 +116,7 @@ function CreateContract() {
   const getAllCustomer = async () => {
     try {
       const res = await contractService.getAllCustomer();
+      console.log(res);
       setCustomer(res);
     } catch (e) {
       console.log(e);
@@ -125,8 +129,10 @@ function CreateContract() {
     const newContract = { ...contract };
     console.log(newContract);
     await contractService.addContract(newContract);
-    toast.success("Add new success!");
-    navigate("/contract");
+    Swal.fire("Thêm mới thành công!", "", "success").then(() => {
+      navigate('/contract');
+    });
+    // navigate("/contract");
   };
   //hàm để tính ngày kết thúc
   const [startDate, setStartDate] = useState("");
@@ -228,6 +234,17 @@ function CreateContract() {
       console.log(e);
     }
   };
+//format hiển thị tiền
+  const formatCurrency = (amount) => {
+    // Thực hiện các bước cần thiết để định dạng giá tiền theo định dạng VND
+    const formattedAmount = amount.toLocaleString('vi-VN', {
+      style: 'currency',
+      currency: 'VND'
+    });
+    return formattedAmount;
+  };
+
+
 
   if (!info) {
     return <div>loading</div>;
@@ -293,7 +310,7 @@ function CreateContract() {
                 ) : (
                   <div>Hiện đã hết mặt bằng cho thuê</div>
                 )}
-                {customer.content && (
+                {customer && (
                   <div className="col-md-4">
                     <label
                       for="inputState"
@@ -310,7 +327,7 @@ function CreateContract() {
                     >
                       <option selected>Chọn tên khách hàng</option>
 
-                      {customer.content.map((item) => (
+                      {customer.map((item) => (
                         <option key={item.id} value={item.id}>
                           {item.name}
                         </option>
@@ -414,12 +431,7 @@ function CreateContract() {
                     className="form-control"
                     id="inputAddress"
                     name="paymentTerm"
-
-                    // value={
-                    //   premiseSelected && premiseSelected.price
-                    //     ? premiseSelected.price
-                    //     : ""
-                    // }
+                    value={price}
                   />
                   <ErrorMessage
                     name="paymentTerm"
@@ -439,11 +451,8 @@ function CreateContract() {
                     className="form-control"
                     id="inputAddress"
                     name="deposit"
-                    // value={
-                    //   premiseSelected && premiseSelected.price
-                    //     ? premiseSelected.price
-                    //     : ""
-                    // }
+                    value={price}
+
                   />
                   <ErrorMessage
                     name="deposit"
@@ -503,14 +512,14 @@ function CreateContract() {
                 > */}
                   <button
                     onClick={handleBack}
-                    className="btn btn-in-list mt-3 mr-3"
+                    className="btn hisu-cancel mt-3 mr-3"
                     type="button"
                   >
                     Hủy thêm mới
                   </button>
                   {/* </a> */}
-                  <button type="submit" className="btn btn-in-list mt-3 mr-3">
-                    Thêm mới
+                  <button type="submit" className="btn hisu-confirm mt-3 mr-3">
+                    Thêm mới hợp đồng
                   </button>
                   {/* <button type="submit" className="btn btn-in-list mt-5 mr-3">
                   In hợp đồng
@@ -525,6 +534,7 @@ function CreateContract() {
       {/* <!-- body --> */}
 
       <Footer />
+
     </>
   );
 }

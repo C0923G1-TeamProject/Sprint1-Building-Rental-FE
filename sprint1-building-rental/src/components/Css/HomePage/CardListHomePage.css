@@ -5,7 +5,7 @@
 }
 
 .team-item:hover img {
-  opacity: 0.7;
+  opacity: 0.1;
 }
 
 .team-item .team-text {

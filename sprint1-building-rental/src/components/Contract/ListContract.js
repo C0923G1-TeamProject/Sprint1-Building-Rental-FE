@@ -11,6 +11,8 @@ import ReactPaginate from "react-paginate";
 
 function LisContract() {
   const [status, setStatus] = useState([]);
+  const [info, setInfo] = useState();
+  const [idAcc, setIdAcc] = useState();
   //search
   const initSearch = {
     nameCustomer: "",
@@ -26,8 +28,21 @@ function LisContract() {
     nameEmployee: "",
     idContractStatus: -1,
   };
+
+  const initPageByEmployee = {
+    page: 0,
+    size: 6,
+    // sortDirection: "ASC",
+    // sortBy: "endDate",
+    nameCustomer: "",
+    nameEmployee: "",
+    idContractStatus: -1,
+    idAccount: idAcc ? idAcc : "",
+  };
   const [search, setSearch] = useState(initSearch);
   const [pageContract, setPageContract] = useState(initPage);
+  const [pageContractByEmployee, setPageContractByEmployee] =
+    useState(initPageByEmployee);
   const [contracts, setContracts] = useState();
   const [contractsUser, setContractsUser] = useState();
   const [totalPages, setTotalPages] = useState(0);
@@ -55,9 +70,6 @@ function LisContract() {
   };
   //lấy thông tin nhân viên
 
-  const [info, setInfo] = useState();
-  const [idAcc, setIdAcc] = useState();
-
   useEffect(() => {
     getInfo();
   }, []);
@@ -65,36 +77,47 @@ function LisContract() {
   const getInfo = async () => {
     try {
       const res = await contractService.getInfo();
-      console.log(res);
       setInfo(res);
       setIdAcc(res.idAccount);
     } catch (e) {
       console.log(e);
     }
   };
+  useEffect(() => {
+    // Cập nhật giá trị của idAcc vào requestDto mỗi khi idAcc thay đổi
+    setPageContractByEmployee(pageContractByEmployee => ({
+      ...pageContractByEmployee,
+      idAccount: idAcc
+    }));
+  }, [idAcc]);
 
   useEffect(() => {
     getAllContract(pageContract);
   }, []);
 
-  //lấy hợp đồng theo idUser
-  useEffect(() => {
-    getAllContractByUser(idAcc);
-  }, []);
-
-  const getAllContractByUser = async (idAccount) => {
-    try {
-      const res = await contractService.getAllContractByUser(idAccount);
-      setContractsUser(res);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const getAllContract = async (pageContract) => {
     try {
       const res = await contractService.getAll(pageContract);
       setContracts(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  // const new = {...pageContractByEmployee, idAcc : res.idAccount};
+
+  //lấy hợp đồng theo idUser
+  useEffect(() => {
+    getAllContractByUser({ ...pageContractByEmployee, idAccount: idAcc });
+  }, [idAcc]);
+
+  const getAllContractByUser = async (pageContractByEmployee) => {
+    try {
+      const res = await contractService.getAllContractByUser(
+        pageContractByEmployee
+      );
+      setContractsUser(res);
+      console.log(pageContractByEmployee);
+      console.log(res);
     } catch (e) {
       console.log(e);
     }
@@ -120,9 +143,32 @@ function LisContract() {
     getAllContract(data);
   };
 
+  //theo account
+
+  const handelSearchChangeEmployee = (e) => {
+    const { name, value } = e.target;
+    const data = { ...pageContractByEmployee, [name]: value };
+    setPageContractByEmployee(data);
+    console.log(data);
+  };
+
+  const handleSearchEmployee = () => {
+    getAllContractByUser(pageContractByEmployee);
+    console.log(pageContractByEmployee);
+  };
+
+  //phaan trang
+
+  const handleChangePageEmployee = async (page) => {
+    const data = { ...pageContractByEmployee, page: page.selected };
+    setPageContractByEmployee(data);
+    getAllContractByUser(data);
+  };
   // useEffect(() => {
   //   getAllContract(search);
   // }, [search]);
+
+
   if (!contracts) {
     return <div>loading</div>;
   }
@@ -135,14 +181,13 @@ function LisContract() {
           <h1 className="text-center fw-bold text-uppercase">
             DANH SÁCH HỢP ĐỒNG
           </h1>
-
           <div className="row">
             <div className="col-1"></div>
             <div className="col-10">
-              <div className="input-group mb-4">
-                <div className="me-4">
+              <div className="input-group mb-3">
+                <div className="me-5">
                   <Link className="btn btn-in-list" to="/contract/create">
-                    Tạo mới hợp đồng
+                    Thêm mới
                   </Link>
                 </div>
                 <div>
@@ -170,7 +215,7 @@ function LisContract() {
                       name="idContractStatus"
                       onChange={handelSearchChange}
                     >
-                      <option selected value="">
+                      <option selected value="-1">
                         Tìm kiếm trạng thái
                       </option>
                       {status.map((item) => (
@@ -187,6 +232,180 @@ function LisContract() {
                     type="submit"
                     className="btn btn-in-list"
                     onClick={handleSearch}
+                  >
+                    Tìm kiếm
+                  </button>
+                </div>
+              </div>
+              <div id="tbl-custom" className="table-responsive">
+              <table  className="table table-striped ">
+                <thead>
+                  <tr className="">
+                    <th
+
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      #
+                    </th>
+                    <th
+
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Mã hợp đồng
+                    </th>
+                    <th
+
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Mã mặt bằng
+                    </th>
+                    <th
+
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Khách hàng
+                    </th>
+                    <th
+
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Nhân viên tạo hợp đồng
+                    </th>
+
+                    <th
+
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Trạng thái
+                    </th>
+                    <th
+
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Ngày bắt đầu
+                    </th>
+                    <th
+
+                      style={{ color: `white`, backgroundColor: `#747264` }}
+                    >
+                      Ngày kết thúc
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {contracts.content && contracts.content.length > 0 ? (
+                    contracts.content.map((item, index) => {
+                      return (
+                        <tr key={item.id}>
+                          <td>{index + 1}</td>
+                          <td>{item.code}</td>
+                          <td>
+                            Mã: {item.premises.code} - Tầng:{" "}
+                            {item.premises.floor}
+                          </td>
+                          <td>{item.customer.name}</td>
+                          <td>{item.nameEmployee}</td>
+                          <td>{item.contractStatus.name}</td>
+                          <td>{formatDate(item.startDate)}</td>
+                          <td>{formatDate(item.endDate)}</td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <tr>
+                      <td colSpan="8">Không tìm thấy nội dung này</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+              </div>
+              <div>
+                {contracts ? (
+                  // <div className="d-flex justify-content-center align-items-center">
+                  <ReactPaginate
+                    forcePage={contracts.number}
+                    breakLabel="..."
+                    nextLabel="Trang sau"
+                    previousLabel="Trang trước"
+                    onPageChange={handleChangePage}
+                    pageRangeDisplayed={1}
+                    marginPagesDisplayed={2}
+                    pageCount={contracts.totalPages}
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                  />
+                ) : (
+                  <div></div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+        <Footer></Footer>
+      </>
+    );
+  }
+
+  if (localStorage.getItem("role") == "ROLE_USER") {
+    return (
+      <div>
+        <HeaderAdmin />
+        <div className="container">
+          <h1 className="text-center fw-bold text-uppercase">
+            DANH SÁCH HỢP ĐỒNG
+          </h1>
+
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col-10">
+              <div className="input-group mb-4">
+                <div className="me-4">
+                  <Link className="btn btn-in-list" to="/contract/create">
+                    Thêm mới
+                  </Link>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    className="form-control rounded-1 me-2"
+                    placeholder="Tìm kiếm tên khách hàng"
+                    name="nameCustomer"
+                    onChange={handelSearchChangeEmployee}
+                  />
+                </div>
+             
+                {status && (
+                  <div className="me-4">
+                    <select
+                      className="form-select"
+                      name="idContractStatus"
+                      onChange={handelSearchChangeEmployee}
+                    >
+                      <option selected value="-1">
+                        Tìm kiếm trạng thái
+                      </option>
+                      {status.map((item) => (
+                        <option value={item.id} key={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                <div>
+                  <button
+                    type="submit"
+                    className="btn btn-in-list"
+                    onClick={handleSearchEmployee}
                   >
                     Tìm kiếm
                   </button>
@@ -247,8 +466,8 @@ function LisContract() {
                   </tr>
                 </thead>
                 <tbody>
-                  {contracts.content && contracts.content.length > 0 ? (
-                    contracts.content.map((item, index) => {
+                  {contractsUser.content && contractsUser.content.length > 0 ? (
+                    contractsUser.content.map((item, index) => {
                       return (
                         <tr key={item.id}>
                           <td>{index + 1}</td>
@@ -272,18 +491,18 @@ function LisContract() {
                   )}
                 </tbody>
               </table>
-              <div className="">
-                {contracts ? (
+              <div>
+                {contractsUser ? (
                   // <div className="d-flex justify-content-center align-items-center">
                   <ReactPaginate
-                    forcePage={contracts.number}
+                    forcePage={contractsUser.number}
                     breakLabel="..."
                     nextLabel="Trang sau"
                     previousLabel="Trang trước"
-                    onPageChange={handleChangePage}
+                    onPageChange={handleChangePageEmployee}
                     pageRangeDisplayed={1}
                     marginPagesDisplayed={2}
-                    pageCount={contracts.totalPages}
+                    pageCount={contractsUser.totalPages}
                     pageClassName="page-item"
                     pageLinkClassName="page-link"
                     previousClassName="page-item"
@@ -296,228 +515,15 @@ function LisContract() {
                     activeClassName="active"
                   />
                 ) : (
-                  // </div>
                   <div></div>
                 )}
-                {/* {contracts.content.length > 0 && (
-                <Pagination>
-                  <Pagination.First
-                    disabled={contracts.number <= 0}
-                    onClick={() => handleChangePage(0)}
-                  />
-                  <Pagination.Prev
-                    disabled={contracts.number <= 0}
-                    onClick={() => handleChangePage(contracts.number - 1)}
-                  />
-
-                  {Array.from(Array(contracts.totalPages)).map((e, i) => (
-                    <Pagination.Item
-                      active={contracts.number === i}
-                      key={i + 1}
-                      onClick={() => handleChangePage(i)}
-                    >
-                      Tìm kiếm
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="col-1">
               </div>
             </div>
-
-            <div id="tbl-custom" className="row my-3 table-responsive">
-                 <div className="col-1"></div>
-                  <div className="col-10">
-                    <table className="table table-striped ">
-                      <thead>
-                      <tr className="table-header-list-contract">
-                        <th
-                            scope="col"
-                            style={{ color: `white`, backgroundColor: `#747264` }}
-                        >
-                          #
-                        </th>
-                        <th
-                            scope="col"
-                            style={{ color: `white`, backgroundColor: `#747264` }}
-                        >
-                          Mã hợp đồng
-                        </th>
-                        <th
-                            scope="col"
-                            style={{ color: `white`, backgroundColor: `#747264` }}
-                        >
-                          Mã mặt bằng
-                        </th>
-                        <th
-                            scope="col"
-                            style={{ color: `white`, backgroundColor: `#747264` }}
-                        >
-                          Khách hàng
-                        </th>
-                        <th
-                            scope="col"
-                            style={{ color: `white`, backgroundColor: `#747264` }}
-                        >
-                          Nhân viên tạo hợp đồng
-                        </th>
-
-                        <th
-                            scope="col"
-                            style={{ color: `white`, backgroundColor: `#747264` }}
-                        >
-                          Trạng thái
-                        </th>
-                        <th
-                            scope="col"
-                            style={{ color: `white`, backgroundColor: `#747264` }}
-                        >
-                          Ngày bắt đầu
-                        </th>
-                        <th
-                            scope="col"
-                            style={{ color: `white`, backgroundColor: `#747264` }}
-                        >
-                          Ngày kết thúc
-                        </th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      {contracts.content && contracts.content.length > 0 ? (
-                          contracts.content.map((item, index) => {
-                            return (
-                                <tr key={item.id}>
-                                  <td>{index + 1}</td>
-                                  <td>{item.code}</td>
-                                  <td>
-                                    Mã: {item.premises.code} - Tầng: {item.premises.floor}
-                                  </td>
-                                  <td>{item.customer.name}</td>
-                                  <td>{item.nameEmployee}</td>
-                                  <td>{item.contractStatus.name}</td>
-                                  <td>{formatDate(item.startDate)}</td>
-                                  <td>{formatDate(item.endDate)}</td>
-                                </tr>
-                            );
-                          })
-                      ) : (
-                          <tr>
-                            <td colSpan="6">Không tìm thấy nội dung này</td>
-                          </tr>
-                      )}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="col-1"></div>
-                </div>
-
-            <div className="row pb-5">
-              {contracts ? (
-                  <div className="d-flex justify-content-center align-items-center">
-                    <ReactPaginate
-                        forcePage={currentPage}
-                        pageCount={totalPages}
-                        onPageChange={(selectedItem) => handleChangePage(selectedItem.selected)}
-                        nextLabel="Trang sau"
-                        previousLabel="Trang trước"
-                        pageClassName="page-item"
-                        pageLinkClassName="page-link"
-                        previousClassName="page-item"
-                        previousLinkClassName="page-link"
-                        nextClassName="page-item"
-                        nextLinkClassName="page-link"
-                        breakClassName="page-item"
-                        breakLinkClassName="page-link"
-                        containerClassName="pagination"
-                        activeClassName="active"
-                    />
-                  </div>
-              ) : (<div></div>)}
-            </div>
-              </div>
-
-
-        <Footer></Footer>
-      </>
-    );
-  }
-  if (localStorage.getItem("role") == "ROLE_USER") {
-    return (
-        <div>
-          <HeaderAdmin />
-          <div className="container">
-            <h1 className="text-center fw-bold text-uppercase">DANH SÁCH HỢP ĐỒNG</h1>
-
-            <div className="row">
-              <div className="col-1"></div>
-              <div className="col-10">
-                {/*<div className="input-group">*/}
-                {/*  <div className="me-4">*/}
-                {/*    <Link className="btn btn-in-list" to="/contract/create">*/}
-                {/*      Tạo mới hợp đồng*/}
-                {/*    </Link>*/}
-                {/*  </div>*/}
-                {/*  <div>*/}
-                {/*    <input*/}
-                {/*        type="text"*/}
-                {/*        className="form-control rounded-1 me-2"*/}
-                {/*        placeholder="Tìm kiếm tên khách hàng"*/}
-                {/*        name="nameCustomer"*/}
-                {/*        onChange={handelSearchChange}*/}
-                {/*    />*/}
-                {/*  </div>*/}
-                {/*  <div>*/}
-                {/*    <input*/}
-                {/*        type="text"*/}
-                {/*        className="form-control rounded-1 me-2"*/}
-                {/*        placeholder="Tìm kiếm tên nhân viên"*/}
-                {/*        name="nameEmployee"*/}
-                {/*        onChange={handelSearchChange}*/}
-                {/*    />*/}
-                {/*  </div>*/}
-                {/*  {status && (*/}
-                {/*      <div className="me-4">*/}
-                {/*        <select*/}
-                {/*            className="form-select"*/}
-                {/*            name="idContractStatus"*/}
-                {/*            onChange={handelSearchChange}*/}
-                {/*        >*/}
-                {/*          <option selected value="">*/}
-                {/*            Tìm kiếm trạng thái*/}
-                {/*          </option>*/}
-                {/*          {status.map((item) => (*/}
-                {/*              <option value={item.id} key={item.id}>*/}
-                {/*                {item.name}*/}
-                {/*              </option>*/}
-                {/*          ))}*/}
-                {/*        </select>*/}
-                {/*      </div>*/}
-                {/*  )}*/}
-
-                {/*  <div>*/}
-                {/*    <button*/}
-                {/*        type="submit"*/}
-                {/*        className="btn btn-in-list"*/}
-                {/*        onClick={handleSearch}*/}
-                {/*    >*/}
-                {/*      Tìm kiếm*/}
-                {/*    </button>*/}
-                {/*  </div>*/}
-                {/*</div>*/}
-              </div>
-              <div className="col-1"></div>
-            </div>
-
- 
           </div>
         </div>
-
-        <Footer></Footer>
-      </>
+      </div>
     );
   }
-  if(localStorage.getItem("role") == "ROLE_EMPLOYEE"){
-
-  }
 }
+
 export default LisContract;
