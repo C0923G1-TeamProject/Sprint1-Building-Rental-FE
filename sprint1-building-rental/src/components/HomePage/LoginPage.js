@@ -254,17 +254,17 @@ function LoginPage() {
                             />
                             <div class="team-text bg-#6a6868 rounded-end p-4">
                               <div>
-                                <h6>
+                                <h6 style={{ color: "black" }}>
                                   <a style={{ "font-weight": "bold" }}>
                                     Diện tích:
                                   </a>{" "}
                                   {premise.area} m<sup>2</sup>
                                 </h6>
-                                <h6>
+                                <h6 style={{ color: "black" }}>
                                   <a style={{ "font-weight": "bold" }}>Giá: </a>{" "}
                                   {formatPrice(premise.price)} {"vnđ/tháng"}
                                 </h6>
-                                <h6>
+                                <h6 style={{ color: "black" }}>
                                   <a style={{ "font-weight": "bold" }}>
                                     Tầng:{" "}
                                   </a>{" "}
@@ -273,12 +273,12 @@ function LoginPage() {
 
                                 <br />
                               </div>
-                              <Link to={`/premises/${premise.id}`}>
-                                <i
-                                  style={{ color: "#EEB043" }}
-                                  class="fa fa-arrow-right fa-2x"
-                                ></i>
-                              </Link>
+                              {/* <Link to={`/api/premises/get/${premise.id}`}>
+                                  <i
+                                    style={{ color: "black" }}
+                                    class="fa fa-arrow-right fa-2x"
+                                  ></i>
+                                </Link> */}
                             </div>
                           </div>
                         </div>
@@ -470,7 +470,7 @@ function LoginPage() {
                     </div>
                     <div class="bg-light text-center p-4">
                       <h3 class="mt-2">Maria</h3>
-                      <span>Trưởng Phòng</span>
+                      <span>Giám Đốc</span>
                     </div>
                   </div>
                 </div>
@@ -499,7 +499,7 @@ function LoginPage() {
                     </div>
                     <div class="bg-light text-center p-4">
                       <h3 class="mt-2">Alex</h3>
-                      <span>Giám Đốc</span>
+                      <span>Trưởng phòng</span>
                     </div>
                   </div>
                 </div>

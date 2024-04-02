@@ -200,7 +200,7 @@ function ShowInfoUser() {
                   <Field type="hidden" name="id"></Field>
                   <div
                     className="column "
-                    // style={{ width: "103%" }}
+                    style={{ width: '99%' }}
                   >
                     <div
                       className="box col-lg-12 col-sm-12 col-xs-12"
@@ -223,7 +223,9 @@ function ShowInfoUser() {
                                     style={{
                                       fontWeight: "bold",
                                       width: "115px",
+                                      
                                     }}
+                                   
                                   >
                                     Họ và tên:
                                   </td>
@@ -302,7 +304,8 @@ function ShowInfoUser() {
                             >
                               <thead>
                                 <tr>
-                                  <td style={{ fontWeight: "bold" }}>
+                                  <td style={{ fontWeight: "bold"}}>
+                                  
                                     Tài khoản:
                                   </td>
                                   <td>{user.username}</td>

@@ -7,6 +7,8 @@ import emailjs from "@emailjs/browser";
 import Helmet from "react-helmet";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import PhoneIcon from "@mui/icons-material/Phone";
+import {ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ContactPage() {
   const form = useRef();
@@ -20,9 +22,11 @@ function ContactPage() {
       .then(
         () => {
           console.log("SUCCESS!");
+          toast.success("Email đã được gửi thành công!");
         },
         (error) => {
           console.log("FAILED...", error.text);
+          toast.error("Có lỗi xảy ra khi gửi email, vui lòng thử lại sau.");
         }
       );
     e.target.reset();
@@ -50,9 +54,7 @@ function ContactPage() {
       </Helmet>
       <HeaderUser />
       <div className=" text-img-contact">
-        <img className="picture-contact" 
-        src="img/HomePage/contact.jpg" 
-        />
+        <img className="picture-contact" src="img/HomePage/contact.jpg" />
       </div>
       <br />
       <br />
@@ -134,8 +136,8 @@ function ContactPage() {
       <br />
       <br />
       <br />
-
       <Footer />
+      <ToastContainer />
     </>
   );
 }

@@ -263,19 +263,19 @@ function HomePage() {
                               />
                               <div class="team-text bg-#504e4e rounded-end p-4">
                                 <div>
-                                  <h6>
+                                  <h6 style={{ color: "black" }}>
                                     <a style={{ "font-weight": "bold" }}>
                                       Diện tích:
                                     </a>{" "}
                                     {premise.area} m<sup>2</sup>
                                   </h6>
-                                  <h6>
+                                  <h6 style={{ color: "black" }}>
                                     <a style={{ "font-weight": "bold" }}>
                                       Giá:{" "}
                                     </a>{" "}
                                     {formatPrice(premise.price)} {"vnđ/tháng"}
                                   </h6>
-                                  <h6>
+                                  <h6 style={{ color: "black" }}>
                                     <a style={{ "font-weight": "bold" }}>
                                       Tầng:{" "}
                                     </a>{" "}
@@ -284,9 +284,9 @@ function HomePage() {
 
                                   <br />
                                 </div>
-                                <Link to={`/premises/${premise.id}`}>
+                                <Link to={`/api/premises/get/${premise.id}`}>
                                   <i
-                                    style={{ color: "#EEB043" }}
+                                    style={{ color: "black" }}
                                     class="fa fa-arrow-right fa-2x"
                                   ></i>
                                 </Link>
@@ -481,7 +481,7 @@ function HomePage() {
                     </div>
                     <div class="bg-light text-center p-4">
                       <h3 class="mt-2">Maria</h3>
-                      <span>Trưởng Phòng</span>
+                      <span>Giám Đốc</span>
                     </div>
                   </div>
                 </div>
@@ -510,7 +510,7 @@ function HomePage() {
                     </div>
                     <div class="bg-light text-center p-4">
                       <h3 class="mt-2">Alex</h3>
-                      <span>Giám Đốc</span>
+                      <span>Trưởng Phòng</span>
                     </div>
                   </div>
                 </div>
