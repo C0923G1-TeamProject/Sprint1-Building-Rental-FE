@@ -12,6 +12,7 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as premisesService from "../../service/PremisesService";
+import moment from "moment";
 
 function CreateContract() {
   const [status, setStatus] = useState([]);
@@ -125,8 +126,9 @@ function CreateContract() {
     const newContract = { ...contract };
     console.log(newContract);
     await contractService.addContract(newContract);
-    toast.success("Add new success!");
+    // Swal.fire("Chỉnh sửa thành công!", "", "success").then(() => {
     navigate("/contract");
+    // });
   };
   //hàm để tính ngày kết thúc
   const [startDate, setStartDate] = useState("");
@@ -228,15 +230,20 @@ function CreateContract() {
       console.log(e);
     }
   };
-//format hiển thị tiền
+  //format hiển thị tiền
   const formatCurrency = (amount) => {
     // Thực hiện các bước cần thiết để định dạng giá tiền theo định dạng VND
-    const formattedAmount = amount.toLocaleString('vi-VN', {
-      style: 'currency',
-      currency: 'VND'
+    const formattedAmount = amount.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
     });
     return formattedAmount;
   };
+
+  // const formatDate = (date) => {
+  //   return moment(date).format("DD/MM/YYYY");
+  // };
+
   if (!info) {
     return <div>loading</div>;
   }
@@ -422,6 +429,7 @@ function CreateContract() {
                     className="form-control"
                     id="inputAddress"
                     name="paymentTerm"
+                    value={price}
                   />
                   <ErrorMessage
                     name="paymentTerm"
@@ -441,6 +449,7 @@ function CreateContract() {
                     className="form-control"
                     id="inputAddress"
                     name="deposit"
+                    value={price}
                   />
                   <ErrorMessage
                     name="deposit"
