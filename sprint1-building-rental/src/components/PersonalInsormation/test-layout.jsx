@@ -111,15 +111,15 @@ function Test() {
         };
   };
 
-    if (localStorage.getItem("rm")) {
-        if(!localStorage.getItem("token")){
-            navigation("/login");
-        }
-    } else {
-        if(!sessionStorage.getItem("token")){
-            navigation("/login");
-        }
+  if (localStorage.getItem("rm")) {
+    if (!localStorage.getItem("token")) {
+      navigation("/login");
     }
+  } else {
+    if (!sessionStorage.getItem("token")) {
+      navigation("/login");
+    }
+  }
   return (
     <>
       <HeaderAdmin />
@@ -220,27 +220,43 @@ function Test() {
                     .required("Ngày sinh không được bỏ trống"),
                 })}
                 onSubmit={(values, { setSubmitting }) => {
-                  updateInfo(values).then(() => {
-                    Swal.fire({
-                      position: "center",
-                      icon: "success",
-                      title: "Cập nhật thông tin thành công!",
-                      showConfirmButton: false,
-                      timer: 1500,
-                    });
-                    setIsEditing(false);
-                    setSubmitting(false);
+                  updateInfo(values)
+                    .then(() => {
+                      Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Cập nhật thông tin thành công!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                      });
+                      setIsEditing(false);
+                      setSubmitting(false);
                       if (localStorage.getItem("rm")) {
-                          if(localStorage.getItem("token")){
-                              localStorage.setItem("nameOfSigninUser", values.name);
-                          }
+                        if (localStorage.getItem("token")) {
+                          localStorage.setItem("nameOfSigninUser", values.name);
+                        }
                       } else {
-                          if(sessionStorage.getItem("token")){
-                              sessionStorage.setItem("nameOfSigninUser", values.name);
-                          }
+                        if (sessionStorage.getItem("token")) {
+                          sessionStorage.setItem(
+                            "nameOfSigninUser",
+                            values.name
+                          );
+                        }
                       }
-                    getInfo();
-                  });
+                      getInfo();
+                    })
+                    .catch((err) => {
+                      if (err.response.data === "Email đã tồn tại!") {
+                        Swal.fire({
+                          position: "center",
+                          icon: "error",
+                          title:
+                            "Email đã tồn tại! Vui lòng nhập lại",
+                          showConfirmButton: false,
+                          timer: 2500,
+                        });
+                      }
+                    });
                 }}
               >
                 <Form>

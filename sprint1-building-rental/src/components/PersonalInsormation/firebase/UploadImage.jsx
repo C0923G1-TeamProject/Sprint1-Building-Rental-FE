@@ -9,7 +9,7 @@ const UploadImage = ({ setImage, setPreview, user }) => {
   const [file, setFile] = useState("");
   const [previousFile, setPreviousFile] = useState("");
   const [fileName, setFileName] = useState(""); // State to store the file name
-
+  const [sizeImage, setSizeImage] = useState();
   // progress
   const [showButtons, setShowButtons] = useState(false);
 
@@ -17,19 +17,43 @@ const UploadImage = ({ setImage, setPreview, user }) => {
   function handleChange(event) {
     setFile(event.target.files[0]);
     setFileName(event.target.files[0].name); // Set the file name
+    setSizeImage(event.target.files[0].size);
     setPreview(event.target.files[0]);
     setShowButtons(true);
   }
 
   const handleUpload = () => {
     if (!file) {
-      alert("Vui lòng chọn ảnh trước khi xác nhận");
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Vui lòng chọn ảnh ",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    if (sizeImage > 5 * 1024 * 1024) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Chỉ cho phép tải ảnh dưới 5MB",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    if (!fileName.endsWith(".jpg") && !fileName.endsWith(".png")) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Vui lòng chọn file .jpg hoặc .png",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } else {
       const storageRef = ref(storage, `/files/${file.name}`);
       // progress can be paused and resumed. It also exposes progress updates.
       // Receives the storage reference and the file to upload.
       const uploadTask = uploadBytesResumable(storageRef, file);
-
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -69,13 +93,13 @@ const UploadImage = ({ setImage, setPreview, user }) => {
   return (
     <div
       class="field is-grouped"
-      style={{ "justify-content": "center",    "column-gap": "20px"}}
+      style={{ "justify-content": "center", "column-gap": "20px" }}
     >
       <p class="control">
         <input
           type="file"
           onChange={handleChange}
-          accept="/image/*"
+          accept="jpg, .png"
           style={{ display: "none" }}
           id="upload-input"
         />
