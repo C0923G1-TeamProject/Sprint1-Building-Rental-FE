@@ -78,7 +78,6 @@ function AddCustomer() {
                 Swallow.fire("Thêm mới thành công!", "", "success").then(() => {
                     navigation('/customer');
                 });
-                toast.success("Thêm mới thành công");
             }
         } catch (e) {
             console.log(e);
@@ -245,7 +244,7 @@ function AddCustomer() {
                                     <div className="btn cus custom-btn-1">
                                         <Link to={"/customer"} className="cus-display-add">Huỷ thêm mới</Link>
                                     </div>
-                                    <button className="btn cus custom-btn" type="submit">Thêm khách hàng</button>
+                                    <button className="btn cus custom-btn" type="submit">Thêm mới khách hàng</button>
                                 </div>
 
                             </Form>

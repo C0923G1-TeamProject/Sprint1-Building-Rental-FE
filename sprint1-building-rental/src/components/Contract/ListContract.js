@@ -184,10 +184,10 @@ function LisContract() {
           <div className="row">
             <div className="col-1"></div>
             <div className="col-10">
-              <div className="input-group mb-4">
-                <div className="me-4">
+              <div className="input-group mb-3">
+                <div className="me-5">
                   <Link className="btn btn-in-list" to="/contract/create">
-                    Tạo mới hợp đồng
+                    Thêm mới
                   </Link>
                 </div>
                 <div>
@@ -237,54 +237,55 @@ function LisContract() {
                   </button>
                 </div>
               </div>
-              <table className="table table-striped ">
+              <div id="tbl-custom" className="table-responsive">
+              <table  className="table table-striped ">
                 <thead>
-                  <tr className="table-header-list-contract">
+                  <tr className="">
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       #
                     </th>
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Mã hợp đồng
                     </th>
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Mã mặt bằng
                     </th>
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Khách hàng
                     </th>
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Nhân viên tạo hợp đồng
                     </th>
 
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Trạng thái
                     </th>
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Ngày bắt đầu
                     </th>
                     <th
-                      scope="col"
+
                       style={{ color: `white`, backgroundColor: `#747264` }}
                     >
                       Ngày kết thúc
@@ -317,6 +318,7 @@ function LisContract() {
                   )}
                 </tbody>
               </table>
+              </div>
               <div>
                 {contracts ? (
                   // <div className="d-flex justify-content-center align-items-center">
@@ -367,7 +369,7 @@ function LisContract() {
               <div className="input-group mb-4">
                 <div className="me-4">
                   <Link className="btn btn-in-list" to="/contract/create">
-                    Tạo mới hợp đồng
+                    Thêm mới
                   </Link>
                 </div>
                 <div>
