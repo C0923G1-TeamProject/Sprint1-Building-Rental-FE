@@ -260,17 +260,17 @@ function LoginPage() {
                             />
                             <div class="team-text bg-#6a6868 rounded-end p-4">
                               <div>
-                                <h6>
+                                <h6 style={{ color: "black" }}>
                                   <a style={{ "font-weight": "bold" }}>
                                     Diện tích:
                                   </a>{" "}
                                   {premise.area} m<sup>2</sup>
                                 </h6>
-                                <h6>
+                                <h6 style={{ color: "black" }}>
                                   <a style={{ "font-weight": "bold" }}>Giá: </a>{" "}
                                   {formatPrice(premise.price)} {"vnđ/tháng"}
                                 </h6>
-                                <h6>
+                                <h6 style={{ color: "black" }}>
                                   <a style={{ "font-weight": "bold" }}>
                                     Tầng:{" "}
                                   </a>{" "}
@@ -279,12 +279,12 @@ function LoginPage() {
 
                                 <br />
                               </div>
-                              <Link to={`/premises/${premise.id}`}>
-                                <i
-                                  style={{ color: "#EEB043" }}
-                                  class="fa fa-arrow-right fa-2x"
-                                ></i>
-                              </Link>
+                              {/* <Link to={`/api/premises/get/${premise.id}`}>
+                                  <i
+                                    style={{ color: "black" }}
+                                    class="fa fa-arrow-right fa-2x"
+                                  ></i>
+                                </Link> */}
                             </div>
                           </div>
                         </div>
@@ -434,142 +434,142 @@ function LoginPage() {
           {/* <!--Div giới thiệu End--> */}
 
           {/* <!-- Team C0923G1 Start--> */}
-          {/*<div class="container-xxl py-5">*/}
-          {/*  <div class="container">*/}
-          {/*    <div*/}
-          {/*      class="text-center mx-auto mb-5 wow fadeInUp"*/}
-          {/*      data-wow-delay="0.1s"*/}
-          {/*      style={{ "max-width": "600px" }}*/}
-          {/*    >*/}
-          {/*      <h3*/}
-          {/*        class="display-5 mb-4"*/}
-          {/*        style={{*/}
-          {/*          color: "#452D14",*/}
-          {/*        }}*/}
-          {/*      >*/}
-          {/*        Đóng góp*/}
-          {/*      </h3>*/}
-          {/*    </div>*/}
-          {/*    <div class="row g-0 team-items">*/}
-          {/*      <div*/}
-          {/*        class="col-lg-3 col-md-6 wow fadeInUp"*/}
-          {/*        data-wow-delay="0.1s"*/}
-          {/*      >*/}
-          {/*        <div class="team-item position-relative">*/}
-          {/*          <div class="position-relative">*/}
-          {/*            <img*/}
-          {/*              class="img-fluid"*/}
-          {/*              src="/img/HomePage/team-1.jpg"*/}
-          {/*              alt=""*/}
-          {/*            />*/}
-          {/*            <div class="team-social text-center">*/}
-          {/*              <a class="btn btn-square" href="">*/}
-          {/*                <FacebookIcon />*/}
-          {/*              </a>*/}
-          {/*              <a class="btn btn-square" href="">*/}
-          {/*                <InstagramIcon />*/}
-          {/*              </a>*/}
-          {/*              <a class="btn btn-square" href="">*/}
-          {/*                <TwitterIcon />*/}
-          {/*              </a>*/}
-          {/*            </div>*/}
-          {/*          </div>*/}
-          {/*          <div class="bg-light text-center p-4">*/}
-          {/*            <h3 class="mt-2">Maria</h3>*/}
-          {/*            <span>Trưởng Phòng</span>*/}
-          {/*          </div>*/}
-          {/*        </div>*/}
-          {/*      </div>*/}
-          {/*      <div*/}
-          {/*        class="col-lg-3 col-md-6 wow fadeInUp"*/}
-          {/*        data-wow-delay="0.3s"*/}
-          {/*      >*/}
-          {/*        <div class="team-item position-relative">*/}
-          {/*          <div class="position-relative">*/}
-          {/*            <img*/}
-          {/*              class="img-fluid"*/}
-          {/*              src="/img/HomePage/team-2.jpg"*/}
-          {/*              alt=""*/}
-          {/*            />*/}
-          {/*            <div class="team-social text-center">*/}
-          {/*              <a class="btn btn-square" href="">*/}
-          {/*                <FacebookIcon />*/}
-          {/*              </a>*/}
-          {/*              <a class="btn btn-square" href="">*/}
-          {/*                <InstagramIcon />*/}
-          {/*              </a>*/}
-          {/*              <a class="btn btn-square" href="">*/}
-          {/*                <TwitterIcon />*/}
-          {/*              </a>*/}
-          {/*            </div>*/}
-          {/*          </div>*/}
-          {/*          <div class="bg-light text-center p-4">*/}
-          {/*            <h3 class="mt-2">Alex</h3>*/}
-          {/*            <span>Giám Đốc</span>*/}
-          {/*          </div>*/}
-          {/*        </div>*/}
-          {/*      </div>*/}
-          {/*      <div*/}
-          {/*        class="col-lg-3 col-md-6 wow fadeInUp"*/}
-          {/*        data-wow-delay="0.5s"*/}
-          {/*      >*/}
-          {/*        <div class="team-item position-relative">*/}
-          {/*          <div class="position-relative">*/}
-          {/*            <img*/}
-          {/*              class="img-fluid"*/}
-          {/*              src="/img/HomePage/team-3.jpg"*/}
-          {/*              alt=""*/}
-          {/*            />*/}
-          {/*            <div class="team-social text-center">*/}
-          {/*              <a class="btn btn-square" href="">*/}
-          {/*                <FacebookIcon />*/}
-          {/*              </a>*/}
-          {/*              <a class="btn btn-square" href="">*/}
-          {/*                <InstagramIcon />*/}
-          {/*              </a>*/}
-          {/*              <a class="btn btn-square" href="">*/}
-          {/*                <TwitterIcon />*/}
-          {/*              </a>*/}
-          {/*            </div>*/}
-          {/*          </div>*/}
-          {/*          <div class="bg-light text-center p-4">*/}
-          {/*            <h3 class="mt-2">Peter</h3>*/}
-          {/*            <span>Khảo Sát Mặt Bằng</span>*/}
-          {/*          </div>*/}
-          {/*        </div>*/}
-          {/*      </div>*/}
-          {/*      <div*/}
-          {/*        class="col-lg-3 col-md-6 wow fadeInUp"*/}
-          {/*        data-wow-delay="0.7s"*/}
-          {/*      >*/}
-          {/*        <div class="team-item position-relative">*/}
-          {/*          <div class="position-relative">*/}
-          {/*            <img*/}
-          {/*              class="img-fluid"*/}
-          {/*              src="/img/HomePage/team-4.jpg"*/}
-          {/*              alt=""*/}
-          {/*            />*/}
-          {/*            <div class="team-social text-center">*/}
-          {/*              <a class="btn btn-square" href="">*/}
-          {/*                <FacebookIcon />*/}
-          {/*              </a>*/}
-          {/*              <a class="btn btn-square" href="">*/}
-          {/*                <InstagramIcon />*/}
-          {/*              </a>*/}
-          {/*              <a class="btn btn-square" href="">*/}
-          {/*                <TwitterIcon />*/}
-          {/*              </a>*/}
-          {/*            </div>*/}
-          {/*          </div>*/}
-          {/*          <div class="bg-light text-center p-4">*/}
-          {/*            <h3 class="mt-2">May</h3>*/}
-          {/*            <span>Thư Ký</span>*/}
-          {/*          </div>*/}
-          {/*        </div>*/}
-          {/*      </div>*/}
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*</div>*/}
+          <div class="container-xxl py-5">
+            <div class="container">
+              <div
+                class="text-center mx-auto mb-5 wow fadeInUp"
+                data-wow-delay="0.1s"
+                style={{ "max-width": "600px" }}
+              >
+                <h3
+                  class="display-5 mb-4"
+                  style={{
+                    color: "#452D14",
+                  }}
+                >
+                  Đóng góp
+                </h3>
+              </div>
+              <div class="row g-0 team-items">
+                <div
+                  class="col-lg-3 col-md-6 wow fadeInUp"
+                  data-wow-delay="0.1s"
+                >
+                  <div class="team-item position-relative">
+                    <div class="position-relative">
+                      <img
+                        class="img-fluid"
+                        src="/img/HomePage/team-1.jpg"
+                        alt=""
+                      />
+                      <div class="team-social text-center">
+                        <a class="btn btn-square" href="">
+                          <FacebookIcon />
+                        </a>
+                        <a class="btn btn-square" href="">
+                          <InstagramIcon />
+                        </a>
+                        <a class="btn btn-square" href="">
+                          <TwitterIcon />
+                        </a>
+                      </div>
+                    </div>
+                    <div class="bg-light text-center p-4">
+                      <h3 class="mt-2">Maria</h3>
+                      <span>Giám Đốc</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col-lg-3 col-md-6 wow fadeInUp"
+                  data-wow-delay="0.3s"
+                >
+                  <div class="team-item position-relative">
+                    <div class="position-relative">
+                      <img
+                        class="img-fluid"
+                        src="/img/HomePage/team-2.jpg"
+                        alt=""
+                      />
+                      <div class="team-social text-center">
+                        <a class="btn btn-square" href="">
+                          <FacebookIcon />
+                        </a>
+                        <a class="btn btn-square" href="">
+                          <InstagramIcon />
+                        </a>
+                        <a class="btn btn-square" href="">
+                          <TwitterIcon />
+                        </a>
+                      </div>
+                    </div>
+                    <div class="bg-light text-center p-4">
+                      <h3 class="mt-2">Alex</h3>
+                      <span>Trưởng phòng</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col-lg-3 col-md-6 wow fadeInUp"
+                  data-wow-delay="0.5s"
+                >
+                  <div class="team-item position-relative">
+                    <div class="position-relative">
+                      <img
+                        class="img-fluid"
+                        src="/img/HomePage/team-3.jpg"
+                        alt=""
+                      />
+                      <div class="team-social text-center">
+                        <a class="btn btn-square" href="">
+                          <FacebookIcon />
+                        </a>
+                        <a class="btn btn-square" href="">
+                          <InstagramIcon />
+                        </a>
+                        <a class="btn btn-square" href="">
+                          <TwitterIcon />
+                        </a>
+                      </div>
+                    </div>
+                    <div class="bg-light text-center p-4">
+                      <h3 class="mt-2">Peter</h3>
+                      <span>Khảo Sát Mặt Bằng</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col-lg-3 col-md-6 wow fadeInUp"
+                  data-wow-delay="0.7s"
+                >
+                  <div class="team-item position-relative">
+                    <div class="position-relative">
+                      <img
+                        class="img-fluid"
+                        src="/img/HomePage/team-4.jpg"
+                        alt=""
+                      />
+                      <div class="team-social text-center">
+                        <a class="btn btn-square" href="">
+                          <FacebookIcon />
+                        </a>
+                        <a class="btn btn-square" href="">
+                          <InstagramIcon />
+                        </a>
+                        <a class="btn btn-square" href="">
+                          <TwitterIcon />
+                        </a>
+                      </div>
+                    </div>
+                    <div class="bg-light text-center p-4">
+                      <h3 class="mt-2">May</h3>
+                      <span>Thư Ký</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           {/* <!-- Team C0923G1 End--> */}
 
           {/* <!-- Body End --> */}

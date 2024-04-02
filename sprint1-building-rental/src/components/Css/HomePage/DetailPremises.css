@@ -1,0 +1,32 @@
+.display-detail-premises {
+  display: flex;
+}
+.div-detai {
+  margin: 0.5%;
+  padding: 5%;
+
+}
+.picture-detail {
+  border-radius: 3px;
+  border: solid;
+  1px:
+}
+.flexx {
+  flex-wrap: wrap;
+}
+.btn-back-detail-premises {
+  background: #eeb043;
+  height: 50px;
+  width: 130px;
+  color: white;
+  font-weight: bold;
+  border-radius: 3px;
+}
+.hi {
+  position: relative;
+  top: 1px;
+}
+.text-detail-premises {
+  text-align: center;
+  color: #452d14;
+}
