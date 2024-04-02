@@ -183,6 +183,7 @@ function Test() {
                     .matches("^D$", "Vui lòng nhập Họ và tên hợp lệ")
                     .required("Họ và tên không được để trống"),
                   email: Yup.string()
+                    .max(50, "Địa chỉ phải dưới 50 kí tự")
                     .email("Vui lòng nhập email đúng định dạng")
                     .required("Email không được bỏ trống"),
                   address: Yup.string()
@@ -272,8 +273,8 @@ function Test() {
                                 style={{
                                   color: "red",
                                   position: "absolute",
-                                  bottom: "-29px",
-                                  left: "115px",
+                                  bottom: "-30px",
+                                  left: "89px",
                                 }}
                                 component={"span"}
                               />

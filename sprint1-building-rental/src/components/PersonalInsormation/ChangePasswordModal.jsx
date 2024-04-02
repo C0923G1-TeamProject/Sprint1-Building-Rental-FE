@@ -94,9 +94,10 @@ function Example(props) {
               });
           }}
           validationSchema={Yup.object({
-            currentPassword: Yup.string().required(
-              "Mật khẩu không được bỏ trống"
-            ),
+            currentPassword: Yup.string()
+              .min(2, "Mật khẩu phải ít nhất chứa hơn 2 kí tự")
+              .max(24, "Mật khẩu không chứa quá 24 kí tự!")
+              .required("Mật khẩu không được bỏ trống"),
             newPassword: Yup.string()
               .min(6, "Mật khẩu phải ít nhất chứa hơn 6 kí tự")
               .max(24, "Mật khẩu không chứa quá 24 kí tự!")
