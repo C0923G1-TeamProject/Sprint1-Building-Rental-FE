@@ -30,6 +30,7 @@ import { Logout } from "./components/Login/Logout";
 import { UserDataProvider } from "./components/Context/useUserData";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Test from "./components/PersonalInsormation/test-layout";
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
             ></Route>
             <Route path={"/logout"} element={<Logout />}></Route>
             <Route path="/contract/create" element={<CreateContract />}></Route>
+            <Route path="/test" element={<Test />}></Route>
           </Routes>
         </BrowserRouter>
       </UserDataProvider>
