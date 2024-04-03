@@ -23,7 +23,7 @@ function Test() {
   const [preview, setPreview] = useState();
   const [user, setUser] = useState();
   const navigation = useNavigate();
-
+  const [name, setName] = useState("");
   const formatDate = (date) => {
     const newDate = moment(date).format("DD/MM/YYYY");
     return newDate;
@@ -122,7 +122,7 @@ function Test() {
   }
   return (
     <>
-      <HeaderAdmin />
+      <HeaderAdmin name={name}/>
       <div className="container p-5">
         {/* <h1 className="mt-3 text-center" style={{ color: "#ddb673" }}>
           THÔNG TIN CÁ NHÂN
@@ -222,13 +222,15 @@ function Test() {
                 onSubmit={(values, { setSubmitting }) => {
                   updateInfo(values)
                     .then(() => {
+                      setName(values.name);
                       Swal.fire({
                         position: "center",
                         icon: "success",
                         title: "Cập nhật thông tin thành công!",
                         showConfirmButton: false,
                         timer: 1500,
-                      });
+                      }
+                      )
                       setIsEditing(false);
                       setSubmitting(false);
                       if (localStorage.getItem("rm")) {

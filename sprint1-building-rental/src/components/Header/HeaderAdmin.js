@@ -25,7 +25,7 @@ import "jquery";
 import "@popperjs/core"; // Edit here
 import "bootstrap/dist/js/bootstrap.bundle";
 
-function HeaderAdmin({ name, ...props }) {
+function HeaderAdmin({ name = "" ,...props}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -38,10 +38,13 @@ function HeaderAdmin({ name, ...props }) {
   const handleCloseModal = () => setShowModal(false);
 
   const [accName, setAccName] = useState(localStorage.getItem("rm")?localStorage.getItem("nameOfSigninUser"): sessionStorage.getItem("nameOfSigninUser"));
-
+  const [nameUser, setNameUser] = useState(localStorage.getItem("nameOfSigninUser"));
   const handleLogout = () => {
     setShowModal(true); // Hiển thị Modal khi người dùng nhấn vào nút "Đăng xuất"
   };
+  useEffect(() => {
+    setNameUser(localStorage.getItem("nameOfSigninUser")); 
+  },[nameUser, name])
 
   return (
     <>
@@ -129,7 +132,7 @@ function HeaderAdmin({ name, ...props }) {
               onClick={handleShow}
               className="me-2"
             >
-              {name} <button className="text-manage">QUẢN LÝ</button>
+              {} <button className="text-manage">QUẢN LÝ</button>
             </NavLink>
             <Offcanvas show={show} onHide={handleClose} {...props}>
               <Offcanvas.Header >
@@ -174,7 +177,7 @@ function HeaderAdmin({ name, ...props }) {
             <div>
               <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle>
-                  <AccountCircleIcon sx={{ fontSize: 30 }} /> {accName}
+                  <AccountCircleIcon sx={{ fontSize: 30 }} /> {name || accName}
                 </DropdownToggle>
 
                 <DropdownMenu>
