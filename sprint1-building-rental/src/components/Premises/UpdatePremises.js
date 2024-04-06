@@ -19,13 +19,18 @@ export default function UpdatePremises() {
     const [listType, setListType] = useState([]);
     const [listStatus, setListStatus] = useState([]);
     const navigate = useNavigate();
-    const [isSaving, setIsSaving] = useState(false);
+    const [premisesCode, setPremisesCode] = useState([]);
+    const [priceSpan, setPriceSpan] = useState(0);
 
 
     const findPremisesById = async () => {
         try {
             const res = await service.findPremises(id);
-            setPremises(res);
+            console.log({res})
+            const obj = {...res, typePremises: JSON.stringify(res.typePremises), premisesStatus: JSON.stringify(res.premisesStatus)}
+            setPremises(obj);
+            setPremisesCode(res.code);
+            // setTypePremises(res.typePremises);
         } catch (err) {
             console.log(err);
         }
@@ -34,6 +39,7 @@ export default function UpdatePremises() {
     useEffect(() => {
         findPremisesById();
     }, []);
+
 
     const findAllFloor = async () => {
         try {
@@ -83,6 +89,7 @@ export default function UpdatePremises() {
     }, []);
     //******* Điền form
     const handleSubmit = async (values) => {
+        debugger;
         try {
             const updatedPremises = {
                 ...values,
@@ -91,9 +98,9 @@ export default function UpdatePremises() {
                 code: values.code,
                 premisesStatus: JSON.parse(values.premisesStatus),
                 area: values.area,
-                description: values.description,
-                price: values.price,
-                cost: values.cost
+                description: values.description.trim(),
+                price: parseInt(values.price),
+                cost: parseInt(values.cost)
             };
 
             await service.updatePremises(id, updatedPremises);
@@ -124,13 +131,12 @@ export default function UpdatePremises() {
 
 
     const validateObject = {
-        code: Yup.string().required("Vui lòng nhập diện tích").matches("(MB-[0-9]{4})", "Vui lòng nhập đúng định dạng MB-XXXX"),
+        // code: Yup.string().required("Vui lòng nhập diện tích").matches("(MB-[0-9]{4})", "Vui lòng nhập đúng định dạng MB-XXXX"),
         area: Yup.number().min(10.0, "Diện tích quá nhỏ").max(999999.9, "Diện tích quá lớn").typeError("Diện tích phải là số").required("Vui lòng nhập diện tích"),
         description: Yup.string().max(1500, "Mô tả tối đa 1500 ký tự"),
-        price: Yup.number().min(1000, "Giá bán quá nhỏ").max(999999999999, "Giá bán quá lớn"),
-        cost: Yup.number().min(1000, "Phí quản lý quá nhỏ").max(99999999999, "Phí quản lý quá lớn")
+        price: Yup.number().required("Vui lòng nhập giá thuê").min(1000, "Giá thuê quá nhỏ").max(999999999999, "Giá bán quá lớn"),
+        cost: Yup.number().required("Vui lòng nhập phí quản lý").min(1000, "Phí quản lý quá nhỏ").max(99999999999, "Phí quản lý quá lớn"),
     }
-
 
 
     if (premises == null) {
@@ -139,23 +145,25 @@ export default function UpdatePremises() {
         </div>
     }
 
-    if (localStorage.getItem("rm")) {
-        if(!localStorage.getItem("token")){
-            navigate("/login");
-        }
-    } else {
-        if(!sessionStorage.getItem("token")){
-            navigate("/login");
-        }
-    }
+
+
+    // if (localStorage.getItem("rm")) {
+    //     if(!localStorage.getItem("token")){
+    //         navigate("/login");
+    //     }
+    // } else {
+    //     if(!sessionStorage.getItem("token")){
+    //         navigate("/login");
+    //     }
+    // }
 
     return (<>
         <HeaderAdmin></HeaderAdmin>
-        <div className="container-fluid">
+        <div className="container">
             <h2 className="text-center fw-bold text-uppercase">chỉnh sửa mặt bằng</h2>
-            <div className="row">
-                <div className="col-2"></div>
-                <div className="col-8 justify-content-center align-items-center px-0">
+            <div className="d-flex justify-content-center row">
+
+                <div className="col-9 justify-content-center align-items-center px-0">
                     <div className="form-group">
                         <Formik
                             initialValues={premises}
@@ -163,50 +171,48 @@ export default function UpdatePremises() {
                             validationSchema={Yup.object(validateObject)}
                         >
                             <Form>
-                                <div className="row my-3 justify-content-between">
-                                    <div className="col-5">
+                                <div className="row">
+                                    <div className="col-md-5">
                                         <div className="row my-1">
                                             <span className="px-0">Chọn tầng: <span
                                                 style={{color: 'red'}}>*</span></span>
                                         </div>
-                                        {listFloor && (
-                                            <div className="row">
-                                                {/*<Field name="id" value={id} hidden></Field>*/}
-                                                <Field as="select" id="floor" name="floor"
-                                                       className="form-control rounded-1">
-                                                    {
-                                                        listFloor.map((item) => (
-                                                            <option key={item.index} value={item}>{item}</option>
-                                                        ))
-                                                    }
-                                                </Field>
-                                                <ErrorMessage name="floor" component="span" className="text-danger"/>
-                                            </div>
-                                        )}
 
+                                        <div className="row">
+                                            {/*<Field name="id" value={id} hidden></Field>*/}
+                                            <Field as="select" id="floor" name="floor"
+                                                   className="form-control rounded-1">
+                                                {
+                                                    listFloor.map((item) => (
+                                                        <option key={item.index} value={item}>{item}</option>
+                                                    ))
+                                                }
+                                            </Field>
+                                            <ErrorMessage name="floor" component="span" className="text-danger"/>
+                                        </div>
 
 
                                         <div className="row my-1">
                                                 <span className="px-0">Loại mặt bằng: <span
                                                     style={{color: 'red'}}>*</span></span>
                                         </div>
-                                        {
-                                            listType && (
+
+
+
                                                 <div className="row">
                                                     <Field as="select" id="typePremises" name="typePremises"
                                                            className="form-control rounded-1">
                                                         {
                                                             listType.map((item) => (
                                                                 <option key={item.id}
-                                                                        value={JSON.stringify(item)}>{item.name}</option>
+                                                                        value={JSON.stringify(item)} > {item.name} </option>
                                                             ))
                                                         }
                                                     </Field>
                                                     <ErrorMessage name="typePremises" component="span"
                                                                   className="text-danger"/>
                                                 </div>
-                                            )
-                                        }
+
 
 
                                         <div className="row my-1">
@@ -215,7 +221,7 @@ export default function UpdatePremises() {
                                         </div>
                                         <div className="row">
                                             <Field type="text" className="form-control w-100" name="code"
-                                                   id="code"/>
+                                                   id="code" value={premisesCode} disabled/>
                                             <ErrorMessage name="code" component="span" className="text-danger"/>
 
                                         </div>
@@ -225,21 +231,23 @@ export default function UpdatePremises() {
                                             <span className="px-0">Trạng thái: <span
                                                 style={{color: 'red'}}>*</span></span>
                                         </div>
+
                                         <div className="row">
                                             <Field as="select" id="premisesStatus" name="premisesStatus"
                                                    className="form-control rounded-1">
-                                                {
-                                                    listStatus.map((item) => (
-                                                        <option key={item.id}
-                                                                value={JSON.stringify(item)}>{item.name}</option>
-                                                    ))
+                                                {listStatus.map((item) => (
+                                                    <option key={item.id}
+                                                            value={JSON.stringify(item)}>{item.name} </option>
+                                                ))
                                                 }
                                             </Field>
                                             <ErrorMessage name="premisesStatus" component="span"
                                                           className="text-danger"/>
                                         </div>
+
+
                                         <div className="row my-1">
-                                            <span className="px-0">Diện tích(m²): <span
+                                            <span className="px-0">Diện tích (m²): <span
                                                 style={{color: 'red'}}>*</span></span>
                                         </div>
                                         <div className="row">
@@ -248,26 +256,16 @@ export default function UpdatePremises() {
                                             <ErrorMessage name="area" component="span" className="text-danger"/>
 
                                         </div>
-                                        <div className="row my-2">
-                                            <div className="col-4 px-0">
-                                                <Link to={`/premises`} className="px-0">
-                                                    <button type="button" className="btn hisu-cancel">
-                                                        Huỷ chỉnh sửa
-                                                    </button>
-                                                </Link>
-                                            </div>
-                                            <div className="col-8 px-0">
-                                                <button onSubmit={handleSubmit} type="submit"
-                                                        className="btn hisu-confirm">
-                                                    Chỉnh sửa mặt bằng
-                                                </button>
-                                            </div>
-                                        </div>
+
+
                                     </div>
 
-                                    <div className="col-5">
+                                    <div className="col-md-2"></div>
+
+                                    <div className="col-md-5">
                                         <div className="row my-1">
-                                            <span className="px-0">Giá bán (VND/tháng):  </span>
+                                            <span className="px-0">Giá thuê (VND/tháng): <span
+                                                style={{color: 'red'}}>*</span> </span>
                                         </div>
                                         <div className="row">
                                             <Field type="number" className="form-control w-100" name="price"
@@ -278,7 +276,8 @@ export default function UpdatePremises() {
 
 
                                         <div className="row my-1">
-                                            <span className="px-0">Phí quản lý (VND): </span>
+                                            <span className="px-0">Phí quản lý (VND): <span
+                                                style={{color: 'red'}}>*</span> </span>
                                         </div>
                                         <div className="row">
                                             <Field type="number" className="form-control w-100" name="cost"
@@ -301,14 +300,28 @@ export default function UpdatePremises() {
                                         </div>
 
                                     </div>
+
+
+                                    <div className="row d-flex justify-content-between my-4 mx-0 p-0">
+                                        <div className="btn hisu-cancel col-5 col-md-5">
+                                            <Link to={`/premises`} className="px-0">
+                                                Huỷ chỉnh sửa
+                                            </Link>
+                                        </div>
+
+                                            <button onSubmit={handleSubmit} type="submit"
+                                                    className="btn hisu-confirm col-5 col-md-5">
+                                                Chỉnh sửa mặt bằng
+                                            </button>
+                                    </div>
+
+
                                 </div>
                             </Form>
                         </Formik>
                     </div>
-
-
                 </div>
-                <div className="col-2"></div>
+
             </div>
         </div>
         <Footer></Footer>
