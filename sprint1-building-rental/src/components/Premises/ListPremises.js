@@ -86,7 +86,7 @@ export default function ListPremises() {
 
     useEffect(() => {
         findAllFloor();
-    });
+    }, []);
 
 
     const findAllType = async () => {
@@ -100,7 +100,7 @@ export default function ListPremises() {
 
     useEffect(() => {
         findAllType();
-    });
+    }, []);
 
     const handlePageClick = async (event) => {
         try {
@@ -164,22 +164,25 @@ export default function ListPremises() {
                                 }
                             </select>
 
-                            <select className="form-control rounded-1 me-2"
-                                    onChange={(event) => handlePremisesName(event.target.value)}>
-                                <option value="">Loại mặt bằngㅤㅤㅤㅤㅤㅤ▼</option>
-                                {
-                                    listType.map((item) => (
-                                        <option key={item.index} value={item.name}>{item.name}</option>
-                                    ))
-                                }
-                            </select>
+                            {
+                                listType && listType.length > 0 ? (
+                                    <select className="form-control rounded-1 me-2"
+                                            onChange={(event) => handlePremisesName(event.target.value)}>
+                                        <option value="">Loại mặt bằngㅤㅤㅤㅤㅤㅤ▼</option>
+                                        {
+                                            listType.map((item) => (
+                                                <option key={item.index} value={item.name}>{item.name}</option>
+                                            ))
+                                        }
+                                    </select> ):(<div></div>)
+                            }
 
                             <input onChange={(event) => handleCode(event.target.value)} type="text"
                                    className="form-control rounded-1 me-2" name="name-search" size="25"
                                    placeholder="Mã mặt bằng"/>
 
 
-                            <input onChange={(event) => handleArea(event.target.value)} type="text"
+                            <input onChange={(event) => handleArea(event.target.value)} type="number"
                                    className="form-control rounded-1 me-2" name="name-search" size="25"
                                    placeholder="Diện tích tối đa"/>
 
@@ -217,7 +220,7 @@ export default function ListPremises() {
                             {premisesList ? (
                                 premisesList.map((premises, index) => (
                                         <tr key={premises.id}>
-                                            <td>{(index + 1)}</td>
+                                            <td>{(currentPage * 6 + index + 1)}</td>
                                             <td>{premises.code}</td>
                                             <td>{premises.typePremises.name}</td>
                                             <td>{premises.area}</td>
