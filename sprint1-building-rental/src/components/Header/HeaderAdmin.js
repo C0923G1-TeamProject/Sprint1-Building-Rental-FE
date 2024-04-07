@@ -52,7 +52,7 @@ function HeaderAdmin({ name, ...props }) {
             <div class="h-100 d-inline-flex align-items-center py-3 me-3">
               <a
                 style={{
-                  color: "white",
+
                   "font-size": "15px",
                   color: "white",
                   margin: "0 10px",
@@ -62,7 +62,7 @@ function HeaderAdmin({ name, ...props }) {
               </a>
               <a
                 style={{
-                  color: "white",
+
                   "font-size": "15px",
                   color: "white",
                   margin: "0 10px",
