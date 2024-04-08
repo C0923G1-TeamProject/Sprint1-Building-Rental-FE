@@ -2,11 +2,11 @@ import HeaderAdmin from "../Header/HeaderAdmin";
 import Footer from "../Footer/Footer";
 import "../Css/Contract/list-contract.css";
 import { useEffect, useState } from "react";
-import * as contractStatusService from "../../service/ThamService/ContractStatusService";
-import * as contractService from "../../service/ThamService/ContractService";
+import * as contractStatusService from "../../service/contractService/ContractStatusService";
+import * as contractService from "../../service/contractService/ContractService";
 import Pagination from "react-bootstrap/Pagination";
 import moment from "moment";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
 function LisContract() {
@@ -22,7 +22,7 @@ function LisContract() {
   //paginate
   const initPage = {
     page: 0,
-    size: 2,
+    size: 6,
     // sortDirection: "ASC",
     // sortBy: "endDate",
     nameCustomer: "",
@@ -48,7 +48,11 @@ function LisContract() {
   const [contractsUser, setContractsUser] = useState();
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  const [role1, setRole1] = useState(localStorage.getItem("rm")?localStorage.getItem("role"): sessionStorage.getItem("role"));
+  const [role1, setRole1] = useState(
+    localStorage.getItem("rm")
+      ? localStorage.getItem("role")
+      : sessionStorage.getItem("role")
+  );
 
   useEffect(() => {
     document.title = "Danh sách hợp đồng";
@@ -87,9 +91,9 @@ function LisContract() {
   };
   useEffect(() => {
     // Cập nhật giá trị của idAcc vào requestDto mỗi khi idAcc thay đổi
-    setPageContractByEmployee(pageContractByEmployee => ({
+    setPageContractByEmployee((pageContractByEmployee) => ({
       ...pageContractByEmployee,
-      idAccount: idAcc
+      idAccount: idAcc,
     }));
   }, [idAcc]);
 
@@ -127,7 +131,7 @@ function LisContract() {
 
   const handelSearchChange = (e) => {
     const { name, value } = e.target;
-    const data = { ...pageContract, [name]: value };
+    const data = { ...pageContract, [name]: value.trim() };
     setPageContract(data);
     console.log(data);
   };
@@ -149,7 +153,7 @@ function LisContract() {
 
   const handelSearchChangeEmployee = (e) => {
     const { name, value } = e.target;
-    const data = { ...pageContractByEmployee, [name]: value };
+    const data = { ...pageContractByEmployee, [name]: value.trim() };
     setPageContractByEmployee(data);
     console.log(data);
   };
@@ -166,15 +170,13 @@ function LisContract() {
     setPageContractByEmployee(data);
     getAllContractByUser(data);
   };
-  // useEffect(() => {
-  //   getAllContract(search);
-  // }, [search]);
+
   if (localStorage.getItem("rm")) {
-    if(!localStorage.getItem("token")){
+    if (!localStorage.getItem("token")) {
       navigation("/login");
     }
   } else {
-    if(!sessionStorage.getItem("token")){
+    if (!sessionStorage.getItem("token")) {
       navigation("/login");
     }
   }
@@ -207,6 +209,8 @@ function LisContract() {
                     placeholder="Tìm kiếm tên khách hàng"
                     name="nameCustomer"
                     onChange={handelSearchChange}
+                    size="25"
+                    maxLength="150"
                   />
                 </div>
                 <div>
@@ -215,7 +219,10 @@ function LisContract() {
                     className="form-control rounded-1 me-2"
                     placeholder="Tìm kiếm tên nhân viên"
                     name="nameEmployee"
+                    size="25"
                     onChange={handelSearchChange}
+                    maxLength="150"
+
                   />
                 </div>
                 {status && (
@@ -248,86 +255,78 @@ function LisContract() {
                 </div>
               </div>
               <div id="tbl-custom" className="table-responsive">
-              <table  className="table table-striped ">
-                <thead>
-                  <tr className="">
-                    <th
+                <table className="table table-striped ">
+                  <thead>
+                    <tr className="">
+                      <th
+                        style={{ color: `white`, backgroundColor: `#747264` }}
+                      >
+                        #
+                      </th>
+                      <th
+                        style={{ color: `white`, backgroundColor: `#747264` }}
+                      >
+                        Mã hợp đồng
+                      </th>
+                      <th
+                        style={{ color: `white`, backgroundColor: `#747264` }}
+                      >
+                        Mã mặt bằng
+                      </th>
+                      <th
+                        style={{ color: `white`, backgroundColor: `#747264` }}
+                      >
+                        Khách hàng
+                      </th>
+                      <th
+                        style={{ color: `white`, backgroundColor: `#747264` }}
+                      >
+                        Nhân viên tạo hợp đồng
+                      </th>
 
-                      style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      #
-                    </th>
-                    <th
-
-                      style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Mã hợp đồng
-                    </th>
-                    <th
-
-                      style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Mã mặt bằng
-                    </th>
-                    <th
-
-                      style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Khách hàng
-                    </th>
-                    <th
-
-                      style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Nhân viên tạo hợp đồng
-                    </th>
-
-                    <th
-
-                      style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Trạng thái
-                    </th>
-                    <th
-
-                      style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Ngày bắt đầu
-                    </th>
-                    <th
-
-                      style={{ color: `white`, backgroundColor: `#747264` }}
-                    >
-                      Ngày kết thúc
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {contracts.content && contracts.content.length > 0 ? (
-                    contracts.content.map((item, index) => {
-                      return (
-                        <tr key={item.id}>
-                          <td>{index + 1}</td>
-                          <td>{item.code}</td>
-                          <td>
-                            Mã: {item.premises.code} - Tầng:{" "}
-                            {item.premises.floor}
-                          </td>
-                          <td>{item.customer.name}</td>
-                          <td>{item.nameEmployee}</td>
-                          <td>{item.contractStatus.name}</td>
-                          <td>{formatDate(item.startDate)}</td>
-                          <td>{formatDate(item.endDate)}</td>
-                        </tr>
-                      );
-                    })
-                  ) : (
-                    <tr>
-                      <td colSpan="8">Không tìm thấy nội dung này</td>
+                      <th
+                        style={{ color: `white`, backgroundColor: `#747264` }}
+                      >
+                        Trạng thái
+                      </th>
+                      <th
+                        style={{ color: `white`, backgroundColor: `#747264` }}
+                      >
+                        Ngày bắt đầu
+                      </th>
+                      <th
+                        style={{ color: `white`, backgroundColor: `#747264` }}
+                      >
+                        Ngày kết thúc
+                      </th>
                     </tr>
-                  )}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {contracts.content && contracts.content.length > 0 ? (
+                      contracts.content.map((item, index) => {
+                        return (
+                          <tr key={item.id}>
+                            <td>{contracts.number * 6 + index + 1}</td>
+                            <td>{item.code}</td>
+                            <td>
+                              Mã: {item.premises.code} - Tầng:{" "}
+                              {item.premises.floor}
+                            </td>
+                            <td>{item.customer.name}</td>
+                            <td>{item.nameEmployee}</td>
+                            <td>{item.contractStatus.name}</td>
+                            <td>{formatDate(item.startDate)}</td>
+                            <td>{formatDate(item.endDate)}</td>
+                          </tr>
+                        );
+                      })
+                    ) : (
+                      <tr>
+                        <td colSpan="8">Không tìm thấy nội dung này</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
               </div>
               <div>
                 {contracts ? (
@@ -388,10 +387,11 @@ function LisContract() {
                     className="form-control rounded-1 me-2"
                     placeholder="Tìm kiếm tên khách hàng"
                     name="nameCustomer"
+                    size="25"
                     onChange={handelSearchChangeEmployee}
                   />
                 </div>
-             
+
                 {status && (
                   <div className="me-4">
                     <select
@@ -480,7 +480,7 @@ function LisContract() {
                     contractsUser.content.map((item, index) => {
                       return (
                         <tr key={item.id}>
-                          <td>{index + 1}</td>
+                          <td>{contractsUser.number * 6 + index + 1}</td>
                           <td>{item.code}</td>
                           <td>
                             Mã: {item.premises.code} - Tầng:{" "}
