@@ -29,6 +29,7 @@ export function Login() {
 
     useEffect(() => {
         getAuth();
+        document.title = "Đăng nhập";
     }, []);
 
     const getAuth = async () => {

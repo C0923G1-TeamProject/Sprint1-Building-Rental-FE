@@ -34,7 +34,7 @@ function HeaderUser() {
                 style={{
                   color: "white",
                   "font-size": "15px",
-                  color: "white",
+
                   margin: "0 10px",
                 }}
               >
@@ -42,7 +42,7 @@ function HeaderUser() {
               </a>
               <a
                 style={{
-                  color: "white",
+
                   "font-size": "15px",
                   color: "white",
                   margin: "0 10px",

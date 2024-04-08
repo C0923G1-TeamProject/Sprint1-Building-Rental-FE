@@ -6,6 +6,7 @@ import {Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {useUserData} from "../Context/useUserData";
 import {ModalLogin} from "./ModalLogin";
+import {toast} from "react-toastify";
 
 export function Otp() {
     const [otp, setOtp] = useState();
@@ -20,7 +21,7 @@ export function Otp() {
 
 
     useEffect(() => {
-
+        document.title = "Đăng nhập";
         getInfo();
 
     }, [userData]);
@@ -43,6 +44,7 @@ export function Otp() {
                 console.log(info.otp)
                 setOtp(info.otp)
                 setAccount(info);
+                toast.success("Gui mail thanh cong");
                 console.log("set roi")
             }
         } catch (e) {
